@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class NotaneitorApplicationTests {
+public class MyWallapopApplicationTests {
 
 	@Test
 	public void contextLoads() {

@@ -1,9 +1,8 @@
 package com.uniovi.controllers;
 
-import java.security.Principal;
 import java.util.LinkedList;
 
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -13,8 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import com.uniovi.entities.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.uniovi.entities.User;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
@@ -92,7 +96,7 @@ public class UsersController {
 			return "user/edit";
 		}
 		User original = usersService.getUser(id); // modificar solo score y description
-		original.setDni(user.getDni());
+		original.setEmail(user.getEmail());
 		original.setName(user.getName());
 		original.setLastName(user.getLastName());
 		original.setPassword(user.getPassword());
@@ -114,7 +118,7 @@ public class UsersController {
 		}
 		user.setRole(rolesService.getRoles()[0]);
 		usersService.addUser(user);
-		securityService.autoLogin(user.getDni(), user.getPasswordConfirm());
+		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:login";
 	}
 
@@ -128,8 +132,8 @@ public class UsersController {
 	public String home(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String dni = auth.getName();
-		User activeUser = usersService.getUserByDni(dni);
-		model.addAttribute("markList", activeUser.getMarks());
+		User activeUser = usersService.getUserByEmail(dni);
+		model.addAttribute("bidList", activeUser.getBids());
 		return "home";
 	}
 
