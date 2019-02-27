@@ -14,6 +14,7 @@ public class User {
 	private String name;
 	private String lastName;
 	private String role;
+	private Double money;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Bid> bids;
@@ -31,6 +32,7 @@ public class User {
 		this.email = email;
 		this.name = name;
 		this.lastName = lastName;
+		this.money = 100.0;
 	}
 
 	public User() {
@@ -103,4 +105,14 @@ public class User {
 	public void setBids(Set<Bid> bids) {
 		this.bids = bids;
 	}
+
+	public Double getMoney() {
+		return money;
+	}
+
+	public void setMoney(Double money) {
+		this.money = money;
+	}
+	
+	
 }

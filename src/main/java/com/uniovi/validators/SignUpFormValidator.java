@@ -19,12 +19,20 @@ public class SignUpFormValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dni", "Error.empty");
-		if (user.getEmail().length() < 5 || user.getEmail().length() > 24) {
-			errors.rejectValue("dni", "Error.signup.dni.length");
+		
+		//Comprobamos que todos los campos del formulario no estén vacíos.
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Error.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Error.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "Error.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Error.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordConfirm", "Error.empty");
+		
+		//Condiciones que consideremos oportunas.
+		if (user.getEmail().length() < 8 || user.getEmail().length() > 24) {
+			errors.rejectValue("email", "Error.signup.email.length");
 		}
 		if (usersService.getUserByEmail(user.getEmail()) != null) {
-			errors.rejectValue("dni", "Error.signup.dni.duplicate");
+			errors.rejectValue("email", "Error.signup.email.duplicate");
 		}
 		if (user.getName().length() < 5 || user.getName().length() > 24) {
 			errors.rejectValue("name", "Error.signup.name.length");
