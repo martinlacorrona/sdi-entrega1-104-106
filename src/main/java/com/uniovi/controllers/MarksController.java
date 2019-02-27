@@ -1,9 +1,7 @@
 package com.uniovi.controllers;
 
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,11 +24,11 @@ import com.uniovi.entities.User;
 import com.uniovi.services.MarksService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.EditMarkFormValidator;
-import com.uniovi.validators.EditUserFormValidator;
 
 @Controller
 public class MarksController {
 
+	@SuppressWarnings("unused")
 	@Autowired
 	private HttpSession httpSession;
 

@@ -12,11 +12,13 @@ import com.uniovi.entities.User;
 public class InsertSampleDataService {
 	@Autowired
 	private UsersService usersService;
+	@SuppressWarnings("unused")
 	@Autowired
 	private MarksService marksService;
 	@Autowired
 	private RolesService rolesService;
 
+	@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
 	@PostConstruct
 	public void init() {
 		User user1 = new User("99999990A", "Pedro", "Díaz");
