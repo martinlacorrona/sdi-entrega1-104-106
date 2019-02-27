@@ -23,10 +23,10 @@ public class EditUserFormValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Error.empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "Error.empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Error.empty");
-		if (user.getEmail().length() < 5 || user.getEmail().length() > 40) {
+		if (user.getDni().length() < 5 || user.getDni().length() > 24) {
 			errors.rejectValue("dni", "Error.edit.user.dni.length");
 		}
-		if (usersService.getUserByEmail(user.getEmail()) != null) {
+		if (usersService.getUserByDni(user.getDni()) != null) {
 			errors.rejectValue("dni", "Error.edit.user.dni.duplicate");
 		}
 		if (user.getName().length() < 5 || user.getName().length() > 24) {

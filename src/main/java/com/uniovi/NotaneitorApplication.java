@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MyWallapop {
+public class NotaneitorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MyWallapop.class, args);
+		SpringApplication.run(NotaneitorApplication.class, args);
 	}
 
 }
