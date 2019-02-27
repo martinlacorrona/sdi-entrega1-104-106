@@ -8,23 +8,27 @@ public class User {
 	@Id
 	@GeneratedValue
 	private long id;
+	
 	@Column(unique = true)
-	private String dni;
+	private String email;
 	private String name;
 	private String lastName;
 	private String role;
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<Mark> marks;
 	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Bid> bids;
+	
+	@OneToMany(mappedBy = "buyerUser")
+	private Set<Bid> buyedBids;
 	
 
 	private String password;
-	@Transient // propiedad que no se almacena e la tabla.
+	@Transient // propiedad que no se almacena en la tabla.
 	private String passwordConfirm;
 
-	public User(String dni, String name, String lastName) {
+	public User(String email, String name, String lastName) {
 		super();
-		this.dni = dni;
+		this.email = email;
 		this.name = name;
 		this.lastName = lastName;
 	}
@@ -40,12 +44,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getDni() {
-		return dni;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setDni(String dni) {
-		this.dni = dni;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getName() {
@@ -62,14 +66,6 @@ public class User {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public void setMarks(Set<Mark> marks) {
-		this.marks = marks;
-	}
-
-	public Set<Mark> getMarks() {
-		return marks;
 	}
 
 	public String getFullName() {
@@ -98,5 +94,13 @@ public class User {
 	
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public Set<Bid> getBids() {
+		return bids;
+	}
+
+	public void setBids(Set<Bid> bids) {
+		this.bids = bids;
 	}
 }

@@ -96,7 +96,7 @@ public class UsersController {
 			return "user/edit";
 		}
 		User original = usersService.getUser(id); // modificar solo score y description
-		original.setDni(user.getDni());
+		original.setEmail(user.getEmail());
 		original.setName(user.getName());
 		original.setLastName(user.getLastName());
 		original.setPassword(user.getPassword());
@@ -118,7 +118,7 @@ public class UsersController {
 		}
 		user.setRole(rolesService.getRoles()[0]);
 		usersService.addUser(user);
-		securityService.autoLogin(user.getDni(), user.getPasswordConfirm());
+		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:login";
 	}
 
@@ -132,8 +132,8 @@ public class UsersController {
 	public String home(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String dni = auth.getName();
-		User activeUser = usersService.getUserByDni(dni);
-		model.addAttribute("markList", activeUser.getMarks());
+		User activeUser = usersService.getUserByEmail(dni);
+		model.addAttribute("bidList", activeUser.getBids());
 		return "home";
 	}
 
