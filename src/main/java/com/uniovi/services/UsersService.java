@@ -36,8 +36,8 @@ public class UsersService {
 		usersRepository.save(user);
 	}
 	
-	public User getUserByDni(String dni) {
-		User user = usersRepository.findByDni(dni);
+	public User getUserByEmail(String email) {
+		User user = usersRepository.findByEmail(email);
 		return user;
 	}
 

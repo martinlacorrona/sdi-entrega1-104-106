@@ -2,83 +2,87 @@ package com.uniovi.services;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.uniovi.entities.Mark;
+
+import com.uniovi.entities.Bid;
 import com.uniovi.entities.User;
 
 @Service
 public class InsertSampleDataService {
 	@Autowired
 	private UsersService usersService;
-	@SuppressWarnings("unused")
-	@Autowired
-	private MarksService marksService;
 	@Autowired
 	private RolesService rolesService;
 
 	@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
 	@PostConstruct
 	public void init() {
-		User user1 = new User("99999990A", "Pedro", "Díaz");
+		User user1 = new User("pedro@gmail.com", "Pedro", "Díaz");
 		user1.setPassword("123456");
 		user1.setRole(rolesService.getRoles()[0]);
-		User user2 = new User("99999991B", "Lucas", "Núñez");
+		User user2 = new User("lucas@gmail.com", "Lucas", "Núñez");
 		user2.setPassword("123456");
 		user2.setRole(rolesService.getRoles()[0]);
-		User user3 = new User("99999992C", "María", "Rodríguez");
+		User user3 = new User("maria@gmail.com", "María", "Rodríguez");
 		user3.setPassword("123456");
 		user3.setRole(rolesService.getRoles()[0]);
-		User user4 = new User("99999993D", "Marta", "Almonte");
+		User user4 = new User("marta@gmail.com", "Marta", "Almonte");
 		user4.setPassword("123456");
-		user4.setRole(rolesService.getRoles()[1]);
-		User user5 = new User("99999977E", "Pelayo", "Valdes");
+		user4.setRole(rolesService.getRoles()[0]);
+		User user5 = new User("pelayo@gmail.com", "Pelayo", "Valdes");
 		user5.setPassword("123456");
-		user5.setRole(rolesService.getRoles()[2]);
-		User user6 = new User("99999988F", "Edward", "Núñez");
+		user5.setRole(rolesService.getRoles()[0]);
+		User user6 = new User("edward@gmail.com", "Edward", "Núñez");
 		user6.setPassword("123456");
-		user6.setRole(rolesService.getRoles()[2]);
-		Set user1Marks = new HashSet<Mark>() {
+		user6.setRole(rolesService.getRoles()[0]);
+		User user7 = new User("admin@email.com", "Edward", "Núñez");
+		user7.setPassword("admin");
+		user7.setRole(rolesService.getRoles()[1]);
+		Set user1Bids = new HashSet<Bid>() {
 			{
-				add(new Mark("Nota A1", 10.0, user1));
-				add(new Mark("Nota A2", 9.0, user1));
-				add(new Mark("Nota A3", 7.0, user1));
-				add(new Mark("Nota A4", 6.5, user1));
+				add(new Bid("Oferta A1", "Oferta de prueba A1", 10.0, user1));
+				add(new Bid("Oferta A2", "Oferta de prueba A2", 15.0, user1));
+				add(new Bid("Oferta A3", "Oferta de prueba A3", 20.0, user1));
+				add(new Bid("Oferta A4", "Oferta de prueba A4", 30.0, user1));
 			}
 		};
-		user1.setMarks(user1Marks);
-		Set user2Marks = new HashSet<Mark>() {
+		user1.setBids(user1Bids);
+		Set user2Bids = new HashSet<Bid>() {
 			{
-				add(new Mark("Nota B1", 5.0, user2));
-				add(new Mark("Nota B2", 4.3, user2));
-				add(new Mark("Nota B3", 8.0, user2));
-				add(new Mark("Nota B4", 3.5, user2));
+				add(new Bid("Oferta B1", "Oferta de prueba B1", 10.2, user2));
+				add(new Bid("Oferta B2", "Oferta de prueba B2", 15.2, user2));
+				add(new Bid("Oferta B3", "Oferta de prueba B3", 20.2, user2));
+				add(new Bid("Oferta B4", "Oferta de prueba B4", 30.2, user2));
 			}
 		};
-		user2.setMarks(user2Marks);
-		Set user3Marks = new HashSet<Mark>() {
+		user2.setBids(user2Bids);
+		Set user3Bids = new HashSet<Bid>() {
 			{
-				;
-				add(new Mark("Nota C1", 5.5, user3));
-				add(new Mark("Nota C2", 6.6, user3));
-				add(new Mark("Nota C3", 7.0, user3));
+				add(new Bid("Oferta C1", "Oferta de prueba C1", 10.2, user3));
+				add(new Bid("Oferta C2", "Oferta de prueba C2", 15.2, user3));
+				add(new Bid("Oferta C3", "Oferta de prueba C3", 20.2, user3));
+				add(new Bid("Oferta C4", "Oferta de prueba C4", 30.2, user3));
 			}
 		};
-		user3.setMarks(user3Marks);
-		Set user4Marks = new HashSet<Mark>() {
+		user3.setBids(user3Bids);
+		Set user4Bids = new HashSet<Bid>() {
 			{
-				add(new Mark("Nota D1", 10.0, user4));
-				add(new Mark("Nota D2", 8.0, user4));
-				add(new Mark("Nota D3", 9.0, user4));
+				add(new Bid("Oferta D1", "Oferta de prueba D1", 200.2, user4));
+				add(new Bid("Oferta D2", "Oferta de prueba D2", 20.2, user4));
+				add(new Bid("Oferta D3", "Oferta de prueba D3", 54.2, user4));
 			}
 		};
-		user4.setMarks(user4Marks);
+		user4.setBids(user4Bids);
 		usersService.addUser(user1);
 		usersService.addUser(user2);
 		usersService.addUser(user3);
 		usersService.addUser(user4);
 		usersService.addUser(user5);
 		usersService.addUser(user6);
+		usersService.addUser(user7);
 	}
 }
