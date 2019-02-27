@@ -35,7 +35,4 @@ public class CustomConfiguration implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());
 	}
-	
-	//Para que Spring sepa cómo convertir los parámetros GET page y size a objetos Pageable,
-	
 }
