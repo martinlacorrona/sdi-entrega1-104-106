@@ -1,16 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="fragments/head" />
+<head th:replace="fragments/head">
+</head>
 <body>
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
 		<h2 th:text="#{list.users}"></h2>
 		<p th:text="#{list.p2}"></p>
+		<button type="button" id="deleteButton" class="btn btn-default" ><th th:text="#{users.delete}"></th></button>
+		<script th:inline="javascript">
+ 		/*<![CDATA[*/
+	  	$( "#deleteButton" ).click(function() {
+			 var urlUpdate = '/user/list';
+			 var table = document.getElementById('tabla');
+			 for (var r = 1, n = table.rows.length; r < n; r++) {
+	         	console.log(table.rows[r].cells[0]);
+			 }
+			 //window.location.replace(urlUpdate);
+		});
+		/*]]>*/
+		</script>
 		<div class="table-responsive">
-			<table class="table table-hover">
+			<table id="tabla" class="table table-hover">
 				<thead>
 					<tr>
+						<th class="col-md-1"></th>
 						<th th:text="#{users.email}"></th>
 						<th class="col-md-1"></th>
 						<th th:text="#{edit.user.name}"></th>
@@ -19,6 +34,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="user : ${usersList}">
+						<td><input type="checkbox" th:id="${'user' + user.id}"></input></td>
 						<td th:text="${user.email}"></td>
 						<td></td>
 						<td th:text="${user.name}"></td>
