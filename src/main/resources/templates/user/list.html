@@ -14,9 +14,22 @@
 	  	$( "#deleteButton" ).click(function() {
 			 var urlUpdate = '/user/list';
 			 var table = document.getElementById('tabla');
+			 var listIds = new Array();
+			 var totalUsersToDelete = 0;
 			 for (var r = 1, n = table.rows.length; r < n; r++) {
-	         	console.log(table.rows[r].cells[0]);
+				 // Parse id users
+				 var id = String(table.rows[r].cells[0].innerHTML);
+				 id = id.slice(0, id.length-2);
+				 id = id.substr(31);
+	         	 
+				 //If checkbox is mark, added to list
+	         	 var idCheckbox = 'user' + id;
+	         	 if(document.getElementById(idCheckbox).checked) {
+	         		listIds[totalUsersToDelete] = id;
+	         		totalUsersToDelete++;
+	         	 }
 			 }
+			 console.log(listIds);
 			 //window.location.replace(urlUpdate);
 		});
 		/*]]>*/
