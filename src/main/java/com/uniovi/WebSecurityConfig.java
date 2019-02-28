@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup", "/login/**").permitAll()
 				.antMatchers("/mark/add").hasAuthority("ROLE_PROFESSOR") 
 				.antMatchers("/mark/edit/*").hasAuthority("ROLE_PROFESSOR") 
-				.antMatchers("/mark/delete/*").hasAuthority("-ROLE_PROFESSOR") 
+				.antMatchers("/mark/delete/*").hasAuthority("ROLE_PROFESSOR") 
 				.antMatchers("/mark/**").hasAnyAuthority("ROLE_STUDENT","ROLE_PROFESSOR","ROLE_ADMIN")
 				.antMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN")
 				.anyRequest().authenticated()

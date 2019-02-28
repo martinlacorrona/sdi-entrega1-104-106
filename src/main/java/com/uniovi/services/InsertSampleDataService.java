@@ -39,7 +39,7 @@ public class InsertSampleDataService {
 		User user6 = new User("edward@gmail.com", "Edward", "Núñez");
 		user6.setPassword("123456");
 		user6.setRole(rolesService.getRoles()[0]);
-		User user7 = new User("admin@email.com", "Edward", "Núñez");
+		User user7 = new User("admin@email.com", "Administrador", "Administrador");
 		user7.setPassword("admin");
 		user7.setRole(rolesService.getRoles()[1]);
 		Set user1Bids = new HashSet<Bid>() {
