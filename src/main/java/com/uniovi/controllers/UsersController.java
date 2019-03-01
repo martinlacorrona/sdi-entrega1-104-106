@@ -43,9 +43,13 @@ public class UsersController {
 		return "user/add";
 	}
 
-	@RequestMapping("/user/delete/{id}")
-	public String delete(@PathVariable Long id) {
-		usersService.deleteUser(id);
+	@RequestMapping("/user/delete/{ids}")
+	public String delete(@PathVariable String[] ids) {
+		//El objetivo es no eliminar el admin.
+		Long idAdmin = usersService.getUserByEmail("admin@email.com").getId();
+		for(String id : ids)
+			if(Long.parseLong(id) != idAdmin) //Si no es el admin, se borra
+				usersService.deleteUser(Long.parseLong(id));
 		return "redirect:/user/list";
 	}
 
