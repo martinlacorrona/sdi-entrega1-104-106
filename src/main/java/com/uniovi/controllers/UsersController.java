@@ -45,10 +45,14 @@ public class UsersController {
 
 	@RequestMapping("/user/delete/{ids}")
 	public String delete(@PathVariable String[] ids) {
-		//El objetivo es no eliminar el admin.
-		Long idAdmin = usersService.getUserByEmail("admin@email.com").getId();
+		//Vamos a sacar la ID del usuario logueado para que no lo borre
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		Long idLoguedUser = activeUser.getId();
+		
 		for(String id : ids)
-			if(Long.parseLong(id) != idAdmin) //Si no es el admin, se borra
+			if(Long.parseLong(id) != idLoguedUser) //No borrarse a si mismo
 				usersService.deleteUser(Long.parseLong(id));
 		return "redirect:/user/list";
 	}
@@ -81,8 +85,8 @@ public class UsersController {
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String dni = auth.getName();
-		User activeUser = usersService.getUserByEmail(dni);
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
 		model.addAttribute("bidList", activeUser.getBids());
 		return "home";
 	}
