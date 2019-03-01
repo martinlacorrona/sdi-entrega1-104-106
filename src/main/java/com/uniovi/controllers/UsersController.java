@@ -34,6 +34,7 @@ public class UsersController {
 	@RequestMapping("/user/list")
 	public String getListado(Model model) {
 		model.addAttribute("usersList", usersService.getUsers());
+		
 		return "user/list";
 	}
 
@@ -87,8 +88,21 @@ public class UsersController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
+		model.addAttribute("money",activeUser.getMoney() + "€");
+		model.addAttribute("bidList", activeUser.getBids());
+		return "home";
+	}
+	
+	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
+	public String raiz(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+
+		model.addAttribute("money",activeUser.getMoney() + "€");
 		model.addAttribute("bidList", activeUser.getBids());
 		return "home";
 	}
 
+	
 }
