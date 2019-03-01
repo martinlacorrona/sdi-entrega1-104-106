@@ -1,13 +1,13 @@
 <!-- nav.html -->
-<nav class="navbar navbar-inverse">
-	<div class="container-fluid">
+<nav class="navbar" >
+	<div class="container-fluid" >
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#myNavbar">
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a href="/">
+			<a href="/home">
 				<img src="/img/Logo.png" alt="logo" />
 			</a>
 		</div>
@@ -15,45 +15,45 @@
 			th:object="${user}">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 
-				<li><a href="/" th:text="#{nav.home}">Home</a></li>
-				<li sec:authorize="hasRole('ROLE_USER')"><a>100€</a></li>
+				<li><a href="/" th:text="#{nav.home}" style = "color: black">Home</a></li>
+				<li sec:authorize="hasRole('ROLE_USER')" ><a th:text = "${money}" style = "color: black" ></a></li>
 				<li id="users-menu" class="dropdown"
 					sec:authorize="hasRole('ROLE_ADMIN')"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#"
-					th:text="#{nav.user}"> <span class="caret"></span>
+					th:text="#{nav.user}" style = "color: black"> <span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/user/list" th:text="#{nav.user.view}"></a></li>
+						<li><a href="/user/list" th:text="#{nav.user.view}" style = "color: black"></a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a id="btnLanguage" href=" #"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"
-					aria-haspopup="true" aria-expanded="false"> <span
+					aria-haspopup="true" aria-expanded="false" style = "color: black"> <span
 						th:text="#{language.change}"></span> <span class="caret"></span>
 				</a>
 					<ul id="languageDropdownMenuButton" class="dropdown-menu">
 						<li><a id="btnEnglish" value="EN"> <img
 								th:src="@{/img/if_uk_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.en}">Ingles</span>
+								th:text="#{language.en}" style = "color: black">Ingles</span>
 						</a></li>
 						<li><a id="btnSpanish" value="ES"> <img
 								th:src="@{/img/if_spain_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.es}">EspaÑol</span>
+								th:text="#{language.es}" style = "color: black">Español</span>
 						</a></li>
 					</ul></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/signup"
-					th:text="#{signup.message}"> <span
+					th:text="#{signup.message}"style = "color: black"> <span
 						class="glyphicon glyphicon-user"></span> Registrate
 				</a></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/login"
-					th:text="#{login.message}"> <span
+					th:text="#{login.message}" style = "color: black"> <span
 						class="glyphicon glyphicon-log-in"></span> Identificate
 				</a></li>
 				<li sec:authorize="isAuthenticated()"><a href="/logout"
-					th:text="#{logout.message}"> <span
+					th:text="#{logout.message}"style = "color: black"> <span
             class=" glyphiconglyphicon-log-out"></span>
 						Desconectar </a></li>
 			</ul>

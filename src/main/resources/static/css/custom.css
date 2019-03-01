@@ -8,8 +8,13 @@ body {
 	margin-bottom: 60px;
 }
 
-.container-fluid{
-	background-color: black;
+.navbar{
+	background-color: #7FFFD4;
+	
+}
+.deleteButton {
+	color: black; 
+	background-color: red;
 }
 
 footer {
