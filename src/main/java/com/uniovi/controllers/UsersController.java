@@ -79,7 +79,6 @@ public class UsersController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
-		// Validar el error aqui y luego hacer si hay error en la vista..
 		return "login";
 	}
 
