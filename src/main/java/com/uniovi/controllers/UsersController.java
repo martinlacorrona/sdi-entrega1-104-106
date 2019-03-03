@@ -93,16 +93,7 @@ public class UsersController {
 		return "home";
 	}
 	
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public String raiz(Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
-
-		model.addAttribute("money",activeUser.getMoney() + "€");
-		model.addAttribute("bidList", activeUser.getBids());
-		return "home";
-	}
+	
 
 	
 }
