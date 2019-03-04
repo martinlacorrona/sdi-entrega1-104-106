@@ -54,6 +54,16 @@ public class BidsController {
 		bid.setStatus(BidStatus.ACTIVED);
 		
 		bidsService.addBid(bid);
-		return "bid/add";
+		return "redirect:/bid/mybids";
+	}
+	
+	@RequestMapping(value = "/bid/mybids", method = RequestMethod.GET)
+	public String getListBid(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		
+		model.addAttribute("bidList", bidsService.getBidsForUser(activeUser));
+		return "bid/mybids";
 	}
 }
