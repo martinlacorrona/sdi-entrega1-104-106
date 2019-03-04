@@ -68,6 +68,7 @@ public class BidsService {
 	 * @return
 	 */
 	public Page<Bid> getBidsPaginationSearchTitle(Pageable pageable, String searchText) {
+		searchText = "%" + searchText + "%";
 		return bidsRepository.searchByTitle(pageable, searchText);
 	}
 	
