@@ -36,6 +36,14 @@ public interface BidsRepository extends CrudRepository<Bid, Long> {
 	List<Bid> findAllByUser(User user);
 	
 	/**
+	 * Busca todas las bids publicadas por un usuario activas.
+	 * @param user
+	 * @return
+	 */
+	@Query("SELECT r FROM Bid r WHERE r.user = ?1 AND r.status = 'ACTIVED' ORDER BY r.id ASC ")
+	List<Bid> findAllByUserActive(User user);
+	
+	/**
 	 * Busca todas las bids publicadas por un usuario.
 	 * @param pageable
 	 * @param user

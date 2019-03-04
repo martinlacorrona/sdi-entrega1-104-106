@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -65,5 +66,16 @@ public class BidsController {
 		
 		model.addAttribute("bidList", bidsService.getBidsForUser(activeUser));
 		return "bid/mybids";
+	}
+	
+	@RequestMapping("/bid/mybids/delete/{id}")
+	public String delete(@PathVariable Long id) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		Bid bid = bidsService.getBid(id);
+		if(bid.getUser().getId() == activeUser.getId())
+			bidsService.deleteBid(id);
+		return "redirect:/bid/mybids";
 	}
 }
