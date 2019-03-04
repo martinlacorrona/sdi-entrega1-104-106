@@ -45,11 +45,19 @@ public class BidsService {
 	
 	/**
 	 * Devuelve todas las ofertas disponibles.
-	 * @param pageable
 	 * @return
 	 */
 	public List<Bid> getBids() {
 		List<Bid> bids = bidsRepository.findAll();
+		return bids;
+	}
+	
+	/**
+	 * Devuelve todas las ofertas compradas por un usuario.
+	 * @return
+	 */
+	public List<Bid> getBuyedBids(User user) {
+		List<Bid> bids = bidsRepository.findAllBuyedByUser(user);
 		return bids;
 	}
 	
@@ -65,6 +73,7 @@ public class BidsService {
 	/**
 	 * Devuelve todas las ofertas disponibles en modo paginacion buscando por el titulo.
 	 * @param pageable
+	 * @param searchText
 	 * @return
 	 */
 	public Page<Bid> getBidsPaginationSearchTitle(Pageable pageable, String searchText) {
