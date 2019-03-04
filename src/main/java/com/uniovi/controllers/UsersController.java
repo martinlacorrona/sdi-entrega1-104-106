@@ -1,5 +1,7 @@
 package com.uniovi.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -83,11 +85,11 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(Model model, HttpServletRequest request) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		model.addAttribute("money",activeUser.getMoney() + "€");
+		request.getSession().setAttribute("money", activeUser.getMoney() + "€");
 		model.addAttribute("bidList", activeUser.getBids());
 		return "home";
 	}

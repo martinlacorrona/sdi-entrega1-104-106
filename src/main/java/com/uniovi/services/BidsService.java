@@ -1,15 +1,13 @@
 package com.uniovi.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Bid;
@@ -32,13 +30,13 @@ public class BidsService {
 	 * @param user
 	 * @return
 	 */
-	public Page<Bid> getBidsForUser(Pageable pageable, User user) {
-		Page<Bid> bids = new PageImpl<Bid>(new LinkedList<Bid>());
+	public List<Bid> getBidsForUser(User user) {
+		List<Bid> bids = new ArrayList<Bid>();
 		if (user.getRole().equals("ROLE_USER")) {
-			bids = bidsRepository.findAllByUser(pageable, user);
+			bids = bidsRepository.findAllByUser(user);
 		}
 		if (user.getRole().equals("ROLE_ADMIN")) {
-			bids = getBids(pageable);
+			bids = getBids();
 		}
 		return bids;
 	}
@@ -48,8 +46,8 @@ public class BidsService {
 	 * @param pageable
 	 * @return
 	 */
-	public Page<Bid> getBids(Pageable pageable) {
-		Page<Bid> bids = bidsRepository.findAll(pageable);
+	public List<Bid> getBids() {
+		List<Bid> bids = bidsRepository.findAll();
 		return bids;
 	}
 	
