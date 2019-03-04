@@ -59,7 +59,7 @@ public interface BidsRepository extends CrudRepository<Bid, Long> {
 	 * @return
 	 */
 	@Query("SELECT r FROM Bid r WHERE r.buyerUser = ?1 ORDER BY r.id ASC ")
-	Page<Bid> findAllBuyedByUser(Pageable pageable, User user);
+	List<Bid> findAllBuyedByUser(User user);
 	
 	/**
 	 * "Borra" una bid, pero realmente la pone en estado "deleted".

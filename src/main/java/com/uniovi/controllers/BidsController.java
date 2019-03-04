@@ -73,6 +73,16 @@ public class BidsController {
 		return "bid/mybids";
 	}
 
+	@RequestMapping(value = "/bid/mybuyedbids", method = RequestMethod.GET)
+	public String getBuyedListBid(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+
+		model.addAttribute("bidList", bidsService.getBuyedBids(activeUser));
+		return "bid/mybuyedbids";
+	}
+
 	@RequestMapping("/bid/mybids/delete/{id}")
 	public String delete(@PathVariable Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -42,6 +42,14 @@ public class InsertSampleDataService {
 		User user7 = new User("admin@email.com", "Administrador", "Administrador");
 		user7.setPassword("admin");
 		user7.setRole(rolesService.getRoles()[1]);
+		
+		Bid b1 = new Bid("Oferta B1", "Oferta de prueba B1", 10.2, user2);
+		b1.setBuyerUser(user1);
+		Bid c1 = new Bid("Oferta C1", "Oferta de prueba C1", 10.2, user3);
+		c1.setBuyerUser(user1);
+		Bid d1 = new Bid("Oferta D1", "Oferta de prueba D1", 200.2, user4);
+		d1.setBuyerUser(user1);
+		
 		Set user1Bids = new HashSet<Bid>() {
 			{
 				add(new Bid("Oferta A1", "Oferta de prueba A1", 10.0, user1));
@@ -53,7 +61,7 @@ public class InsertSampleDataService {
 		user1.setBids(user1Bids);
 		Set user2Bids = new HashSet<Bid>() {
 			{
-				add(new Bid("Oferta B1", "Oferta de prueba B1", 10.2, user2));
+				add(b1);
 				add(new Bid("Oferta B2", "Oferta de prueba B2", 15.2, user2));
 				add(new Bid("Oferta B3", "Oferta de prueba B3", 20.2, user2));
 				add(new Bid("Oferta B4", "Oferta de prueba B4", 30.2, user2));
@@ -62,7 +70,7 @@ public class InsertSampleDataService {
 		user2.setBids(user2Bids);
 		Set user3Bids = new HashSet<Bid>() {
 			{
-				add(new Bid("Oferta C1", "Oferta de prueba C1", 10.2, user3));
+				add(c1);
 				add(new Bid("Oferta C2", "Oferta de prueba C2", 15.2, user3));
 				add(new Bid("Oferta C3", "Oferta de prueba C3", 20.2, user3));
 				add(new Bid("Oferta C4", "Oferta de prueba C4", 30.2, user3));
@@ -71,7 +79,7 @@ public class InsertSampleDataService {
 		user3.setBids(user3Bids);
 		Set user4Bids = new HashSet<Bid>() {
 			{
-				add(new Bid("Oferta D1", "Oferta de prueba D1", 200.2, user4));
+				add(d1);
 				add(new Bid("Oferta D2", "Oferta de prueba D2", 20.2, user4));
 				add(new Bid("Oferta D3", "Oferta de prueba D3", 54.2, user4));
 			}
