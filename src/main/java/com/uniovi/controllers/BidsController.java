@@ -105,6 +105,9 @@ public class BidsController {
 		
 		model.addAttribute("bidList", bids.getContent());
 		model.addAttribute("page", bids);
+		if(searchText == null) //Para que no falle la paginacion con busqueda
+			searchText = "";
+		model.addAttribute("urlPath", searchText);
 		return "bid/list";
 	}
 }
