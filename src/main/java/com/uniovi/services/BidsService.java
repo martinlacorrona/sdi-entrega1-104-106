@@ -33,7 +33,7 @@ public class BidsService {
 	public List<Bid> getBidsForUser(User user) {
 		List<Bid> bids = new ArrayList<Bid>();
 		if (user.getRole().equals("ROLE_USER")) {
-			bids = bidsRepository.findAllByUser(user);
+			bids = bidsRepository.findAllByUserActive(user);
 		}
 		if (user.getRole().equals("ROLE_ADMIN")) {
 			bids = getBids();

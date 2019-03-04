@@ -13,7 +13,9 @@
 					<tr>
 						<th th:text="#{bid.list.title}"></th>
 						<th th:text="#{bid.list.description}"></th>
-						<th th:text="#{bid.list.description}"></th>
+						<th th:text="#{bid.list.price}"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -21,6 +23,9 @@
 						<td th:text="${bid.title}"></td>
 						<td th:text="${bid.description}"></td>
 						<td th:text="${bid.price}"></td>
+						<td />
+						<td><a th:href="${'/bid/mybids/delete/' + bid.id}"
+							th:text="#{bid.list.delete}"></a></td>
 					</tr>
 				</tbody>
 			</table>
