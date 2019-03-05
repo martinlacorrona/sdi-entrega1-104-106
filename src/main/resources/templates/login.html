@@ -10,7 +10,7 @@
 				<label class="control-label col-sm-2" for="email"
 				th:text="#{singup.email}"></label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" name="username"
+					<input type="email" class="form-control" name="username"
 						th:placeholder="#{singup.example.email}" required="true" />
 						<span th:if="${param.error}" class="text-danger" th:text="#{Error.login}">    
                 </span>
