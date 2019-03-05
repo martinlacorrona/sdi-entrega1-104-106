@@ -92,8 +92,4 @@ public class UsersController {
 		model.addAttribute("bidList", activeUser.getBids());
 		return "home";
 	}
-	
-	
-
-	
 }
