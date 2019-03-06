@@ -41,4 +41,14 @@ public class UsersService {
 	public void deleteUser(Long id) {
 		usersRepository.deleteById(id);
 	}
+	
+	/**
+	 * Pone una oferta un id, haciendo que esté comprada.
+	 * @param Double dinero
+	 * @param String email
+	 * @return
+	 */
+	public void updateMoney(Double money , String email) {
+		usersRepository.updateMoney(money,email);
+	}
 }

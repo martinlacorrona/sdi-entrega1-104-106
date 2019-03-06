@@ -110,4 +110,45 @@ public class BidsController {
 		model.addAttribute("urlPath", searchText);
 		return "bid/list";
 	}
+	
+	@RequestMapping(value = "/bid/{id}/buyed", method = RequestMethod.GET)
+	public String setBuyedTrue(Model model, @PathVariable Long id) {
+		//Datos del usuario
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		Long idBuyer = activeUser.getId();
+		String titleBid = bidsService.getBid(id).getTitle();
+		double precio = bidsService.getBid(id).getPrice();
+		//Si tiene dinero suficiente lo compra 
+		if(activeUser.isPurschable(precio) ) {
+			bidsService.setUserBuyed(idBuyer, titleBid);
+			Double finalMoney = activeUser.getMoney() - precio;
+			activeUser.setMoney(finalMoney);
+			usersService.updateMoney(finalMoney, email);
+		}
+		return "redirect:/bid/list";
+	}
+
+	@RequestMapping(value = "/bid/{id}/notbuyed", method = RequestMethod.GET)
+	public String setBuyedFalse(Model model, @PathVariable Long id) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		String titleBid = bidsService.getBid(id).getTitle();
+		double precio = bidsService.getBid(id).getPrice();
+		Long idActiveUser = activeUser.getId();
+		Long idBuyerUser = bidsService.getBid(id).getBuyerUser().getId();
+
+		//Si es el comprador y decide no comprarlo
+		if(idActiveUser==idBuyerUser ) {
+			bidsService.setUserBuyed(null, titleBid);
+			Double finalMoney = activeUser.getMoney() + precio;
+			activeUser.setMoney(finalMoney);
+			usersService.updateMoney(finalMoney, email);
+			
+		}
+		
+		return "redirect:/bid/list";
+	}
 }
