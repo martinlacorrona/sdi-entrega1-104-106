@@ -66,20 +66,22 @@ public class BidsController {
 	}
 
 	@RequestMapping(value = "/bid/mybids", method = RequestMethod.GET)
-	public String getListBid(Model model) {
+	public String getListBid(Model model, HttpServletRequest request) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
+		request.getSession().setAttribute("money", activeUser.getMoney());
 
 		model.addAttribute("bidList", bidsService.getBidsForUser(activeUser));
 		return "bid/mybids";
 	}
 
 	@RequestMapping(value = "/bid/mybuyedbids", method = RequestMethod.GET)
-	public String getBuyedListBid(Model model) {
+	public String getBuyedListBid(Model model, HttpServletRequest request) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
+		request.getSession().setAttribute("money", activeUser.getMoney());
 
 		model.addAttribute("bidList", bidsService.getBuyedBids(activeUser));
 		return "bid/mybuyedbids";
@@ -98,6 +100,7 @@ public class BidsController {
 
 	@RequestMapping(value = "/bid/list", method = RequestMethod.GET)
 	public String getAllBids(Model model, Pageable pageable,
+			HttpServletRequest request,
 			@RequestParam(value = "", required = false) String searchText) {
 		Page<Bid> bids = new PageImpl<Bid>(new LinkedList<Bid>());
 		if(searchText == null) //Si no se busca texto
@@ -110,8 +113,14 @@ public class BidsController {
 		if(searchText == null) //Para que no falle la paginacion con busqueda
 			searchText = "";
 		model.addAttribute("urlPath", searchText);
+		
+		//Actualizamos el dinero
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
+		User activeUser = usersService.getUserByEmail(email);
+		request.getSession().setAttribute("money", activeUser.getMoney());
+		
 		return "bid/list";
-	}
+}
 	
 	@RequestMapping(value = "/bid/{id}/buyed", method = RequestMethod.GET)
 	public String setBuyedTrue(Model model,HttpServletRequest request, @PathVariable Long id,String error) {

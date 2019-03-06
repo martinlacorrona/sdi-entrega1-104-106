@@ -5204,3 +5204,238 @@ DISCONNECT
 DISCONNECT
 /*C573*/SET SCHEMA PUBLIC
 DISCONNECT
+/*C574*/SET SCHEMA PUBLIC
+alter table bid drop constraint FK4tfy8c4srbkc5ueax6kxywxal
+alter table bid drop constraint FK4abkntgv9nvsfi86p7kfl63au
+drop table bid if exists
+drop table user if exists
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table bid (id bigint not null, date timestamp, description varchar(255), price double not null, special_bid boolean not null, status varchar(255), title varchar(255), buyer_user_id bigint, user_id bigint, primary key (id))
+create table user (id bigint not null, email varchar(255), last_name varchar(255), money double, name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table bid add constraint FK4tfy8c4srbkc5ueax6kxywxal foreign key (buyer_user_id) references user
+alter table bid add constraint FK4abkntgv9nvsfi86p7kfl63au foreign key (user_id) references user
+INSERT INTO USER VALUES(1,'pedro@gmail.com','D\u00edaz',100.0E0,'Pedro','$2a$10$EM268u9bnwCXuCDf0ZCSSuoXTBabT59hspbKwQFtiSiVOqaTYIr9S','ROLE_USER')
+INSERT INTO BID VALUES(2,'2019-03-06 14:04:52.865000','Oferta de prueba A4',30.0E0,FALSE,'ACTIVED','Oferta A4',NULL,1)
+INSERT INTO BID VALUES(3,'2019-03-06 14:04:52.865000','Oferta de prueba A3',20.0E0,FALSE,'ACTIVED','Oferta A3',NULL,1)
+INSERT INTO BID VALUES(4,'2019-03-06 14:04:52.865000','Oferta de prueba A1',10.0E0,FALSE,'ACTIVED','Oferta A1',NULL,1)
+INSERT INTO BID VALUES(5,'2019-03-06 14:04:52.865000','Oferta de prueba A2',15.0E0,FALSE,'ACTIVED','Oferta A2',NULL,1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,'lucas@gmail.com','N\u00fa\u00f1ez',100.0E0,'Lucas','$2a$10$5R4WAIcIuuA0NvVm/wJy2uveN71ztojzCEAXOkPGM8KAA9o0dnV0u','ROLE_USER')
+INSERT INTO BID VALUES(7,'2019-03-06 14:04:52.865000','Oferta de prueba B4',30.2E0,FALSE,'ACTIVED','Oferta B4',NULL,6)
+INSERT INTO BID VALUES(8,'2019-03-06 14:04:52.865000','Oferta de prueba B3',20.2E0,FALSE,'ACTIVED','Oferta B3',NULL,6)
+INSERT INTO BID VALUES(9,'2019-03-06 14:04:52.865000','Oferta de prueba B1',10.2E0,FALSE,'ACTIVED','Oferta B1',1,6)
+INSERT INTO BID VALUES(10,'2019-03-06 14:04:52.865000','Oferta de prueba B2',15.2E0,FALSE,'ACTIVED','Oferta B2',NULL,6)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,'maria@gmail.com','Rodr\u00edguez',100.0E0,'Mar\u00eda','$2a$10$y7Y6eZLj6uvoYyb9AnvKIuxa2RdgtK0Oh7MQv/JA8450v3I4Ou5Qu','ROLE_USER')
+INSERT INTO BID VALUES(12,'2019-03-06 14:04:52.865000','Oferta de prueba C1',10.2E0,FALSE,'ACTIVED','Oferta C1',1,11)
+INSERT INTO BID VALUES(13,'2019-03-06 14:04:52.865000','Oferta de prueba C3',20.2E0,FALSE,'ACTIVED','Oferta C3',NULL,11)
+INSERT INTO BID VALUES(14,'2019-03-06 14:04:52.865000','Oferta de prueba C4',30.2E0,FALSE,'ACTIVED','Oferta C4',NULL,11)
+INSERT INTO BID VALUES(15,'2019-03-06 14:04:52.865000','Oferta de prueba C2',15.2E0,FALSE,'ACTIVED','Oferta C2',NULL,11)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 16
+COMMIT
+INSERT INTO USER VALUES(16,'marta@gmail.com','Almonte',100.0E0,'Marta','$2a$10$kLqV7UtwlpYCj3r/9PzVx.piJvPTlaNbmaBromHk/Pf1LOev5S62i','ROLE_USER')
+INSERT INTO BID VALUES(17,'2019-03-06 14:04:52.865000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D6',NULL,16)
+INSERT INTO BID VALUES(18,'2019-03-06 14:04:52.865000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D2',NULL,16)
+INSERT INTO BID VALUES(19,'2019-03-06 14:04:52.865000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D1',NULL,16)
+INSERT INTO BID VALUES(20,'2019-03-06 14:04:52.865000','Oferta de prueba D3',54.2E0,FALSE,'ACTIVED','Oferta D3',NULL,16)
+INSERT INTO BID VALUES(21,'2019-03-06 14:04:52.865000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D5',NULL,16)
+INSERT INTO BID VALUES(22,'2019-03-06 14:04:52.865000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D3',NULL,16)
+INSERT INTO BID VALUES(23,'2019-03-06 14:04:52.865000','Oferta de prueba D2',20.2E0,FALSE,'ACTIVED','Oferta D2',NULL,16)
+INSERT INTO BID VALUES(24,'2019-03-06 14:04:52.865000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D4',NULL,16)
+INSERT INTO BID VALUES(25,'2019-03-06 14:04:52.865000','Oferta de prueba D1',200.2E0,FALSE,'ACTIVED','Oferta D1',6,16)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 26
+COMMIT
+INSERT INTO USER VALUES(26,'pelayo@gmail.com','Valdes',100.0E0,'Pelayo','$2a$10$2JyVDOJQFwI66FiYxCVIFOSzmJS58aoRn.Z76jVgISdzgg0pEkRvC','ROLE_USER')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 27
+COMMIT
+INSERT INTO USER VALUES(27,'edward@gmail.com','N\u00fa\u00f1ez',100.0E0,'Edward','$2a$10$4AcUM9djI510dh8EsokUGuuv2fFark3WYtT9BUYIT6IYqMviDHKMu','ROLE_USER')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 28
+COMMIT
+INSERT INTO USER VALUES(28,'admin@email.com','Administrador',100.0E0,'Administrador','$2a$10$QcBgVLHpWmId2crI4XXimuYBEs17zvpd3a74ldu04v/cE7IEfBi86','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 29
+COMMIT
+DELETE FROM BID WHERE ID=2
+INSERT INTO BID VALUES(2,'2019-03-06 14:04:52.865000','Oferta de prueba A4',30.0E0,FALSE,'ACTIVED','Oferta A4',1,1)
+COMMIT
+DELETE FROM USER WHERE ID=1
+INSERT INTO USER VALUES(1,'pedro@gmail.com','D\u00edaz',70.0E0,'Pedro','$2a$10$EM268u9bnwCXuCDf0ZCSSuoXTBabT59hspbKwQFtiSiVOqaTYIr9S','ROLE_USER')
+DELETE FROM USER WHERE ID=1
+INSERT INTO USER VALUES(1,'pedro@gmail.com','D\u00edaz',70.0E0,'Pedro','$2a$10$EM268u9bnwCXuCDf0ZCSSuoXTBabT59hspbKwQFtiSiVOqaTYIr9S','ROLE_USER')
+COMMIT
+DISCONNECT
+/*C577*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C575*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C582*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C581*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C579*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C580*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C576*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C583*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C578*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C584*/SET SCHEMA PUBLIC
+alter table bid drop constraint FK4tfy8c4srbkc5ueax6kxywxal
+alter table bid drop constraint FK4abkntgv9nvsfi86p7kfl63au
+drop table bid if exists
+drop table user if exists
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table bid (id bigint not null, date timestamp, description varchar(255), price double not null, special_bid boolean not null, status varchar(255), title varchar(255), buyer_user_id bigint, user_id bigint, primary key (id))
+create table user (id bigint not null, email varchar(255), last_name varchar(255), money double, name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table bid add constraint FK4tfy8c4srbkc5ueax6kxywxal foreign key (buyer_user_id) references user
+alter table bid add constraint FK4abkntgv9nvsfi86p7kfl63au foreign key (user_id) references user
+INSERT INTO USER VALUES(1,'pedro@gmail.com','D\u00edaz',100.0E0,'Pedro','$2a$10$4eLxgghoB.hKy0qN.FQ0FeSMo44V.k4sOgHLE5v2FPReX8nBHmC8y','ROLE_USER')
+INSERT INTO BID VALUES(2,'2019-03-06 14:05:55.721000','Oferta de prueba A3',20.0E0,FALSE,'ACTIVED','Oferta A3',NULL,1)
+INSERT INTO BID VALUES(3,'2019-03-06 14:05:55.721000','Oferta de prueba A1',10.0E0,FALSE,'ACTIVED','Oferta A1',NULL,1)
+INSERT INTO BID VALUES(4,'2019-03-06 14:05:55.721000','Oferta de prueba A4',30.0E0,FALSE,'ACTIVED','Oferta A4',NULL,1)
+INSERT INTO BID VALUES(5,'2019-03-06 14:05:55.721000','Oferta de prueba A2',15.0E0,FALSE,'ACTIVED','Oferta A2',NULL,1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,'lucas@gmail.com','N\u00fa\u00f1ez',100.0E0,'Lucas','$2a$10$lBLabdONjxzti6B8I.Tp8.RR44AQrRD0EvKAGO8y.ybNzVlXlbd.2','ROLE_USER')
+INSERT INTO BID VALUES(7,'2019-03-06 14:05:55.721000','Oferta de prueba B4',30.2E0,FALSE,'ACTIVED','Oferta B4',NULL,6)
+INSERT INTO BID VALUES(8,'2019-03-06 14:05:55.721000','Oferta de prueba B2',15.2E0,FALSE,'ACTIVED','Oferta B2',NULL,6)
+INSERT INTO BID VALUES(9,'2019-03-06 14:05:55.721000','Oferta de prueba B3',20.2E0,FALSE,'ACTIVED','Oferta B3',NULL,6)
+INSERT INTO BID VALUES(10,'2019-03-06 14:05:55.721000','Oferta de prueba B1',10.2E0,FALSE,'ACTIVED','Oferta B1',1,6)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,'maria@gmail.com','Rodr\u00edguez',100.0E0,'Mar\u00eda','$2a$10$9DRPgqwXJ.cruGfo6rPTIOx2cTjC8GO9nnQ3HoYt.Tbpc1SXHvSse','ROLE_USER')
+INSERT INTO BID VALUES(12,'2019-03-06 14:05:55.721000','Oferta de prueba C3',20.2E0,FALSE,'ACTIVED','Oferta C3',NULL,11)
+INSERT INTO BID VALUES(13,'2019-03-06 14:05:55.721000','Oferta de prueba C2',15.2E0,FALSE,'ACTIVED','Oferta C2',NULL,11)
+INSERT INTO BID VALUES(14,'2019-03-06 14:05:55.721000','Oferta de prueba C1',10.2E0,FALSE,'ACTIVED','Oferta C1',1,11)
+INSERT INTO BID VALUES(15,'2019-03-06 14:05:55.721000','Oferta de prueba C4',30.2E0,FALSE,'ACTIVED','Oferta C4',NULL,11)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 16
+COMMIT
+INSERT INTO USER VALUES(16,'marta@gmail.com','Almonte',100.0E0,'Marta','$2a$10$wXb3qh9TQmIcT/cOdogZ9uuAr/tmAKBpZKZeRJVpXoCIA7v9sKFpO','ROLE_USER')
+INSERT INTO BID VALUES(17,'2019-03-06 14:05:55.721000','Oferta de prueba D2',20.2E0,FALSE,'ACTIVED','Oferta D2',NULL,16)
+INSERT INTO BID VALUES(18,'2019-03-06 14:05:55.721000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D4',NULL,16)
+INSERT INTO BID VALUES(19,'2019-03-06 14:05:55.721000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D6',NULL,16)
+INSERT INTO BID VALUES(20,'2019-03-06 14:05:55.721000','Oferta de prueba D3',54.2E0,FALSE,'ACTIVED','Oferta D3',NULL,16)
+INSERT INTO BID VALUES(21,'2019-03-06 14:05:55.721000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D1',NULL,16)
+INSERT INTO BID VALUES(22,'2019-03-06 14:05:55.721000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D2',NULL,16)
+INSERT INTO BID VALUES(23,'2019-03-06 14:05:55.721000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D3',NULL,16)
+INSERT INTO BID VALUES(24,'2019-03-06 14:05:55.721000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D5',NULL,16)
+INSERT INTO BID VALUES(25,'2019-03-06 14:05:55.721000','Oferta de prueba D1',200.2E0,FALSE,'ACTIVED','Oferta D1',6,16)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 26
+COMMIT
+INSERT INTO USER VALUES(26,'pelayo@gmail.com','Valdes',100.0E0,'Pelayo','$2a$10$yvPG4Pk0Pdq/PS6a8OxoN.rQGWibVv62cf.OIdOVDgSzQIVfdhTlG','ROLE_USER')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 27
+COMMIT
+INSERT INTO USER VALUES(27,'edward@gmail.com','N\u00fa\u00f1ez',100.0E0,'Edward','$2a$10$FRyXZn3ozne45vCJqadcu.z5RwIoPa4d6IdPkvrh1nVSAhIhRjGZq','ROLE_USER')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 28
+COMMIT
+INSERT INTO USER VALUES(28,'admin@email.com','Administrador',100.0E0,'Administrador','$2a$10$koR8THE7nPTtQhxyQlPUa.OWuzSUdiUndbX.6YWHOxP1.u5yUJIOC','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 29
+COMMIT
+/*C586*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C588*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C584*/DISCONNECT
+/*C585*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C592*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C591*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C593*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C589*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C590*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C587*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C594*/SET SCHEMA PUBLIC
+alter table bid drop constraint FK4tfy8c4srbkc5ueax6kxywxal
+alter table bid drop constraint FK4abkntgv9nvsfi86p7kfl63au
+drop table bid if exists
+drop table user if exists
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table bid (id bigint not null, date timestamp, description varchar(255), price double not null, special_bid boolean not null, status varchar(255), title varchar(255), buyer_user_id bigint, user_id bigint, primary key (id))
+create table user (id bigint not null, email varchar(255), last_name varchar(255), money double, name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table bid add constraint FK4tfy8c4srbkc5ueax6kxywxal foreign key (buyer_user_id) references user
+alter table bid add constraint FK4abkntgv9nvsfi86p7kfl63au foreign key (user_id) references user
+INSERT INTO USER VALUES(1,'pedro@gmail.com','D\u00edaz',100.0E0,'Pedro','$2a$10$wCJx2RhOqnzsFiNiI5y.wevd6HEloBm8A//gFkuyltaAGEZ8tevem','ROLE_USER')
+INSERT INTO BID VALUES(2,'2019-03-06 14:07:27.552000','Oferta de prueba A3',20.0E0,FALSE,'ACTIVED','Oferta A3',NULL,1)
+INSERT INTO BID VALUES(3,'2019-03-06 14:07:27.552000','Oferta de prueba A4',30.0E0,FALSE,'ACTIVED','Oferta A4',NULL,1)
+INSERT INTO BID VALUES(4,'2019-03-06 14:07:27.552000','Oferta de prueba A2',15.0E0,FALSE,'ACTIVED','Oferta A2',NULL,1)
+INSERT INTO BID VALUES(5,'2019-03-06 14:07:27.552000','Oferta de prueba A1',10.0E0,FALSE,'ACTIVED','Oferta A1',NULL,1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,'lucas@gmail.com','N\u00fa\u00f1ez',100.0E0,'Lucas','$2a$10$nb5QePyTaHEj/4R1LxnuiuHK6fjMVelo7RMzPi/a1qjY2xgRQxMT6','ROLE_USER')
+INSERT INTO BID VALUES(7,'2019-03-06 14:07:27.553000','Oferta de prueba B3',20.2E0,FALSE,'ACTIVED','Oferta B3',NULL,6)
+INSERT INTO BID VALUES(8,'2019-03-06 14:07:27.553000','Oferta de prueba B4',30.2E0,FALSE,'ACTIVED','Oferta B4',NULL,6)
+INSERT INTO BID VALUES(9,'2019-03-06 14:07:27.553000','Oferta de prueba B2',15.2E0,FALSE,'ACTIVED','Oferta B2',NULL,6)
+INSERT INTO BID VALUES(10,'2019-03-06 14:07:27.551000','Oferta de prueba B1',10.2E0,FALSE,'ACTIVED','Oferta B1',1,6)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,'maria@gmail.com','Rodr\u00edguez',100.0E0,'Mar\u00eda','$2a$10$7/rcYbX6cdlDA4O9j4u6.uOfJjcPOP/IX7xxVv7iVKkQhkyhLVr9i','ROLE_USER')
+INSERT INTO BID VALUES(12,'2019-03-06 14:07:27.553000','Oferta de prueba C4',30.2E0,FALSE,'ACTIVED','Oferta C4',NULL,11)
+INSERT INTO BID VALUES(13,'2019-03-06 14:07:27.551000','Oferta de prueba C1',10.2E0,FALSE,'ACTIVED','Oferta C1',1,11)
+INSERT INTO BID VALUES(14,'2019-03-06 14:07:27.553000','Oferta de prueba C2',15.2E0,FALSE,'ACTIVED','Oferta C2',NULL,11)
+INSERT INTO BID VALUES(15,'2019-03-06 14:07:27.553000','Oferta de prueba C3',20.2E0,FALSE,'ACTIVED','Oferta C3',NULL,11)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 16
+COMMIT
+INSERT INTO USER VALUES(16,'marta@gmail.com','Almonte',100.0E0,'Marta','$2a$10$1.lRPVFA9MZyC5o7UM7r4umhtNXphvJRSsU8fZCHrWmqVFMoCa4dy','ROLE_USER')
+INSERT INTO BID VALUES(17,'2019-03-06 14:07:27.554000','Oferta de prueba D3',54.2E0,FALSE,'ACTIVED','Oferta D3',NULL,16)
+INSERT INTO BID VALUES(18,'2019-03-06 14:07:27.551000','Oferta de prueba D1',200.2E0,FALSE,'ACTIVED','Oferta D1',6,16)
+INSERT INTO BID VALUES(19,'2019-03-06 14:07:27.554000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D6',NULL,16)
+INSERT INTO BID VALUES(20,'2019-03-06 14:07:27.554000','Oferta de prueba D2',20.2E0,FALSE,'ACTIVED','Oferta D2',NULL,16)
+INSERT INTO BID VALUES(21,'2019-03-06 14:07:27.554000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D5',NULL,16)
+INSERT INTO BID VALUES(22,'2019-03-06 14:07:27.554000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D3',NULL,16)
+INSERT INTO BID VALUES(23,'2019-03-06 14:07:27.554000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D4',NULL,16)
+INSERT INTO BID VALUES(24,'2019-03-06 14:07:27.554000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D1',NULL,16)
+INSERT INTO BID VALUES(25,'2019-03-06 14:07:27.554000','Super de prueba D3',54.2E0,FALSE,'ACTIVED','Super D2',NULL,16)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 26
+COMMIT
+INSERT INTO USER VALUES(26,'pelayo@gmail.com','Valdes',100.0E0,'Pelayo','$2a$10$ZQtZlSebdwlgim4AE5DA4.HxD3J5m9oQ1vzn7UiMWYgX1MAu81tTa','ROLE_USER')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 27
+COMMIT
+INSERT INTO USER VALUES(27,'edward@gmail.com','N\u00fa\u00f1ez',100.0E0,'Edward','$2a$10$lhD7nDDLsXFGD4rOHwAQWO6PKd7Eu6a8S3qCuKgIFpNuHUJfI.7o2','ROLE_USER')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 28
+COMMIT
+INSERT INTO USER VALUES(28,'admin@email.com','Administrador',100.0E0,'Administrador','$2a$10$gGApdC.gTNxuGLqLWl/NruUONk73ecS9DGOGrkWT2XauijkyexuBK','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 29
+COMMIT
+DELETE FROM BID WHERE ID=2
+INSERT INTO BID VALUES(2,'2019-03-06 14:07:27.552000','Oferta de prueba A3',20.0E0,FALSE,'ACTIVED','Oferta A3',1,1)
+COMMIT
+DELETE FROM USER WHERE ID=1
+INSERT INTO USER VALUES(1,'pedro@gmail.com','D\u00edaz',80.0E0,'Pedro','$2a$10$wCJx2RhOqnzsFiNiI5y.wevd6HEloBm8A//gFkuyltaAGEZ8tevem','ROLE_USER')
+DELETE FROM USER WHERE ID=1
+INSERT INTO USER VALUES(1,'pedro@gmail.com','D\u00edaz',80.0E0,'Pedro','$2a$10$wCJx2RhOqnzsFiNiI5y.wevd6HEloBm8A//gFkuyltaAGEZ8tevem','ROLE_USER')
+COMMIT
+/*C599*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C601*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C594*/DISCONNECT
+/*C595*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C602*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C600*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C597*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C596*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C603*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C598*/SET SCHEMA PUBLIC
+DISCONNECT

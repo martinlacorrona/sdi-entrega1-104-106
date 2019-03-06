@@ -58,15 +58,15 @@
 					</ul></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/signup"
 					th:text="#{signup.message}" style="color: black"> <span
-						class="glyphicon glyphicon-user"></span> 
+						class="glyphicon glyphicon-user"></span>
 				</a></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/login"
 					th:text="#{login.message}" style="color: black"> <span
-						class="glyphicon glyphicon-log-in"></span> 
+						class="glyphicon glyphicon-log-in"></span>
 				</a></li>
 				<li sec:authorize="isAuthenticated()"><a href="/logout"
 					th:text="#{logout.message}" style="color: black"> <span
-						class="glyphicon glyphicon-log-in"></span> 
+						class="glyphicon glyphicon-log-in"></span>
 				</a></li>
 
 				<li sec:authorize="isAuthenticated()" class="dropdown"><a
@@ -78,7 +78,6 @@
 					<ul sec:authorize="isAuthenticated()" style="text-align: center"
 						id="DropDownInfo" class="dropdown-menu" th:text="${session.money}">
 					</ul>
-					
 			</ul>
 		</div>
 	</div>
