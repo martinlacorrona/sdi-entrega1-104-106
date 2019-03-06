@@ -32,15 +32,27 @@ public class User {
 	@Transient // propiedad que no se almacena en la tabla.
 	private String passwordConfirm;
 
+	public User() {
+		
+	}
+
+	/**
+	 * Borrarmos todos los setBuyedUser ya que si no se fastidiara la
+	 * persistencia.
+	 */
+	@PreRemove
+	private void preRemove() {
+	    for (Bid b : buyedBids) {
+	        b.setBuyerUser(null);
+	    }
+	}
+	
 	public User(String email, String name, String lastName) {
 		super();
 		this.email = email;
 		this.name = name;
 		this.lastName = lastName;
 		this.money = 100.0;
-	}
-
-	public User() {
 	}
 
 	public long getId() {
