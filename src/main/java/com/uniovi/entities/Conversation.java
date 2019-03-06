@@ -18,32 +18,25 @@ public class Conversation {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "seller_id")
-	private User sellerUser;
-	
-	@ManyToOne
-	@JoinColumn(name = "buyer_id")
-	private User buyerUser;
-	
-	@OneToMany(mappedBy = "message", cascade = CascadeType.ALL)
-	private Set<Message> messages;
-	
-	@ManyToOne
 	@JoinColumn(name = "bid_id")
 	private Bid bid;
+	
+	@ManyToOne
+	@JoinColumn(name = "intersetedUser_id")
+	private User intersetedUser;
+	
+	@OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
+	private Set<Message> messages;
 	
 	public Conversation() {
 		
 	}
 
-	public Conversation(User sellerUser, User buyerUser, Bid bid) {
+	public Conversation(User intersetedUser, Bid bid) {
 		super();
-		this.sellerUser = sellerUser;
-		this.buyerUser = buyerUser;
+		this.intersetedUser = intersetedUser;
 		this.bid = bid;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -53,20 +46,12 @@ public class Conversation {
 		this.id = id;
 	}
 
-	public User getSellerUser() {
-		return sellerUser;
+	public User getIntersetedUser() {
+		return intersetedUser;
 	}
 
-	public void setSellerUser(User sellerUser) {
-		this.sellerUser = sellerUser;
-	}
-
-	public User getBuyerUser() {
-		return buyerUser;
-	}
-
-	public void setBuyerUser(User buyerUser) {
-		this.buyerUser = buyerUser;
+	public void setIntersetedUser(User intersetedUser) {
+		this.intersetedUser = intersetedUser;
 	}
 
 	public Set<Message> getMessages() {
@@ -79,7 +64,7 @@ public class Conversation {
 
 	@Override
 	public String toString() {
-		return "Conversation [id=" + id + ", sellerUser=" + sellerUser + ", buyerUser=" + buyerUser + ", messages="
+		return "Conversation [id=" + id + ", bid=" + bid + ", intersetedUser=" + intersetedUser + ", messages="
 				+ messages + "]";
-	}	
+	}
 }

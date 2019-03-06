@@ -22,10 +22,7 @@ public class User {
 	@OneToMany(mappedBy = "buyerUser")
 	private Set<Bid> buyedBids;
 	
-	@OneToMany(mappedBy = "sellerUser", cascade = CascadeType.ALL)
-	private Set<Conversation> conversationSeller;
-	
-	@OneToMany(mappedBy = "buyerUser", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "intersetedUser", cascade = CascadeType.ALL)
 	private Set<Conversation> conversationBuyer;
 
 	private String password;
@@ -132,14 +129,6 @@ public class User {
 
 	public void setBuyedBids(Set<Bid> buyedBids) {
 		this.buyedBids = buyedBids;
-	}
-
-	public Set<Conversation> getConversationSeller() {
-		return conversationSeller;
-	}
-
-	public void setConversationSeller(Set<Conversation> conversationSeller) {
-		this.conversationSeller = conversationSeller;
 	}
 
 	public Set<Conversation> getConversationBuyer() {

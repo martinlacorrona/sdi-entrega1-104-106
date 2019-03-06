@@ -52,96 +52,6 @@ public class InsertSampleDataService {
 		c1.setBuyerUser(user1);
 		Bid d1 = new Bid("Oferta D1", "Oferta de prueba D1", 200.2, user4);
 		d1.setBuyerUser(user2);
-
-		
-		///
-		/// # Conversation producto B1 1
-		Conversation conversationB1_1 = new Conversation(user2, user1, b1);
-		Message conversationB1_1_message1 = new Message(conversationB1_1, user1, new Date(), "Hola, estoy interesado en el producto.");
-		Message conversationB1_1_message2 = new Message(conversationB1_1, user2, new Date(), "Si te gusta compralo.");
-		Message conversationB1_1_message3 = new Message(conversationB1_1, user1, new Date(), "Vale, lo hare :D");
-		Message conversationB1_1_message4 = new Message(conversationB1_1, user1, new Date(), "Gracias.");
-		
-		Set messagesProductB1_1 = new HashSet<Message>() {
-			{
-				add(conversationB1_1_message1);
-				add(conversationB1_1_message2);
-				add(conversationB1_1_message3);
-				add(conversationB1_1_message4);
-			}
-		};
-		conversationB1_1.setMessages(messagesProductB1_1);
-		
-		/// # Conversation producto B1 2
-		Conversation conversationB1_2 = new Conversation(user2, user3, b1);
-		Message conversationB1_2_message1 = new Message(conversationB1_2, user3, new Date(), "B1 - 2 Hola, estoy interesado en el producto.");
-		Message conversationB1_2_message2 = new Message(conversationB1_2, user2, new Date(), "Si te gusta compralo.");
-		Message conversationB1_2_message3 = new Message(conversationB1_2, user3, new Date(), "Vale, lo hare :D");
-		Message conversationB1_2_message4 = new Message(conversationB1_2, user3, new Date(), "Gracias.");
-		
-		Set messagesProductB1_2 = new HashSet<Message>() {
-			{
-				add(conversationB1_2_message1);
-				add(conversationB1_2_message2);
-				add(conversationB1_2_message3);
-				add(conversationB1_2_message4);
-			}
-		};
-		conversationB1_2.setMessages(messagesProductB1_2);
-		
-		/// # Conversation producto C1 1
-		Conversation conversationC1_1 = new Conversation(user3, user1, c1);
-		Message conversationC1_2_message1 = new Message(conversationC1_1, user1, new Date(), "C1-1Hola, estoy interesado en el producto.");
-		Message conversationC1_2_message2 = new Message(conversationC1_1, user3, new Date(), "Si te gusta compralo.");
-		Message conversationC1_2_message3 = new Message(conversationC1_1, user1, new Date(), "Vale, lo hare :D");
-		Message conversationC1_2_message4 = new Message(conversationC1_1, user1, new Date(), "Gracias.");
-		
-		Set messagesProductC1_1 = new HashSet<Message>() {
-			{
-				add(conversationC1_2_message1);
-				add(conversationC1_2_message2);
-				add(conversationC1_2_message3);
-				add(conversationC1_2_message4);
-			}
-		};
-		conversationC1_1.setMessages(messagesProductC1_1);
-		
-		/// #Añadir conversaciones a los usuarios
-		/// # Usuario 1 comprador
-		Set user1ConversationBuyer = new HashSet<Conversation>() {
-			{
-				add(conversationB1_1);
-				add(conversationC1_1);
-			}
-		};
-		/// # Usuario 2 seller
-		Set user2ConversationSeller = new HashSet<Conversation>() {
-			{
-				add(conversationB1_1);
-				add(conversationB1_2);
-			}
-		};
-		/// # Usuario 3 seller
-		Set user3ConversationSeller = new HashSet<Conversation>() {
-			{
-				add(conversationC1_1);
-			}
-		};
-
-		/// # Usuario 3 seller
-		Set user3ConversationBuyer = new HashSet<Conversation>() {
-			{
-				add(conversationB1_2);
-			}
-		};
-		/// #####
-		
-		user1.setConversationBuyer(user1ConversationBuyer);
-		user2.setConversationSeller(user2ConversationSeller);
-		user3.setConversationBuyer(user3ConversationBuyer);
-		user3.setConversationSeller(user3ConversationSeller);
-		///
-		
 		
 		Set user1Bids = new HashSet<Bid>() {
 			{
@@ -185,6 +95,81 @@ public class InsertSampleDataService {
 			}
 		};
 		user4.setBids(user4Bids);
+		
+		///
+		/// # Conversation producto B1 1
+		Conversation conversationB1_1 = new Conversation(user1, b1);
+		Message conversationB1_1_message1 = new Message(conversationB1_1, user1, new Date(), "Hola, estoy interesado en el producto.");
+		Message conversationB1_1_message2 = new Message(conversationB1_1, user2, new Date(), "Si te gusta compralo.");
+		Message conversationB1_1_message3 = new Message(conversationB1_1, user1, new Date(), "Vale, lo hare :D");
+		Message conversationB1_1_message4 = new Message(conversationB1_1, user1, new Date(), "Gracias.");
+		
+		Set messagesProductB1_1 = new HashSet<Message>() {
+			{
+				add(conversationB1_1_message1);
+				add(conversationB1_1_message2);
+				add(conversationB1_1_message3);
+				add(conversationB1_1_message4);
+			}
+		};
+		conversationB1_1.setMessages(messagesProductB1_1);
+		
+		/// # Conversation producto B1 2
+		Conversation conversationB1_2 = new Conversation(user3, b1);
+		Message conversationB1_2_message1 = new Message(conversationB1_2, user3, new Date(), "B1 - 2 Hola, estoy interesado en el producto.");
+		Message conversationB1_2_message2 = new Message(conversationB1_2, user2, new Date(), "Si te gusta compralo.");
+		Message conversationB1_2_message3 = new Message(conversationB1_2, user3, new Date(), "Vale, lo hare :D");
+		Message conversationB1_2_message4 = new Message(conversationB1_2, user3, new Date(), "Gracias.");
+		
+		Set messagesProductB1_2 = new HashSet<Message>() {
+			{
+				add(conversationB1_2_message1);
+				add(conversationB1_2_message2);
+				add(conversationB1_2_message3);
+				add(conversationB1_2_message4);
+			}
+		};
+		conversationB1_2.setMessages(messagesProductB1_2);
+		
+		/// # Conversation producto C1 1
+		Conversation conversationC1_1 = new Conversation(user1, c1);
+		Message conversationC1_2_message1 = new Message(conversationC1_1, user1, new Date(), "C1-1Hola, estoy interesado en el producto.");
+		Message conversationC1_2_message2 = new Message(conversationC1_1, user3, new Date(), "Si te gusta compralo.");
+		Message conversationC1_2_message3 = new Message(conversationC1_1, user1, new Date(), "Vale, lo hare :D");
+		Message conversationC1_2_message4 = new Message(conversationC1_1, user1, new Date(), "Gracias.");
+		
+		Set messagesProductC1_1 = new HashSet<Message>() {
+			{
+				add(conversationC1_2_message1);
+				add(conversationC1_2_message2);
+				add(conversationC1_2_message3);
+				add(conversationC1_2_message4);
+			}
+		};
+		conversationC1_1.setMessages(messagesProductC1_1);
+		
+		/// #Añadir conversaciones a los usuarios
+		/// # Usuario 1 comprador
+		Set user1ConversationBuyer = new HashSet<Conversation>() {
+			{
+				add(conversationB1_1);
+				add(conversationC1_1);
+			}
+		};
+
+		/// # Usuario 3 Buyer
+		Set user3ConversationBuyer = new HashSet<Conversation>() {
+			{
+				add(conversationB1_2);
+			}
+		};
+		/// #####
+		
+		user1.setConversationBuyer(user1ConversationBuyer);
+		user3.setConversationBuyer(user3ConversationBuyer);
+		///
+		
+		
 		usersService.addUser(user1);
 		usersService.addUser(user2);
 		usersService.addUser(user3);
