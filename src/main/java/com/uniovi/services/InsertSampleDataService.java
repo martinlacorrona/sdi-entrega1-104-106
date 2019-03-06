@@ -1,6 +1,6 @@
 package com.uniovi.services;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,7 +23,7 @@ public class InsertSampleDataService {
 	@Autowired
 	private ConversationService conversationService;
 
-	@SuppressWarnings({ "serial", "rawtypes", "unchecked", "deprecation"})
+	@SuppressWarnings({ "serial", "rawtypes", "unchecked"})
 	@PostConstruct
 	public void init() {
 		User user1 = new User("pedro@gmail.com", "Pedro", "Díaz");
@@ -111,20 +111,20 @@ public class InsertSampleDataService {
 		Conversation conversationB1_1 = new Conversation(user1, b1);
 		Set messagesProductB1_1 = new HashSet<Message>() {
 			{
-				add(new Message(conversationB1_1, user1, new Date(2019, 3, 6, 16, 00, 10), "B1_1 - Hola, estoy interesado en el producto."));
-				add(new Message(conversationB1_1, user2, new Date(2019, 3, 6, 16, 00, 11), "B1_1 - Si te gusta compralo."));
-				add(new Message(conversationB1_1, user1, new Date(2019, 3, 6, 16, 00, 12), "B1_1 - Vale, lo hare :D"));
-				add(new Message(conversationB1_1, user1,new Date(2019, 3, 6, 16, 00, 13), "B1_1 - Gracias."));
+				add(new Message(conversationB1_1, user1, new GregorianCalendar(2019, 2, 6, 16, 00, 10).getTime(), "B1_1 - Hola, estoy interesado en el producto."));
+				add(new Message(conversationB1_1, user2, new GregorianCalendar(2019, 2, 6, 16, 00, 11).getTime(), "B1_1 - Si te gusta compralo."));
+				add(new Message(conversationB1_1, user1, new GregorianCalendar(2019, 2, 6, 16, 00, 12).getTime(), "B1_1 - Vale, lo hare :D"));
+				add(new Message(conversationB1_1, user1,new GregorianCalendar(2019, 2, 6, 16, 00, 13).getTime(), "B1_1 - Gracias."));
 			}
 		};
 		conversationB1_1.setMessages(messagesProductB1_1);
 		
 		/// # Conversation producto B1 2
 		Conversation conversationB1_2 = new Conversation(user3, b1);
-		Message conversationB1_2_message1 = new Message(conversationB1_2, user3, new Date(2019, 3, 6, 16, 11, 10), "B1_2 - Hola, estoy interesado en el producto.");
-		Message conversationB1_2_message2 = new Message(conversationB1_2, user2, new Date(2019, 3, 6, 16, 11, 11), "B1_2 - Si te gusta compralo.");
-		Message conversationB1_2_message3 = new Message(conversationB1_2, user3, new Date(2019, 3, 6, 16, 11, 12), "B1_2 - Vale, lo hare :D");
-		Message conversationB1_2_message4 = new Message(conversationB1_2, user3, new Date(2019, 3, 6, 16, 11, 13), "B1_2 - Gracias.");
+		Message conversationB1_2_message1 = new Message(conversationB1_2, user3, new GregorianCalendar(2019, 2, 6, 16, 11, 10).getTime(), "B1_2 - Hola, estoy interesado en el producto.");
+		Message conversationB1_2_message2 = new Message(conversationB1_2, user2, new GregorianCalendar(2019, 2, 6, 16, 11, 11).getTime(), "B1_2 - Si te gusta compralo.");
+		Message conversationB1_2_message3 = new Message(conversationB1_2, user3, new GregorianCalendar(2019, 2, 6, 16, 11, 12).getTime(), "B1_2 - Vale, lo hare :D");
+		Message conversationB1_2_message4 = new Message(conversationB1_2, user3, new GregorianCalendar(2019, 2, 6, 16, 11, 13).getTime(), "B1_2 - Gracias.");
 		
 		Set messagesProductB1_2 = new HashSet<Message>() {
 			{
@@ -138,10 +138,10 @@ public class InsertSampleDataService {
 		
 		/// # Conversation producto C1 1
 		Conversation conversationC1_1 = new Conversation(user1, c1);
-		Message conversationC1_2_message1 = new Message(conversationC1_1, user1, new Date(2019, 3, 6, 16, 12, 10), "C1_1 - Hola, estoy interesado en el producto.");
-		Message conversationC1_2_message2 = new Message(conversationC1_1, user3, new Date(2019, 3, 6, 16, 12, 11), "C1_1 - Si te gusta compralo.");
-		Message conversationC1_2_message3 = new Message(conversationC1_1, user1, new Date(2019, 3, 6, 16, 12, 12), "C1_1 - Vale, lo hare :D");
-		Message conversationC1_2_message4 = new Message(conversationC1_1, user1, new Date(2019, 3, 6, 16, 12, 13), "C1_1 - Gracias.");
+		Message conversationC1_2_message1 = new Message(conversationC1_1, user1, new GregorianCalendar(2019, 2, 6, 16, 12, 10).getTime(), "C1_1 - Hola, estoy interesado en el producto.");
+		Message conversationC1_2_message2 = new Message(conversationC1_1, user3, new GregorianCalendar(2019, 2, 6, 16, 12, 11).getTime(), "C1_1 - Si te gusta compralo.");
+		Message conversationC1_2_message3 = new Message(conversationC1_1, user1, new GregorianCalendar(2019, 2, 6, 16, 12, 12).getTime(), "C1_1 - Vale, lo hare :D");
+		Message conversationC1_2_message4 = new Message(conversationC1_1, user1, new GregorianCalendar(2019, 2, 6, 16, 12, 13).getTime(), "C1_1 - Gracias.");
 		
 		Set messagesProductC1_1 = new HashSet<Message>() {
 			{

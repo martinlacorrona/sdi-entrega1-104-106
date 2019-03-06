@@ -83,7 +83,7 @@ public class Message {
 	public String getDateFormatted() {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy H:m:s");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		return dateFormat.format(cal.getTime());
 	}
 

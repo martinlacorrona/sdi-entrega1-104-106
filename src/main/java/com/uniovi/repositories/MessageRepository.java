@@ -12,7 +12,7 @@ public interface MessageRepository extends CrudRepository<Message, Long> {
 	
 	List<Message> findAll();
 	
-	@Query("SELECT m FROM Message m WHERE m.conversation = ?1 ORDER BY m.date ASC ")
+	@Query("SELECT m FROM Message m WHERE m.conversation = ?1 ORDER BY m.date DESC ")
 	List<Message> findByConversationId(Conversation conversation);
 	
 }
