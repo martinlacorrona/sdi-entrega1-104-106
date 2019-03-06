@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.uniovi.tests.pageobjects.PO_AddBidView;
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
@@ -366,6 +367,143 @@ public class MyWallapopTests {
 				PO_View.getTimeout());
 		assertTrue(elementos.size() == 4);
 	}
+	
+	@Test
+	//Dar de alta una nueva oferta y comprobarla
+	public void Prueba16(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
+		// Pinchamos añadir oferta
+		elementos.get(0).click();
+		// Rellenamos el formulario.
+		PO_AddBidView.fillForm(driver, "Prueba", "Descricpion","10");
+		//Comprobamos que este
+		PO_View.checkElement(driver, "text", "Prueba");
+	}
+	
+	@Test
+	//Dar de alta una nueva oferta con el titulo vacio y comprobar error.
+	public void Prueba17(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
+		// Pinchamos añadir oferta
+		elementos.get(0).click();
+		// Rellenamos el formulario.
+		PO_AddBidView.fillForm(driver, "", "Descricpion","10");
+		//Comprobamos que este
+		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
+	}
+	
+	@Test
+	//Ir al listado de ofertas del usuario y comprobar que se muestran todas sus ofertas
+	public void Prueba18(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/mybids')]");
+		// Pinchamos en ver mis ofertas
+		elementos.get(0).click();
+		//Como sabemos que tiene 4 ofertas miramos que sean 4
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",PO_View.getTimeout());
+		assertTrue(elementos.size() == 4);
+	}
+	
+	@Test
+	//Ir al listado de ofertas del usuario y borrar la primera comprobandolo
+	public void Prueba19(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/mybids')]");
+		// Pinchamos en ver mis ofertas
+		elementos.get(0).click();
+		
+		//Cogemos el nombre de la primera oferta para luego comprobarlo
+		elementos = PO_View.checkElement(driver, "free", "//tr[contains(@id, 'ofertas')]");
+		String datos = elementos.get(0).getText();
+		String parts[] = datos.split(" ");
+		String nombre = parts[0]+ " "+ parts[1];
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 2);
+		//Borramos la oferta
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@id, 'boton')]");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 2);
+		//Comprobamos que no esta
+		SeleniumUtils.textoNoPresentePagina(driver, nombre);
+	}
+	
+	@Test
+	//Ir al listado de ofertas del usuario y borrar la ultima comprobandolo
+	public void Prueba20(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/mybids')]");
+		// Pinchamos en ver mis ofertas
+		elementos.get(0).click();
+		
+		//Cogemos el nombre de la primera oferta para luego comprobarlo
+		elementos = PO_View.checkElement(driver, "free", "//tr[contains(@id, 'ofertas')]");
+		String datos = elementos.get(elementos.size()-1).getText();
+		String parts[] = datos.split(" ");
+		String nombre = parts[0]+ " "+ parts[1];
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 2);
+		//Borramos la oferta
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@id, 'boton')]");
+		elementos.get(elementos.size()-1).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 2);
+		//Comprobamos que no esta
+		SeleniumUtils.textoNoPresentePagina(driver, nombre);
+	}
+
 
 
 //
