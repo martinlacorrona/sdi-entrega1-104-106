@@ -21,7 +21,7 @@ public class InsertSampleDataService {
 	@Autowired
 	private RolesService rolesService;
 
-	@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
+	@SuppressWarnings({ "serial", "rawtypes", "unchecked", "deprecation"})
 	@PostConstruct
 	public void init() {
 		User user1 = new User("pedro@gmail.com", "Pedro", "Díaz");
@@ -96,30 +96,33 @@ public class InsertSampleDataService {
 		};
 		user4.setBids(user4Bids);
 		
+		usersService.addUser(user1);
+		usersService.addUser(user2);
+		usersService.addUser(user3);
+		usersService.addUser(user4);
+		usersService.addUser(user5);
+		usersService.addUser(user6);
+		usersService.addUser(user7);
+		
 		///
 		/// # Conversation producto B1 1
 		Conversation conversationB1_1 = new Conversation(user1, b1);
-		Message conversationB1_1_message1 = new Message(conversationB1_1, user1, new Date(), "Hola, estoy interesado en el producto.");
-		Message conversationB1_1_message2 = new Message(conversationB1_1, user2, new Date(), "Si te gusta compralo.");
-		Message conversationB1_1_message3 = new Message(conversationB1_1, user1, new Date(), "Vale, lo hare :D");
-		Message conversationB1_1_message4 = new Message(conversationB1_1, user1, new Date(), "Gracias.");
-		
 		Set messagesProductB1_1 = new HashSet<Message>() {
 			{
-				add(conversationB1_1_message1);
-				add(conversationB1_1_message2);
-				add(conversationB1_1_message3);
-				add(conversationB1_1_message4);
+				add(new Message(conversationB1_1, user1, new Date(2019, 3, 6, 16, 00, 10), "B1_1 - Hola, estoy interesado en el producto."));
+				add(new Message(conversationB1_1, user2, new Date(2019, 3, 6, 16, 00, 11), "B1_1 - Si te gusta compralo."));
+				add(new Message(conversationB1_1, user1, new Date(2019, 3, 6, 16, 00, 12), "B1_1 - Vale, lo hare :D"));
+				add(new Message(conversationB1_1, user1,new Date(2019, 3, 6, 16, 00, 13), "B1_1 - Gracias."));
 			}
 		};
 		conversationB1_1.setMessages(messagesProductB1_1);
 		
 		/// # Conversation producto B1 2
 		Conversation conversationB1_2 = new Conversation(user3, b1);
-		Message conversationB1_2_message1 = new Message(conversationB1_2, user3, new Date(), "B1 - 2 Hola, estoy interesado en el producto.");
-		Message conversationB1_2_message2 = new Message(conversationB1_2, user2, new Date(), "Si te gusta compralo.");
-		Message conversationB1_2_message3 = new Message(conversationB1_2, user3, new Date(), "Vale, lo hare :D");
-		Message conversationB1_2_message4 = new Message(conversationB1_2, user3, new Date(), "Gracias.");
+		Message conversationB1_2_message1 = new Message(conversationB1_2, user3, new Date(2019, 3, 6, 16, 11, 10), "B1_2 - Hola, estoy interesado en el producto.");
+		Message conversationB1_2_message2 = new Message(conversationB1_2, user2, new Date(2019, 3, 6, 16, 11, 11), "B1_2 - Si te gusta compralo.");
+		Message conversationB1_2_message3 = new Message(conversationB1_2, user3, new Date(2019, 3, 6, 16, 11, 12), "B1_2 - Vale, lo hare :D");
+		Message conversationB1_2_message4 = new Message(conversationB1_2, user3, new Date(2019, 3, 6, 16, 11, 13), "B1_2 - Gracias.");
 		
 		Set messagesProductB1_2 = new HashSet<Message>() {
 			{
@@ -133,10 +136,10 @@ public class InsertSampleDataService {
 		
 		/// # Conversation producto C1 1
 		Conversation conversationC1_1 = new Conversation(user1, c1);
-		Message conversationC1_2_message1 = new Message(conversationC1_1, user1, new Date(), "C1-1Hola, estoy interesado en el producto.");
-		Message conversationC1_2_message2 = new Message(conversationC1_1, user3, new Date(), "Si te gusta compralo.");
-		Message conversationC1_2_message3 = new Message(conversationC1_1, user1, new Date(), "Vale, lo hare :D");
-		Message conversationC1_2_message4 = new Message(conversationC1_1, user1, new Date(), "Gracias.");
+		Message conversationC1_2_message1 = new Message(conversationC1_1, user1, new Date(2019, 3, 6, 16, 12, 10), "C1_1 - Hola, estoy interesado en el producto.");
+		Message conversationC1_2_message2 = new Message(conversationC1_1, user3, new Date(2019, 3, 6, 16, 12, 11), "C1_1 - Si te gusta compralo.");
+		Message conversationC1_2_message3 = new Message(conversationC1_1, user1, new Date(2019, 3, 6, 16, 12, 12), "C1_1 - Vale, lo hare :D");
+		Message conversationC1_2_message4 = new Message(conversationC1_1, user1, new Date(2019, 3, 6, 16, 12, 13), "C1_1 - Gracias.");
 		
 		Set messagesProductC1_1 = new HashSet<Message>() {
 			{
@@ -164,18 +167,11 @@ public class InsertSampleDataService {
 			}
 		};
 		/// #####
-		
 		user1.setConversationBuyer(user1ConversationBuyer);
 		user3.setConversationBuyer(user3ConversationBuyer);
 		///
 		
-		
 		usersService.addUser(user1);
-		usersService.addUser(user2);
 		usersService.addUser(user3);
-		usersService.addUser(user4);
-		usersService.addUser(user5);
-		usersService.addUser(user6);
-		usersService.addUser(user7);
 	}
 }

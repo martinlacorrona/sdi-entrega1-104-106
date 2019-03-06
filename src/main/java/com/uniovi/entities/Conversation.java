@@ -62,6 +62,14 @@ public class Conversation {
 		this.messages = messages;
 	}
 
+	public Bid getBid() {
+		return bid;
+	}
+
+	public void setBid(Bid bid) {
+		this.bid = bid;
+	}
+
 	@Override
 	public String toString() {
 		return "Conversation [id=" + id + ", bid=" + bid + ", intersetedUser=" + intersetedUser + ", messages="

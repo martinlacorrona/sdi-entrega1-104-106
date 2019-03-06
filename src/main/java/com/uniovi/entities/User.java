@@ -24,6 +24,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "intersetedUser", cascade = CascadeType.ALL)
 	private Set<Conversation> conversationBuyer;
+	
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+	private Set<Message> sentMessages;
 
 	private String password;
 	@Transient // propiedad que no se almacena en la tabla.
@@ -137,5 +140,13 @@ public class User {
 
 	public void setConversationBuyer(Set<Conversation> conversationBuyer) {
 		this.conversationBuyer = conversationBuyer;
+	}
+
+	public Set<Message> getSentMessages() {
+		return sentMessages;
+	}
+
+	public void setSentMessages(Set<Message> sentMessages) {
+		this.sentMessages = sentMessages;
 	}
 }
