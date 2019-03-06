@@ -89,6 +89,7 @@ public class UsersController {
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		request.getSession().setAttribute("money", activeUser.getMoney() + "€");
+		request.getSession().setAttribute("email", activeUser.getEmail());
 		model.addAttribute("bidList", activeUser.getBids());
 		return "home";
 	}
