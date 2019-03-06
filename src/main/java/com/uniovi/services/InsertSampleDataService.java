@@ -20,6 +20,8 @@ public class InsertSampleDataService {
 	private UsersService usersService;
 	@Autowired
 	private RolesService rolesService;
+	@Autowired
+	private ConversationsService conversationService;
 
 	@SuppressWarnings({ "serial", "rawtypes", "unchecked", "deprecation"})
 	@PostConstruct
@@ -151,27 +153,8 @@ public class InsertSampleDataService {
 		};
 		conversationC1_1.setMessages(messagesProductC1_1);
 		
-		/// #Añadir conversaciones a los usuarios
-		/// # Usuario 1 comprador
-		Set user1ConversationBuyer = new HashSet<Conversation>() {
-			{
-				add(conversationB1_1);
-				add(conversationC1_1);
-			}
-		};
-
-		/// # Usuario 3 Buyer
-		Set user3ConversationBuyer = new HashSet<Conversation>() {
-			{
-				add(conversationB1_2);
-			}
-		};
-		/// #####
-		user1.setConversationBuyer(user1ConversationBuyer);
-		user3.setConversationBuyer(user3ConversationBuyer);
-		///
-		
-		usersService.addUser(user1);
-		usersService.addUser(user3);
+		conversationService.addConversation(conversationB1_1);
+		conversationService.addConversation(conversationB1_2);
+		conversationService.addConversation(conversationC1_1);
 	}
 }
