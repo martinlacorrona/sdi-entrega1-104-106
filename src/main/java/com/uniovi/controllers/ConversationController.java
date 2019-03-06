@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.uniovi.entities.Bid;
 import com.uniovi.entities.Conversation;
 import com.uniovi.entities.Message;
 import com.uniovi.entities.User;
@@ -66,9 +67,15 @@ public class ConversationController {
 		User activeUser = usersService.getUserByEmail(email);
 
 		Long conversationID;
+		Bid bid = bidService.getBid(Long.parseLong(bid_id));
+		
+		//Si el creador de la oferta se quiere mandar un mensaje a si mismo no podra.
+		if(bid.getUser().getId() == activeUser.getId())
+			return "redirect:/conversation";
+		
 		// Buscamos la conversacion por si existe, si no existe crearemos una nueva.
 		Conversation c = conversationService
-				.getConversationByBidAndInterested(bidService.getBid(Long.parseLong(bid_id)), activeUser);
+				.getConversationByBidAndInterested(bid, activeUser);
 		if (c == null) { // Como no existe la conversacion creamos una nueva.
 			c = new Conversation(activeUser, bidService.getBid(Long.parseLong(bid_id))); // La creamos
 			conversationService.addConversation(c); // Y la añadimos
