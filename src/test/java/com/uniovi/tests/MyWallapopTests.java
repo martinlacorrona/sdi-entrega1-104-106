@@ -17,6 +17,7 @@ import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
+import com.uniovi.tests.pageobjects.PO_SearchBidView;
 import com.uniovi.tests.pageobjects.PO_View;
 import com.uniovi.tests.util.SeleniumUtils;
 
@@ -502,6 +503,49 @@ public class MyWallapopTests {
 		SeleniumUtils.esperarSegundos(driver, 2);
 		//Comprobamos que no esta
 		SeleniumUtils.textoNoPresentePagina(driver, nombre);
+		
+	}
+	
+	@Test
+	//Hacer una busqueda de las ofertas con el campo vacio y 
+	//comprobar que se muestra la pagina que corresponde con el listado de paginas existentes
+	public void Prueba21(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
+		// Pinchamos en ver mis ofertas
+		elementos.get(0).click();
+		
+		//Cogemos el nombre de las ofertas de la primera pagina
+		elementos = PO_View.checkElement(driver, "free", "//tr[contains(@id, 'ofertas')]");
+		String nombres[] = new String[5];
+		for(int i = 0; i<elementos.size();i++) {
+			String datos = elementos.get(i).getText();
+			String parts[] = datos.split(" ");
+			nombres[i]= parts[0]+ " "+ parts[1];
+		}
+		
+		//Clickamos el buscador y buscamos vacio
+		elementos = PO_View.checkElement(driver, "free", "//input");
+		elementos.get(0).click();
+		PO_SearchBidView.fillForm(driver,"");
+		
+		SeleniumUtils.esperarSegundos(driver, 3);
+		//Comprobamos la pagina que está igual
+		elementos = PO_View.checkElement(driver, "free", "//tr[contains(@id, 'ofertas')]");
+		for(int i = 0; i<elementos.size();i++) {
+			PO_View.checkElement(driver, "text", nombres[i]);
+		}
+		
 	}
 
 
