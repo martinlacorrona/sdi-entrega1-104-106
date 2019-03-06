@@ -71,8 +71,8 @@
 					aria-expanded="false" href="#" th:text="${session.email}"
 					style="color: black"> <span class="caret"></span>
 				</a>
-					<ul class="dropdown-menu">
-						<li sec:authorize="hasRole('ROLE_USER')"
+					<ul class="dropdown-menu" >
+						<li sec:authorize="hasRole('ROLE_USER')" 
 							style="text-align: center; font-size: 16pt" id="DropDownInfo"><a
 							th:text="#{money.available}"></a></li>
 						<li sec:authorize="hasRole('ROLE_USER')"

@@ -6,11 +6,11 @@ import org.openqa.selenium.WebElement;
 
 public class PO_RegisterView extends PO_NavView {
 	
-	static public void fillForm(WebDriver driver, String dnip, String namep, String lastnamep, String passwordp,String passwordconfp) {
-			WebElement dni = driver.findElement(By.name("dni"));
-			dni.click();
-			dni.clear();
-			dni.sendKeys(dnip);
+	static public void fillForm(WebDriver driver, String emailp, String namep, String lastnamep, String passwordp,String passwordconfp) {
+			WebElement email = driver.findElement(By.name("email"));
+			email.click();
+			email.clear();
+			email.sendKeys(emailp);
 			WebElement name = driver.findElement(By.name("name"));
 			name.click();
 			name.clear();

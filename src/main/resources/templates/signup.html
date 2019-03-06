@@ -12,7 +12,7 @@
 				<label class="control-label col-sm-2" for="email">Email:</label>
 				<div class="col-sm-10">
 					<input type="email" class="form-control" name="email"
-						th:placeholder="#{singup.example.email}" required="true" /> <span
+						th:placeholder="#{singup.example.email}" /> <span
 						class="text-danger" th:if="${#fields.hasErrors('email')}"
 						th:errors="*{email}">
 				</div>
@@ -22,7 +22,7 @@
 					th:text="#{singup.name}"></label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="name"
-						th:placeholder="#{singup.example.name}" required="true" /> <span
+						th:placeholder="#{singup.example.name}" /> <span
 						class="text-danger" th:if="${#fields.hasErrors('name')}"
 						th:errors="*{name}" />
 				</div>
@@ -32,7 +32,7 @@
 					th:text="#{singup.lastname}"></label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="lastName"
-						th:placeholder="#{singup.example.lastname}" required="true" /> <span
+						th:placeholder="#{singup.example.lastname}"  /> <span
 						class="text-danger" th:if="${#fields.hasErrors('lastName')}"
 						th:errors="*{lastName}" />
 				</div>

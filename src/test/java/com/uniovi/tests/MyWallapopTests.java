@@ -47,15 +47,64 @@ public class MyWallapopTests {
 	
 
 	@Test
-	public void PR01(){
-		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
+	//Registro de Usuario con datos válidos.
+	public void Prueba1(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_RegisterView.fillForm(driver, "pruuebaa@gmail.aaacom", "Prueba", "Antonio", "77777", "77777");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// Comprobamos que entramos en la sección privada del usuario mirando salgo
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		//Comprobamos que está el texto del saldo al tener role user
+		PO_View.checkElement(driver, "text", "Saldo disponible:");
+	}
+	
+	@Test
+	//Registro de Usuario con email vacío, nombre vacío, apellidos vacío.
+	public void Prueba2(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_RegisterView.fillForm(driver, "", "", "", "77777", "77777");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PO_View.getP();
+		// COmprobamos el error de campo vacio.
+		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
+	}
+	
+	@Test
+	//Registro de Usuario con repetición contraseña inválida.
+	public void Prueba3(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_RegisterView.fillForm(driver, "prueba3@gmail.com", "Lorenzo", "Berto", "77778", "77777");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PO_View.getP();
+		// COmprobamos el error de campo vacio.
+		PO_RegisterView.checkKey(driver, "Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
+	}
+	
+	@Test
+	//Registro de Usuario con email existente.
+	public void Prueba4(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_RegisterView.fillForm(driver, "pedro@gmail.com", "Lorenzo", "Berto", "77777", "77777");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PO_View.getP();
+		// COmprobamos el error de campo vacio.
+		PO_RegisterView.checkKey(driver, "Error.signup.email.duplicate", PO_Properties.getSPANISH());
 	}
 
-//	// PR02. OPción de navegación. Pinchar en el enlace Registro en la página home
-//	@Test
-//	public void PR02() {
-//		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-//	}
+
 //
 //	// PR03. OPción de navegación. Pinchar en el enlace Identificate en la página
 //	// home
@@ -71,15 +120,17 @@ public class MyWallapopTests {
 //		// SeleniumUtils.esperarSegundos(driver, 2);
 //	}
 //	
-//	//PR05. Prueba del formulario de registro. registro con datos correctos
+	//PR05. Prueba del formulario de registro. registro con datos correctos
 //	@Test
 //	public void PR05() {
 //		// Vamos al formulario de registro
 //		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 //		// Rellenamos el formulario.
 //		PO_RegisterView.fillForm(driver, "77777774A", "Josefo", "Perez", "77777", "77777");
+//		
 //		// Comprobamos que entramos en la sección privada
-//		PO_View.checkElement(driver, "text", "Notas del usuario");
+//		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'dropdown-menu')]/a");
+//		elementos.get(0).click();
 //	}
 //	
 //	//PR06. Prueba del formulario de registro. DNI repetido en la BD, Nombre corto, .... pagination pagination-­‐centered, Error.signup.dni.length
