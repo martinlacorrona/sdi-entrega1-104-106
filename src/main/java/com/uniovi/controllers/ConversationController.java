@@ -121,8 +121,11 @@ public class ConversationController {
 			return "redirect:/conversation";
 
 		// Añadir el nuevo mensaje
-		Message newMessage = new Message(c, activeUser, new Date(), message);
-		messageService.addMessage(newMessage);
+		//Si el mensaje tiene algo se añade, si no no.
+		if(message.length() > 0) {
+			Message newMessage = new Message(c, activeUser, new Date(), message);
+			messageService.addMessage(newMessage);
+		}
 
 		// Mostrar los nuevos mensajes
 		List<Message> messages = messageService.getMessagesFromConversation(c);
