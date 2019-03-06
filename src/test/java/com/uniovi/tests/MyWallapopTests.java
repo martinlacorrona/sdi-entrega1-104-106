@@ -164,7 +164,7 @@ public class MyWallapopTests {
 	}
 	
 	@Test
-	//Fallo de inicio de sesion contraseña incorrecta
+	//Fallo de inicio de sesion email incorrecto
 	public void Prueba9(){
 		// Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
@@ -175,6 +175,60 @@ public class MyWallapopTests {
 		PO_View.getP();
 		// COmprobamos el error de campo vacio.
 		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
+		
+	}
+	
+	@Test
+	//Fallo de inicio de sesion email incorrecto
+	public void Prueba10(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// Click en el email
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'logout')]");
+		// Pinchamos en desconectar.
+		elementos.get(0).click();
+		//Comprobamos pagina login
+		PO_View.checkElement(driver, "text", "Email:");
+		
+	}
+	
+	@Test
+	//Fallo de inicio de sesion email incorrecto
+	public void Prueba11(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		
+		
+	}
+	
+	@Test
+	//Mostrar el listado de usuarios y comprobar que se muestran todos los que existen en el sistema
+	public void Prueba12(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en gestion de usuarios
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/user/list')]");
+		// Pinchamos en ver usuarios
+		elementos.get(0).click();
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 7);
 		
 	}
 
