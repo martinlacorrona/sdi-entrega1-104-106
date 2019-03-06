@@ -168,4 +168,13 @@ public class Bid {
 		return "Bid [id=" + id + ", title=" + title + ", description=" + description + ", date=" + date + ", price="
 				+ price + ", specialBid=" + specialBid + ", user=" + user + "]";
 	}
+	
+	/**
+	 * Devuelve el dinero con dos decimales para tener un formato acorde con la UI.
+	 * 
+	 * @return El string del dinero formateado.
+	 */
+	public String getPriceFormatted() {
+		return String.format("%.2f", price) + " €";
+	}
 }

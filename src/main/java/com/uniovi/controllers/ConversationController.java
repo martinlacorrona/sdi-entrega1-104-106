@@ -49,9 +49,6 @@ public class ConversationController {
 
 		model.addAttribute("conversationList", conversations);
 
-		request.getSession().setAttribute("money", activeUser.getMoney());
-		request.getSession().setAttribute("email", activeUser.getEmail());
-
 		return "conversation/list";
 	}
 
@@ -68,14 +65,13 @@ public class ConversationController {
 
 		Long conversationID;
 		Bid bid = bidService.getBid(Long.parseLong(bid_id));
-		
-		//Si el creador de la oferta se quiere mandar un mensaje a si mismo no podra.
-		if(bid.getUser().getId() == activeUser.getId())
+
+		// Si el creador de la oferta se quiere mandar un mensaje a si mismo no podra.
+		if (bid.getUser().getId() == activeUser.getId())
 			return "redirect:/conversation";
-		
+
 		// Buscamos la conversacion por si existe, si no existe crearemos una nueva.
-		Conversation c = conversationService
-				.getConversationByBidAndInterested(bid, activeUser);
+		Conversation c = conversationService.getConversationByBidAndInterested(bid, activeUser);
 		if (c == null) { // Como no existe la conversacion creamos una nueva.
 			c = new Conversation(activeUser, bidService.getBid(Long.parseLong(bid_id))); // La creamos
 			conversationService.addConversation(c); // Y la añadimos
@@ -121,8 +117,8 @@ public class ConversationController {
 			return "redirect:/conversation";
 
 		// Añadir el nuevo mensaje
-		//Si el mensaje tiene algo se añade, si no no.
-		if(message.length() > 0) {
+		// Si el mensaje tiene algo se añade, si no no.
+		if (message.length() > 0) {
 			Message newMessage = new Message(c, activeUser, new Date(), message);
 			messageService.addMessage(newMessage);
 		}
@@ -136,12 +132,12 @@ public class ConversationController {
 
 		return "conversation/chat";
 	}
-	
+
 	@RequestMapping(value = "/conversation/delete", method = RequestMethod.POST)
 	public String getConversationIdPost(Model model, HttpServletRequest request,
 			@RequestParam("conversation_id") Long conversation_id) {
 		Conversation c = conversationService.getConversation(conversation_id);
-		if(c == null) //Si no existe no hay nada que borrar
+		if (c == null) // Si no existe no hay nada que borrar
 			return "redirect:/conversation/";
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();

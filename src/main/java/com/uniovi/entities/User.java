@@ -8,23 +8,23 @@ public class User {
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	@Column(unique = true)
 	private String email;
 	private String name;
 	private String lastName;
 	private String role;
 	private Double money;
-	
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Bid> bids;
-	
+
 	@OneToMany(mappedBy = "buyerUser")
 	private Set<Bid> buyedBids;
-	
+
 	@OneToMany(mappedBy = "interestedUser", cascade = CascadeType.ALL)
 	private Set<Conversation> conversationBuyer;
-	
+
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
 	private Set<Message> sentMessages;
 
@@ -33,20 +33,19 @@ public class User {
 	private String passwordConfirm;
 
 	public User() {
-		
+
 	}
 
 	/**
-	 * Borrarmos todos los setBuyedUser ya que si no se fastidiara la
-	 * persistencia.
+	 * Borrarmos todos los setBuyedUser ya que si no se fastidiara la persistencia.
 	 */
 	@PreRemove
 	private void preRemove() {
-	    for (Bid b : buyedBids) {
-	        b.setBuyerUser(null);
-	    }
+		for (Bid b : buyedBids) {
+			b.setBuyerUser(null);
+		}
 	}
-	
+
 	public User(String email, String name, String lastName) {
 		super();
 		this.email = email;
@@ -106,11 +105,11 @@ public class User {
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 	}
-	
+
 	public String getRole() {
 		return role;
 	}
-	
+
 	public void setRole(String role) {
 		this.role = role;
 	}
@@ -128,14 +127,15 @@ public class User {
 	}
 
 	public boolean isPurschable(Double precio) {
-		if(this.money - precio >=0) {
+		if (this.money - precio >= 0) {
 			return true;
 		}
 		return false;
 	}
+
 	public void setMoney(Double money) {
-			this.money = money;
-		
+		this.money = money;
+
 	}
 
 	public Set<Bid> getBuyedBids() {
@@ -160,5 +160,14 @@ public class User {
 
 	public void setSentMessages(Set<Message> sentMessages) {
 		this.sentMessages = sentMessages;
+	}
+
+	/**
+	 * Devuelve el dinero con dos decimales para tener un formato acorde con la UI.
+	 * 
+	 * @return El string del dinero formateado.
+	 */
+	public String getMoneyFormatted() {
+		return String.format("%.2f", money) + " €";
 	}
 }
