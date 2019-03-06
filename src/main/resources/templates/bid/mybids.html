@@ -10,7 +10,7 @@
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
-					<tr>
+					<tr >
 						<th th:text="#{bid.list.title}"></th>
 						<th th:text="#{bid.list.description}"></th>
 						<th th:text="#{bid.list.price}"></th>
@@ -19,12 +19,12 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="bid : ${bidList}">
-						<td th:text="${bid.title}"></td>
+					<tr id="ofertas" th:each="bid : ${bidList}">
+						<td  th:text="${bid.title}"></td>
 						<td th:text="${bid.description}"></td>
 						<td th:text="${bid.price}"></td>
 						<td />
-						<td><a th:href="${'/bid/mybids/delete/' + bid.id}"
+						<td><a id="boton" th:href="${'/bid/mybids/delete/' + bid.id}"
 							th:text="#{bid.list.delete}"></a></td>
 					</tr>
 				</tbody>
