@@ -23,14 +23,14 @@
 						<td th:text="${conversation.bid.user.email} + ', ' + ${conversation.interestedUser.email}"></td>
 						<td th:text="${conversation.bid.title}"></td>
 						<td />
-						<td><form class="navbar-form" action="/conversation"
+						<td><form action="/conversation"
 								method="post">
 								<input type="hidden" th:value="${conversation.id}"
 									name="conversation_id" />
 								<button type="submit" class="btn btn-default"
 									th:text="#{conversation.list.contact}"></button>
 							</form></td>
-						<td><form class="navbar-form" action="/conversation/delete"
+						<td><form action="/conversation/delete"
 								method="post">
 								<input type="hidden" th:value="${conversation.id}"
 									name="conversation_id" />
