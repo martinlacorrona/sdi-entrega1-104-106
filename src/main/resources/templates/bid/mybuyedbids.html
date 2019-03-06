@@ -21,7 +21,7 @@
 					<tr th:each="bid : ${bidList}">
 						<td th:text="${bid.title}"></td>
 						<td th:text="${bid.description}"></td>
-						<td th:text="${bid.price}"></td>
+						<td th:text="${bid.getPriceFormatted()}"></td>
 						<td th:text="${bid.user.email}"></td>
 					</tr>
 				</tbody>

@@ -10,7 +10,7 @@
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
-					<tr >
+					<tr>
 						<th th:text="#{bid.list.title}"></th>
 						<th th:text="#{bid.list.description}"></th>
 						<th th:text="#{bid.list.price}"></th>
@@ -19,13 +19,16 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr id="ofertas" th:each="bid : ${bidList}">
-						<td  th:text="${bid.title}"></td>
+					<tr th:each="bid : ${bidList}">
+						<td th:text="${bid.title}"></td>
 						<td th:text="${bid.description}"></td>
-						<td th:text="${bid.price}"></td>
+						<td th:text="${bid.getPriceFormatted()}"></td>
 						<td />
-						<td><a id="boton" th:href="${'/bid/mybids/delete/' + bid.id}"
-							th:text="#{bid.list.delete}"></a></td>
+						<td><form id="boton" th:action="${'/bid/mybids/delete/' + bid.id}">
+							<button type="submit" class="btn btn-default"
+									th:text="#{bid.list.delete}"
+									style="background-color: #C24641; color: white"></button>
+							</form></td>
 					</tr>
 				</tbody>
 			</table>
