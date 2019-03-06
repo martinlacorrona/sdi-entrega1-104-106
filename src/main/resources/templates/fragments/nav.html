@@ -37,7 +37,7 @@
 						<li sec:authorize="hasRole('ROLE_USER')"><a
 							href="/bid/mybuyedbids" th:text="#{nav.bid.mybuyedbids}"></a></li>
 					</ul></li>
-				<li sec:authorize="hasRole('ROLE_USER')"><a th:text="${session.money}" th:unless="${session == null}"
+				<li sec:authorize="hasRole('ROLE_USER')"><a th:text="${session.money} + ' €'"
 					style="color: black"></a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
