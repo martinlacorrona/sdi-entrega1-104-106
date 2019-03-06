@@ -27,19 +27,13 @@ public class BidsService {
 	
 	/**
 	 * Devuelve las ofertas por usuario.
-	 * Si eres ADMIN te las devolvera todas.
 	 * @param pageable
 	 * @param user
 	 * @return
 	 */
 	public List<Bid> getBidsForUser(User user) {
 		List<Bid> bids = new ArrayList<Bid>();
-		if (user.getRole().equals("ROLE_USER")) {
-			bids = bidsRepository.findAllByUserActive(user);
-		}
-		if (user.getRole().equals("ROLE_ADMIN")) {
-			bids = getBids();
-		}
+		bids = bidsRepository.findAllByUserActive(user);
 		return bids;
 	}
 	

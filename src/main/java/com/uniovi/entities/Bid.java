@@ -151,8 +151,14 @@ public class Bid {
 		return buyerUser != null;
 	}
 	
-	
-	
+	public Set<Conversation> getConversations() {
+		return conversations;
+	}
+
+	public void setConversations(Set<Conversation> conversations) {
+		this.conversations = conversations;
+	}
+
 	@Override
 	public String toString() {
 		return "Bid [id=" + id + ", title=" + title + ", description=" + description + ", date=" + date + ", price="
