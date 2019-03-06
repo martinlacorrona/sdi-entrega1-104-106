@@ -78,13 +78,16 @@
 						<li sec:authorize="hasRole('ROLE_USER')"
 							style="text-align: center; font-size: 16pt" id="DropDownInfo"><a
 							th:text="${session.money} + ' €'"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"><a href="/conversation"
+							th:text="#{nav.conversations}"
+							style="color: black; text-align: center">
+						</a></li>
 						<li sec:authorize="isAuthenticated()"><a href="/logout"
 							th:text="#{logout.message}"
 							style="color: red; font-size: 18; text-align: center; font-weight: bold">
 								<span class="glyphicon glyphicon-log-in"></span>
 						</a></li>
 					</ul></li>
-
 			</ul>
 		</div>
 	</div>

@@ -22,6 +22,11 @@ public class User {
 	@OneToMany(mappedBy = "buyerUser")
 	private Set<Bid> buyedBids;
 	
+	@OneToMany(mappedBy = "interestedUser", cascade = CascadeType.ALL)
+	private Set<Conversation> conversationBuyer;
+	
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+	private Set<Message> sentMessages;
 
 	private String password;
 	@Transient // propiedad que no se almacena en la tabla.
@@ -120,6 +125,28 @@ public class User {
 			this.money = money;
 		
 	}
-	
-	
+
+	public Set<Bid> getBuyedBids() {
+		return buyedBids;
+	}
+
+	public void setBuyedBids(Set<Bid> buyedBids) {
+		this.buyedBids = buyedBids;
+	}
+
+	public Set<Conversation> getConversationBuyer() {
+		return conversationBuyer;
+	}
+
+	public void setConversationBuyer(Set<Conversation> conversationBuyer) {
+		this.conversationBuyer = conversationBuyer;
+	}
+
+	public Set<Message> getSentMessages() {
+		return sentMessages;
+	}
+
+	public void setSentMessages(Set<Message> sentMessages) {
+		this.sentMessages = sentMessages;
+	}
 }

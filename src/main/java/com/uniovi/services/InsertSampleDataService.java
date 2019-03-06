@@ -1,5 +1,6 @@
 package com.uniovi.services;
 
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Bid;
+import com.uniovi.entities.Conversation;
+import com.uniovi.entities.Message;
 import com.uniovi.entities.User;
 
 @Service
@@ -17,8 +20,10 @@ public class InsertSampleDataService {
 	private UsersService usersService;
 	@Autowired
 	private RolesService rolesService;
+	@Autowired
+	private ConversationService conversationService;
 
-	@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
+	@SuppressWarnings({ "serial", "rawtypes", "unchecked"})
 	@PostConstruct
 	public void init() {
 		User user1 = new User("pedro@gmail.com", "Pedro", "Díaz");
@@ -92,6 +97,7 @@ public class InsertSampleDataService {
 			}
 		};
 		user4.setBids(user4Bids);
+		
 		usersService.addUser(user1);
 		usersService.addUser(user2);
 		usersService.addUser(user3);
@@ -99,5 +105,56 @@ public class InsertSampleDataService {
 		usersService.addUser(user5);
 		usersService.addUser(user6);
 		usersService.addUser(user7);
+		
+		///
+		/// # Conversation producto B1 1
+		Conversation conversationB1_1 = new Conversation(user1, b1);
+		Set messagesProductB1_1 = new HashSet<Message>() {
+			{
+				add(new Message(conversationB1_1, user1, new GregorianCalendar(2019, 2, 6, 16, 00, 10).getTime(), "B1_1 - Hola, estoy interesado en el producto."));
+				add(new Message(conversationB1_1, user2, new GregorianCalendar(2019, 2, 6, 16, 00, 11).getTime(), "B1_1 - Si te gusta compralo."));
+				add(new Message(conversationB1_1, user1, new GregorianCalendar(2019, 2, 6, 16, 00, 12).getTime(), "B1_1 - Vale, lo hare :D"));
+				add(new Message(conversationB1_1, user1,new GregorianCalendar(2019, 2, 6, 16, 00, 13).getTime(), "B1_1 - Gracias."));
+			}
+		};
+		conversationB1_1.setMessages(messagesProductB1_1);
+		
+		/// # Conversation producto B1 2
+		Conversation conversationB1_2 = new Conversation(user3, b1);
+		Message conversationB1_2_message1 = new Message(conversationB1_2, user3, new GregorianCalendar(2019, 2, 6, 16, 11, 10).getTime(), "B1_2 - Hola, estoy interesado en el producto.");
+		Message conversationB1_2_message2 = new Message(conversationB1_2, user2, new GregorianCalendar(2019, 2, 6, 16, 11, 11).getTime(), "B1_2 - Si te gusta compralo.");
+		Message conversationB1_2_message3 = new Message(conversationB1_2, user3, new GregorianCalendar(2019, 2, 6, 16, 11, 12).getTime(), "B1_2 - Vale, lo hare :D");
+		Message conversationB1_2_message4 = new Message(conversationB1_2, user3, new GregorianCalendar(2019, 2, 6, 16, 11, 13).getTime(), "B1_2 - Gracias.");
+		
+		Set messagesProductB1_2 = new HashSet<Message>() {
+			{
+				add(conversationB1_2_message1);
+				add(conversationB1_2_message2);
+				add(conversationB1_2_message3);
+				add(conversationB1_2_message4);
+			}
+		};
+		conversationB1_2.setMessages(messagesProductB1_2);
+		
+		/// # Conversation producto C1 1
+		Conversation conversationC1_1 = new Conversation(user1, c1);
+		Message conversationC1_2_message1 = new Message(conversationC1_1, user1, new GregorianCalendar(2019, 2, 6, 16, 12, 10).getTime(), "C1_1 - Hola, estoy interesado en el producto.");
+		Message conversationC1_2_message2 = new Message(conversationC1_1, user3, new GregorianCalendar(2019, 2, 6, 16, 12, 11).getTime(), "C1_1 - Si te gusta compralo.");
+		Message conversationC1_2_message3 = new Message(conversationC1_1, user1, new GregorianCalendar(2019, 2, 6, 16, 12, 12).getTime(), "C1_1 - Vale, lo hare :D");
+		Message conversationC1_2_message4 = new Message(conversationC1_1, user1, new GregorianCalendar(2019, 2, 6, 16, 12, 13).getTime(), "C1_1 - Gracias.");
+		
+		Set messagesProductC1_1 = new HashSet<Message>() {
+			{
+				add(conversationC1_2_message1);
+				add(conversationC1_2_message2);
+				add(conversationC1_2_message3);
+				add(conversationC1_2_message4);
+			}
+		};
+		conversationC1_1.setMessages(messagesProductC1_1);
+		
+		conversationService.addConversation(conversationB1_1);
+		conversationService.addConversation(conversationB1_2);
+		conversationService.addConversation(conversationC1_1);
 	}
 }
