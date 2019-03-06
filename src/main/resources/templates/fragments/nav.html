@@ -37,8 +37,6 @@
 						<li sec:authorize="hasRole('ROLE_USER')"><a
 							href="/bid/mybuyedbids" th:text="#{nav.bid.mybuyedbids}"></a></li>
 					</ul></li>
-				<li sec:authorize="hasRole('ROLE_USER')"><a th:text="${session.money}" th:unless="${session == null}"
-					style="color: black"></a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a id="btnLanguage" href=" #"
@@ -50,34 +48,37 @@
 						<li><a id="btnEnglish" value="EN"> <img
 								th:src="@{/img/if_uk_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.en}" style="color: black">Ingles</span>
+								th:text="#{language.en}" style="color: black"></span>
 						</a></li>
 						<li><a id="btnSpanish" value="ES"> <img
 								th:src="@{/img/if_spain_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.es}" style="color: black">Español</span>
+								th:text="#{language.es}" style="color: black"></span>
 						</a></li>
 					</ul></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/signup"
 					th:text="#{signup.message}" style="color: black"> <span
-						class="glyphicon glyphicon-user"></span> Registrate
+						class="glyphicon glyphicon-user"></span> 
 				</a></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/login"
 					th:text="#{login.message}" style="color: black"> <span
-						class="glyphicon glyphicon-log-in"></span> Identificate
+						class="glyphicon glyphicon-log-in"></span> 
 				</a></li>
 				<li sec:authorize="isAuthenticated()"><a href="/logout"
 					th:text="#{logout.message}" style="color: black"> <span
-						class=" glyphiconglyphicon-log-out"></span> Desconectar
+						class="glyphicon glyphicon-log-in"></span> 
 				</a></li>
-				<li sec:authorize="isAuthenticated()" class="dropdown"><a id="btnUser" href=" #"
-					class="dropdown-toggle" data-toggle="dropdown" role="button"
-					aria-haspopup="true" aria-expanded="false" style="color: black">
-					<span th:text="${session.email}"></span> <span class="caret"></span>
+
+				<li sec:authorize="isAuthenticated()" class="dropdown"><a
+					id="btnUser" href=" #" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false" style="color: black"> <span
+						th:text="${session.email}"></span> <span class="caret"></span>
 				</a>
-					<ul sec:authorize="isAuthenticated()" style = "text-align: center" id="DropDownInfo" class="dropdown-menu" th:text="${session.money}">
-						<li></li>
-					</ul></li>
+					<ul sec:authorize="isAuthenticated()" style="text-align: center"
+						id="DropDownInfo" class="dropdown-menu" th:text="${session.money}">
+					</ul>
+					
 			</ul>
 		</div>
 	</div>
