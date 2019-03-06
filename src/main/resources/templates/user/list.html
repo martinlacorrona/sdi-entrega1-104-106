@@ -8,31 +8,34 @@
 	<div class="container">
 		<h2 th:text="#{list.users}"></h2>
 		<p th:text="#{list.p2}"></p>
-		<button class="btn btn-default" type="button" id="deleteButton" style="background-color: #C24641"><th th:text="#{users.delete}"></th></button>
+		<button class="btn btn-default" type="button" id="deleteButton"
+			style="background-color: #C24641; color: white">
+			<th th:text="#{users.delete}"></th>
+		</button>
 		<script th:inline="javascript">
- 		/*<![CDATA[*/
-	  	$( "#deleteButton" ).click(function() {
-			 var urlUpdate = '/user/delete/';
-			 var table = document.getElementById('tabla');
-			 var listIds = new Array();
-			 var totalUsersToDelete = 0;
-			 for (var r = 1, n = table.rows.length; r < n; r++) {
-				 // Parse id users
-				 var id = String(table.rows[r].cells[0].innerHTML);
-				 id = id.slice(0, id.length-2);
-				 id = id.substr(31);
-	         	 
-				 //If checkbox is mark, added to list
-	         	 var idCheckbox = 'user' + id;
-	         	 if(document.getElementById(idCheckbox).checked) {
-	         		listIds[totalUsersToDelete] = id;
-	         		totalUsersToDelete++;
-	         	 }
-			 }
-			 if(listIds.length > 0)
-			 	window.location.replace(urlUpdate + listIds);
-		});
-		/*]]>*/
+			/*<![CDATA[*/
+			$("#deleteButton").click(function() {
+				var urlUpdate = '/user/delete/';
+				var table = document.getElementById('tabla');
+				var listIds = new Array();
+				var totalUsersToDelete = 0;
+				for (var r = 1, n = table.rows.length; r < n; r++) {
+					// Parse id users
+					var id = String(table.rows[r].cells[0].innerHTML);
+					id = id.slice(0, id.length - 2);
+					id = id.substr(31);
+
+					//If checkbox is mark, added to list
+					var idCheckbox = 'user' + id;
+					if (document.getElementById(idCheckbox).checked) {
+						listIds[totalUsersToDelete] = id;
+						totalUsersToDelete++;
+					}
+				}
+				if (listIds.length > 0)
+					window.location.replace(urlUpdate + listIds);
+			});
+			/*]]>*/
 		</script>
 		<div class="table-responsive">
 			<table id="tabla" class="table table-hover">
