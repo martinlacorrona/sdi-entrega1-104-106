@@ -85,10 +85,9 @@ public class UsersController {
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model, HttpServletRequest request) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		User activeUser = usersService.getUserByEmail(email);
-		request.getSession().setAttribute("money", activeUser.getMoney() + "€");
+		request.getSession().setAttribute("money", activeUser.getMoney());
 		model.addAttribute("bidList", activeUser.getBids());
 		return "home";
 	}
