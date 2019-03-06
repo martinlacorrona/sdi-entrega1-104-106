@@ -23,6 +23,8 @@ public class Bid {
 	private double price;
 	private boolean specialBid;
 	
+	
+
 	@Enumerated(EnumType.STRING)
 	private BidStatus status;
 	
@@ -145,6 +147,8 @@ public class Bid {
 	public boolean isBuyed() {
 		return buyerUser != null;
 	}
+	
+	
 	
 	@Override
 	public String toString() {

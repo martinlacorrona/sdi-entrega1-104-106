@@ -48,7 +48,7 @@ public class InsertSampleDataService {
 		Bid c1 = new Bid("Oferta C1", "Oferta de prueba C1", 10.2, user3);
 		c1.setBuyerUser(user1);
 		Bid d1 = new Bid("Oferta D1", "Oferta de prueba D1", 200.2, user4);
-		d1.setBuyerUser(user1);
+		d1.setBuyerUser(user2);
 		
 		Set user1Bids = new HashSet<Bid>() {
 			{

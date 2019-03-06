@@ -110,8 +110,15 @@ public class User {
 		return money;
 	}
 
+	public boolean isPurschable(Double precio) {
+		if(this.money - precio >=0) {
+			return true;
+		}
+		return false;
+	}
 	public void setMoney(Double money) {
-		this.money = money;
+			this.money = money;
+		
 	}
 	
 	

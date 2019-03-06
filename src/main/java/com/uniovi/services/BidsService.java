@@ -115,4 +115,13 @@ public class BidsService {
 		bidsRepository.deleteById(id);
 	}
 	
+	/**
+	 * Pone una oferta un id, haciendo que esté comprada.
+	 * @param id
+	 * @return
+	 */
+	public void setUserBuyed(Long id,String title) {
+		bidsRepository.buyedById(id,title);
+	}
+	
 }

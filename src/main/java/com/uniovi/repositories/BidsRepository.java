@@ -77,4 +77,12 @@ public interface BidsRepository extends CrudRepository<Bid, Long> {
 	 */
 	@Query("SELECT r FROM Bid r WHERE (LOWER(r.title) LIKE LOWER(?1)) ")
 	Page<Bid> searchByTitle(Pageable pageable, String seachtext);
+	
+	/**
+	 * Compra una Bid.
+	 */
+	@Modifying
+	@Transactional
+	@Query("UPDATE Bid SET Buyer_user_id = ?1 WHERE (LOWER(title) LIKE LOWER(?2))")
+	void buyedById(Long id, String title);
 }
