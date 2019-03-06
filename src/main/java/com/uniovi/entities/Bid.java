@@ -1,7 +1,9 @@
 package com.uniovi.entities;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Bid {
@@ -23,15 +26,12 @@ public class Bid {
 	private double price;
 	private boolean specialBid;
 	
-	
-
 	@Enumerated(EnumType.STRING)
 	private BidStatus status;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id") //la relacion sera a traves d este campo
 	private User user;
-	
 
 	/**
 	 * Usuario que ha comprado el objeto, en caso de que no haya comprado nadie,
@@ -40,6 +40,9 @@ public class Bid {
 	@ManyToOne
 	@JoinColumn(name = "buyerUser_id")
 	private User buyerUser;
+	
+	@OneToMany(mappedBy = "bid", cascade = CascadeType.ALL)
+	private Set<Conversation> conversations;
 	
 	public Bid() { }
 
