@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.uniovi.tests.pageobjects.PO_AddBidView;
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
@@ -366,6 +367,53 @@ public class MyWallapopTests {
 				PO_View.getTimeout());
 		assertTrue(elementos.size() == 4);
 	}
+	
+	@Test
+	//Dar de alta una nueva oferta y comprobarla
+	public void Prueba16(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
+		// Pinchamos añadir oferta
+		elementos.get(0).click();
+		// Rellenamos el formulario.
+		PO_AddBidView.fillForm(driver, "Prueba", "Descricpion","10");
+		//Comprobamos que este
+		PO_View.checkElement(driver, "text", "Prueba");
+	}
+	
+	@Test
+	//Dar de alta una nueva oferta con el titulo vacio y comprobar error.
+	public void Prueba17(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
+		// Pinchamos añadir oferta
+		elementos.get(0).click();
+		// Rellenamos el formulario.
+		PO_AddBidView.fillForm(driver, "", "Descricpion","10");
+		//Comprobamos que este
+		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
+	}
+
 
 
 //
