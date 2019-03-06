@@ -31,7 +31,7 @@
 						<td th:text="${bid.description}"></td>
 						<td th:text="${bid.price}"></td> 
 							<td ><div th:if="${bid.buyerUser}"> 
-								<a th:href="${'/bid/' + bid.id + '/notbuyed'}">No comprar</a> 
+								<a>Vendido</a> 
 							</div> 
 							<div th:unless="${bid.buyerUser}"> 
 								<a th:href="${'/bid/' + bid.id + '/buyed'}">Comprar</a> 
