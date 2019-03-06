@@ -24,7 +24,7 @@
 						<li><a href="/user/list" th:text="#{nav.user.view}"
 							style="color: black"></a></li>
 					</ul></li>
-				<li id="bids-menu" class="dropdown"><a class="dropdown-toggle"
+				<li sec:authorize="hasRole('ROLE_USER')" id="bids-menu" class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#" th:text="#{nav.bid.bids}"
 					style="color: black"> <span class="caret"></span>
 				</a>
