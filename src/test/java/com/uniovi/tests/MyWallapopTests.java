@@ -103,6 +103,80 @@ public class MyWallapopTests {
 		// COmprobamos el error de campo vacio.
 		PO_RegisterView.checkKey(driver, "Error.signup.email.duplicate", PO_Properties.getSPANISH());
 	}
+	
+	@Test
+	//Iniciar correctamente siendo admin
+	public void Prueba5(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Comprobamos que está el texto de gestion de usuarios que solo posee el admin
+		PO_View.checkElement(driver, "text", "Gestion de usuarios");
+	}
+	
+	@Test
+	//Iniciar correctamente siendo user
+	public void Prueba6(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// Comprobamos que entramos en la sección privada del usuario mirando salgo
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		//Comprobamos que está el texto del saldo al tener role user
+		PO_View.checkElement(driver, "text", "Saldo disponible:");
+	}
+	
+	@Test
+	//Fallo inicio de sesion campos vacios
+	public void Prueba7(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "", "");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PO_View.getP();
+		// COmprobamos el error de campo vacio.
+		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
+		
+	}
+	
+	@Test
+	//Fallo de inicio de sesion contraseña incorrecta
+	public void Prueba8(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "12345");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PO_View.getP();
+		// COmprobamos el error de campo vacio.
+		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
+		
+	}
+	
+	@Test
+	//Fallo de inicio de sesion contraseña incorrecta
+	public void Prueba9(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro12345@gmail.com", "12345");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PO_View.getP();
+		// COmprobamos el error de campo vacio.
+		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
+		
+	}
 
 
 //
