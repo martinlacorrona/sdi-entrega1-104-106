@@ -11,7 +11,7 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th th:text="#{conversation.list.seller_email}"></th>
+						<th th:text="#{conversation.list.partipants}"></th>
 						<th th:text="#{conversation.list.bid_title}"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -20,7 +20,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="conversation : ${conversationList}">
-						<td th:text="${conversation.bid.user.email}"></td>
+						<td th:text="${conversation.bid.user.email} + ', ' + ${conversation.interestedUser.email}"></td>
 						<td th:text="${conversation.bid.title}"></td>
 						<td />
 						<td><form class="navbar-form" action="/conversation"
