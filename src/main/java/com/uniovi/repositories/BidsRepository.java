@@ -83,6 +83,11 @@ public interface BidsRepository extends CrudRepository<Bid, Long> {
 	 */
 	@Modifying
 	@Transactional
-	@Query("UPDATE Bid SET Buyer_user_id = ?1 WHERE (LOWER(title) LIKE LOWER(?2))")
-	void buyedById(Long id, String title);
+	@Query("UPDATE Bid SET buyer_user_id = ?1 WHERE id = ?2 ")
+	void buyedById(Long id_user, Long id_bid);
+	
+	@Modifying
+	@Transactional
+	@Query("UPDATE Bid SET status = 'BUYED' WHERE id = ?1 ")
+	void updateStatusBuyed(Long id_bid);
 }

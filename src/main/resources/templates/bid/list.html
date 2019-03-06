@@ -33,10 +33,10 @@
 						<td th:text="${bid.title}"></td>
 						<td th:text="${bid.description}"></td>
 						<td th:text="${bid.price}"></td>
-						<td><div th:if="${bid.buyerUser}">
+						<td><div th:if="${bid.isBuyed()}">
 								<a th:text="#{bid.buyed}"></a>
 							</div>
-							<div th:unless="${bid.buyerUser}">
+							<div th:unless="${bid.isBuyed()}">
 								<a type=button th:href="${'/bid/' + bid.id + '/buyed'}"
 									th:text="#{bid.buy}"></a><br /> <span class="text-danger"
 									th:if="${session.error}!=null"> <span
