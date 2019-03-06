@@ -24,14 +24,14 @@
 						<li><a href="/user/list" th:text="#{nav.user.view}"
 							style="color: black"></a></li>
 					</ul></li>
-				<li id="bids-menu" class="dropdown"><a class="dropdown-toggle"
+				<li id="bids-menu" class="dropdown" sec:authorize="hasRole('ROLE_USER')"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#" th:text="#{nav.bid.bids}"
 					style="color: black"> <span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
 						<li sec:authorize="hasRole('ROLE_USER')"><a
 							th:text="#{nav.bid.add}" href="/bid/add"></a></li>
-						<li><a href="/bid/list" th:text="#{nav.bid.list}"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"><a href="/bid/list" th:text="#{nav.bid.list}"></a></li>
 						<li sec:authorize="hasRole('ROLE_USER')"><a
 							href="/bid/mybids" th:text="#{nav.bid.mybids}"></a></li>
 						<li sec:authorize="hasRole('ROLE_USER')"><a
@@ -77,7 +77,7 @@
 							th:text="#{money.available}"></a></li>
 						<li sec:authorize="hasRole('ROLE_USER')"
 							style="text-align: center; font-size: 16pt" id="DropDownInfo"><a
-							th:text="${session.money} + ' €'"></a></li>
+							th:text="${session.money}"></a></li>
 						<li sec:authorize="hasRole('ROLE_USER')"><a href="/conversation"
 							th:text="#{nav.conversations}"
 							style="color: black; text-align: center">

@@ -1,7 +1,5 @@
 package com.uniovi.controllers;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,14 +45,14 @@ public class UsersController {
 
 	@RequestMapping("/user/delete/{ids}")
 	public String delete(@PathVariable String[] ids) {
-		//Vamos a sacar la ID del usuario logueado para que no lo borre
+		// Vamos a sacar la ID del usuario logueado para que no lo borre
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		Long idLoguedUser = activeUser.getId();
-		
-		for(String id : ids)
-			if(Long.parseLong(id) != idLoguedUser) //No borrarse a si mismo
+
+		for (String id : ids)
+			if (Long.parseLong(id) != idLoguedUser) // No borrarse a si mismo
 				usersService.deleteUser(Long.parseLong(id));
 		return "redirect:/user/list";
 	}
@@ -81,16 +79,5 @@ public class UsersController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 		return "login";
-	}
-	
-
-	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	public String home(Model model, HttpServletRequest request) {
-		String email = SecurityContextHolder.getContext().getAuthentication().getName();
-		User activeUser = usersService.getUserByEmail(email);
-		request.getSession().setAttribute("money", activeUser.getMoney());
-		request.getSession().setAttribute("email", activeUser.getEmail());
-		model.addAttribute("bidList", activeUser.getBids());
-		return "home";
 	}
 }

@@ -124,6 +124,8 @@ public class Bid {
 	}
 
 	public void setUser(User user) {
+		if(user != null)
+			this.status = BidStatus.BUYED;
 		this.user = user;
 	}
 
@@ -132,6 +134,8 @@ public class Bid {
 	}
 
 	public void setBuyerUser(User buyerUser) {
+		if(buyerUser != null)
+			this.status = BidStatus.BUYED;
 		this.buyerUser = buyerUser;
 	}
 
@@ -148,7 +152,7 @@ public class Bid {
 	 * @return
 	 */
 	public boolean isBuyed() {
-		return buyerUser != null;
+		return status.equals(BidStatus.BUYED);
 	}
 	
 	public Set<Conversation> getConversations() {
@@ -163,5 +167,14 @@ public class Bid {
 	public String toString() {
 		return "Bid [id=" + id + ", title=" + title + ", description=" + description + ", date=" + date + ", price="
 				+ price + ", specialBid=" + specialBid + ", user=" + user + "]";
+	}
+	
+	/**
+	 * Devuelve el dinero con dos decimales para tener un formato acorde con la UI.
+	 * 
+	 * @return El string del dinero formateado.
+	 */
+	public String getPriceFormatted() {
+		return String.format("%.2f", price) + " €";
 	}
 }

@@ -114,8 +114,9 @@ public class BidsService {
 	 * @param id
 	 * @return
 	 */
-	public void setUserBuyed(Long id,String title) {
-		bidsRepository.buyedById(id,title);
+	public void setUserBuyed(Long id_user, Long id_bid) {
+		bidsRepository.buyedById(id_user,id_bid);
+		bidsRepository.updateStatusBuyed(id_bid);
 	}
 	
 }

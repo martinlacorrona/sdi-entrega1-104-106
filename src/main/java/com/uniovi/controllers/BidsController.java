@@ -60,9 +60,6 @@ public class BidsController {
 		bid.setUser(activeUser);
 		bid.setDate(new Date());
 		bid.setStatus(BidStatus.ACTIVED);
-		
-		request.getSession().setAttribute("money", activeUser.getMoney());
-		request.getSession().setAttribute("email", activeUser.getEmail());
 
 		bidsService.addBid(bid);
 		return "redirect:/bid/mybids";
@@ -73,8 +70,6 @@ public class BidsController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		request.getSession().setAttribute("money", activeUser.getMoney());
-		request.getSession().setAttribute("email", activeUser.getEmail());
 
 		model.addAttribute("bidList", bidsService.getBidsForUser(activeUser));
 		return "bid/mybids";
@@ -85,8 +80,6 @@ public class BidsController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		request.getSession().setAttribute("money", activeUser.getMoney());
-		request.getSession().setAttribute("email", activeUser.getEmail());
 
 		model.addAttribute("bidList", bidsService.getBuyedBids(activeUser));
 		return "bid/mybuyedbids";
@@ -104,61 +97,48 @@ public class BidsController {
 	}
 
 	@RequestMapping(value = "/bid/list", method = RequestMethod.GET)
-	public String getAllBids(Model model, Pageable pageable,
-			HttpServletRequest request,
+	public String getAllBids(Model model, Pageable pageable, HttpServletRequest request,
 			@RequestParam(value = "", required = false) String searchText) {
 		Page<Bid> bids = new PageImpl<Bid>(new LinkedList<Bid>());
-		if(searchText == null) //Si no se busca texto
+		if (searchText == null) // Si no se busca texto
 			bids = bidsService.getBidsPagination(pageable);
-		else //Si se busca texto
+		else // Si se busca texto
 			bids = bidsService.getBidsPaginationSearchTitle(pageable, searchText);
-		
+
 		model.addAttribute("bidList", bids.getContent());
 		model.addAttribute("page", bids);
-		if(searchText == null) //Para que no falle la paginacion con busqueda
+		if (searchText == null) // Para que no falle la paginacion con busqueda
 			searchText = "";
 		model.addAttribute("urlPath", searchText);
-		
-		//Actualizamos el dinero
-		String email = SecurityContextHolder.getContext().getAuthentication().getName();
-		User activeUser = usersService.getUserByEmail(email);
-		request.getSession().setAttribute("money", activeUser.getMoney());
-		request.getSession().setAttribute("email", activeUser.getEmail());
-		
+
 		return "bid/list";
-}
-	
+	}
+
 	@RequestMapping(value = "/bid/{id}/buyed", method = RequestMethod.GET)
-	public String setBuyedTrue(Model model,HttpServletRequest request, @PathVariable Long id,String error) {
-		//Datos del usuario
+	public String setBuyedTrue(Model model, HttpServletRequest request, @PathVariable Long id, String error) {
+		// Datos del usuario
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		Long idBuyer = activeUser.getId();
-		String titleBid = bidsService.getBid(id).getTitle();
 		double precio = bidsService.getBid(id).getPrice();
-		//Si tiene dinero suficiente lo compra 
-		if(activeUser.isPurschable(precio) ) {
-			bidsService.setUserBuyed(idBuyer, titleBid);
+		// Si tiene dinero suficiente lo compra
+		if (activeUser.isPurschable(precio)) {
+			bidsService.setUserBuyed(idBuyer, id);
 			Double finalMoney = activeUser.getMoney() - precio;
 			activeUser.setMoney(finalMoney);
 			usersService.updateMoney(finalMoney, email);
-			request.getSession().setAttribute("money", activeUser.getMoney());
-			request.getSession().setAttribute("email", activeUser.getEmail());
-			
-			//Reiniciamos
+			request.getSession().setAttribute("money", activeUser.getMoneyFormatted());
+
+			// Reiniciamos
 			request.getSession().setAttribute("error", null);
 			request.getSession().setAttribute("id", id);
-		}else {
+		} else {
 			request.getSession().setAttribute("error", "Error.buy");
 			request.getSession().setAttribute("id", id);
 		}
-		
-		
+
 		return "redirect:/bid/list";
 	}
-	
-	
 
-	
 }
