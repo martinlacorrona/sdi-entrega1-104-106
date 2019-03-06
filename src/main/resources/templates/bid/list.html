@@ -14,6 +14,7 @@
 			<button type="submit" class="btn btn-default" th:text="#{bid.search.search}"></button>
 		</form>
 		
+		
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
@@ -28,16 +29,19 @@
 				<tbody>
 					<tr th:each="bid : ${bidList}">
 						<td th:text="${bid.title}"></td>
-						<td th:text="${bid.description}"></td>
+						<td th:text="${bid.description}"></td> 
 						<td th:text="${bid.price}"></td> 
 							<td ><div th:if="${bid.buyerUser}"> 
-								<a>Vendido</a> 
+								<a th:text="#{bid.buyed}"></a> 
 							</div> 
 							<div th:unless="${bid.buyerUser}"> 
-								<a th:href="${'/bid/' + bid.id + '/buyed'}">Comprar</a> 
-							</div>  </td>
-						
-						</tr>
+								<a  type = button th:href="${'/bid/' + bid.id + '/buyed'}"  th:text="#{bid.buy}"></a><br/>
+								<span class="text-danger" th:if="${session.error}!=null" >
+									<span class="text-danger" th:if="${session.id} == ${bid.id}"th:text="#{Error.buy}" > </span>
+								</span>   
+							</div>  
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
