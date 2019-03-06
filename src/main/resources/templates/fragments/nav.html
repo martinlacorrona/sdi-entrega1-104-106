@@ -64,20 +64,27 @@
 					th:text="#{login.message}" style="color: black"> <span
 						class="glyphicon glyphicon-log-in"></span>
 				</a></li>
-				<li sec:authorize="isAuthenticated()"><a href="/logout"
-					th:text="#{logout.message}" style="color: black"> <span
-						class="glyphicon glyphicon-log-in"></span>
-				</a></li>
 
-				<li sec:authorize="isAuthenticated()" class="dropdown"><a
-					id="btnUser" href=" #" class="dropdown-toggle"
+				<li sec:authorize="isAuthenticated()" id="user-menu"
+					class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false" style="color: black"> <span
-						th:text="${session.email}"></span> <span class="caret"></span>
+					aria-expanded="false" href="#" th:text="${session.email}"
+					style="color: black"> <span class="caret"></span>
 				</a>
-					<ul sec:authorize="isAuthenticated()" style="text-align: center"
-						id="DropDownInfo" class="dropdown-menu" th:text="${session.money}">
-					</ul>
+					<ul class="dropdown-menu">
+						<li sec:authorize="hasRole('ROLE_USER')"
+							style="text-align: center; font-size: 16pt" id="DropDownInfo"><a
+							th:text="#{money.available}"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"
+							style="text-align: center; font-size: 16pt" id="DropDownInfo"><a
+							th:text="${session.money} + ' €'"></a></li>
+						<li sec:authorize="isAuthenticated()"><a href="/logout"
+							th:text="#{logout.message}"
+							style="color: red; font-size: 18; text-align: center; font-weight: bold">
+								<span class="glyphicon glyphicon-log-in"></span>
+						</a></li>
+					</ul></li>
+
 			</ul>
 		</div>
 	</div>

@@ -46,7 +46,7 @@ public class BidsController {
 	}
 
 	@RequestMapping(value = "/bid/add", method = RequestMethod.POST)
-	public String setBid(@Validated Bid bid, BindingResult result) {
+	public String setBid(@Validated Bid bid, BindingResult result, HttpServletRequest request) {
 		addBidFormValidator.validate(bid, result);
 		if (result.hasErrors()) {
 			return "bid/add";
@@ -60,6 +60,9 @@ public class BidsController {
 		bid.setUser(activeUser);
 		bid.setDate(new Date());
 		bid.setStatus(BidStatus.ACTIVED);
+		
+		request.getSession().setAttribute("money", activeUser.getMoney());
+		request.getSession().setAttribute("email", activeUser.getEmail());
 
 		bidsService.addBid(bid);
 		return "redirect:/bid/mybids";
@@ -71,6 +74,7 @@ public class BidsController {
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		request.getSession().setAttribute("money", activeUser.getMoney());
+		request.getSession().setAttribute("email", activeUser.getEmail());
 
 		model.addAttribute("bidList", bidsService.getBidsForUser(activeUser));
 		return "bid/mybids";
@@ -82,6 +86,7 @@ public class BidsController {
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		request.getSession().setAttribute("money", activeUser.getMoney());
+		request.getSession().setAttribute("email", activeUser.getEmail());
 
 		model.addAttribute("bidList", bidsService.getBuyedBids(activeUser));
 		return "bid/mybuyedbids";
@@ -118,6 +123,7 @@ public class BidsController {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		User activeUser = usersService.getUserByEmail(email);
 		request.getSession().setAttribute("money", activeUser.getMoney());
+		request.getSession().setAttribute("email", activeUser.getEmail());
 		
 		return "bid/list";
 }
@@ -137,7 +143,8 @@ public class BidsController {
 			Double finalMoney = activeUser.getMoney() - precio;
 			activeUser.setMoney(finalMoney);
 			usersService.updateMoney(finalMoney, email);
-			request.getSession().setAttribute("money", activeUser.getMoney() + "€");
+			request.getSession().setAttribute("money", activeUser.getMoney());
+			request.getSession().setAttribute("email", activeUser.getEmail());
 			
 			//Reiniciamos
 			request.getSession().setAttribute("error", null);
