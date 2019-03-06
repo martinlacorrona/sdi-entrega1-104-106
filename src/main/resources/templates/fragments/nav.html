@@ -24,7 +24,7 @@
 						<li><a href="/user/list" th:text="#{nav.user.view}"
 							style="color: black"></a></li>
 					</ul></li>
-				<li sec:authorize="hasRole('ROLE_USER')" id="bids-menu" class="dropdown"><a class="dropdown-toggle"
+				<li id="bids-menu" class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#" th:text="#{nav.bid.bids}"
 					style="color: black"> <span class="caret"></span>
 				</a>
@@ -37,8 +37,6 @@
 						<li sec:authorize="hasRole('ROLE_USER')"><a
 							href="/bid/mybuyedbids" th:text="#{nav.bid.mybuyedbids}"></a></li>
 					</ul></li>
-				<li sec:authorize="hasRole('ROLE_USER')"><a th:text="${session.money} + ' €'"
-					style="color: black"></a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a id="btnLanguage" href=" #"
@@ -50,26 +48,43 @@
 						<li><a id="btnEnglish" value="EN"> <img
 								th:src="@{/img/if_uk_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.en}" style="color: black">Ingles</span>
+								th:text="#{language.en}" style="color: black"></span>
 						</a></li>
 						<li><a id="btnSpanish" value="ES"> <img
 								th:src="@{/img/if_spain_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.es}" style="color: black">Español</span>
+								th:text="#{language.es}" style="color: black"></span>
 						</a></li>
 					</ul></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/signup"
 					th:text="#{signup.message}" style="color: black"> <span
-						class="glyphicon glyphicon-user"></span> Registrate
+						class="glyphicon glyphicon-user"></span>
 				</a></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/login"
 					th:text="#{login.message}" style="color: black"> <span
-						class="glyphicon glyphicon-log-in"></span> Identificate
+						class="glyphicon glyphicon-log-in"></span>
 				</a></li>
-				<li sec:authorize="isAuthenticated()"><a href="/logout"
-					th:text="#{logout.message}" style="color: black"> <span
-						class=" glyphiconglyphicon-log-out"></span> Desconectar
-				</a></li>
+
+				<li sec:authorize="isAuthenticated()" id="user-menu"
+					class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false" href="#" th:text="${session.email}"
+					style="color: black"> <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li sec:authorize="hasRole('ROLE_USER')"
+							style="text-align: center; font-size: 16pt" id="DropDownInfo"><a
+							th:text="#{money.available}"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"
+							style="text-align: center; font-size: 16pt" id="DropDownInfo"><a
+							th:text="${session.money} + ' €'"></a></li>
+						<li sec:authorize="isAuthenticated()"><a href="/logout"
+							th:text="#{logout.message}"
+							style="color: red; font-size: 18; text-align: center; font-weight: bold">
+								<span class="glyphicon glyphicon-log-in"></span>
+						</a></li>
+					</ul></li>
+
 			</ul>
 		</div>
 	</div>
