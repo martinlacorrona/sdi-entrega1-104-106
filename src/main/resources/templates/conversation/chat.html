@@ -29,7 +29,7 @@
 					<tr th:each="message : ${messageList}">
 						<td
 							th:text="${message.sender.name} + ' ' + ${message.sender.lastName}"></td>
-						<td th:text="${message.date}"></td>
+						<td th:text="${message.getDateFormatted()}"></td>
 						<td th:text="${message.message}"></td>
 					</tr>
 				</tbody>

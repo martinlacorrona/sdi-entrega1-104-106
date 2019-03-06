@@ -1,5 +1,7 @@
 package com.uniovi.entities;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -23,7 +25,7 @@ public class Message {
 	private User sender;
 
 	private Date date;
-	
+
 	private String message;
 
 	public Message() {
@@ -37,8 +39,6 @@ public class Message {
 		this.date = date;
 		this.message = message;
 	}
-
-
 
 	public long getId() {
 		return id;
@@ -78,6 +78,13 @@ public class Message {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public String getDateFormatted() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy H:m:s");
+		return dateFormat.format(cal.getTime());
 	}
 
 	@Override
