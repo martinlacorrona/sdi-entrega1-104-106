@@ -203,8 +203,8 @@ public class MyWallapopTests {
 	@Test
 	//Fallo de inicio de sesion email incorrecto
 	public void Prueba11(){
-		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		//Comprobamos que no está la opcion de desconectarse sin autentificacion
+		SeleniumUtils.textoNoPresentePagina(driver, "Desconectar");
 		
 		
 	}
@@ -226,10 +226,145 @@ public class MyWallapopTests {
 		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/user/list')]");
 		// Pinchamos en ver usuarios
 		elementos.get(0).click();
+		//Como hay 7 usuarios registrados comprobamso que salgan todos
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
 				PO_View.getTimeout());
 		assertTrue(elementos.size() == 7);
 		
+	}
+	
+	@Test
+	//Ir a la lista de usuarios, borrar el primer usuarios de la lista y comprobar que se actualiza y dicho usuario no aparece
+	public void Prueba13(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en gestion de usuarios
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/user/list')]");
+		// Pinchamos en ver usuarios
+		elementos.get(0).click();
+		//Cargamos los usuarios y vemos que estan todos
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 7);
+		//Cogemos el nombre del que se va a borrar para su posterior comprobacion
+		String emailYnombre = elementos.get(0).getText();
+		String parts[] = emailYnombre.split(" ");
+		String nombre = parts[1];
+		//Le damos al checkbox
+		elementos = PO_View.checkElement(driver, "free", "//input");
+		elementos.get(0).click();
+		//Click a borrar
+		By boton = By.className("btn");
+		driver.findElement(boton).click();
+		//Comprobamos que el usuario no esta 
+		SeleniumUtils.textoNoPresentePagina(driver, nombre);
+		//Y que la lista es 1 menos
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 6);
+	}
+	
+	@Test
+	//Ir a la lista de usuarios, borrar el primer usuarios de la lista y comprobar que se actualiza y dicho usuario no aparece
+	public void Prueba14(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en gestion de usuarios
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/user/list')]");
+		// Pinchamos en ver usuarios
+		elementos.get(0).click();
+		//Cargamos los usuarios y vemos que estan todos
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 7);
+		//Cogemos el nombre del que se va a borrar para su posterior comprobacion
+		String emailYnombre = elementos.get(elementos.size()-1).getText();
+		String parts[] = emailYnombre.split(" ");
+		String nombre = parts[1];
+		//Le damos al checkbox
+		elementos = PO_View.checkElement(driver, "free", "//input");
+		elementos.get(elementos.size()-1).click();
+		//Click a borrar
+		By boton = By.className("btn");
+		driver.findElement(boton).click();
+		//Comprobamos que el usuario no esta 
+		SeleniumUtils.textoNoPresentePagina(driver, nombre);
+		//Y que la lista es 1 menos
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 6);
+	}
+	
+	@Test
+	//Ir a la lista de usuarios, borrar 3 usuarios y comprobar que se actualiza y dichos usuarios no aparecen
+	public void Prueba15(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en gestion de usuarios
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/user/list')]");
+		// Pinchamos en ver usuarios
+		elementos.get(0).click();
+		
+		//Cargamos los usuarios y vemos que estan todos
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 7);
+		
+		//Cogemos el nombre del primer Usuario
+		String emailYnombre1 = elementos.get(0).getText();
+		String parts1[] = emailYnombre1.split(" ");
+		String nombre1 = parts1[1];
+		//Cogemos el nombre del segundo Usuario
+		String emailYnombre2 = elementos.get(1).getText();
+		String parts2[] = emailYnombre2.split(" ");
+		String nombre2 = parts2[1];
+		//Cogemos el nombre del tercer Usuario
+		String emailYnombre3 = elementos.get(2).getText();
+		String parts3[] = emailYnombre3.split(" ");
+		String nombre3 = parts3[1];
+		
+		//Le damos a los checkboxs
+		elementos = PO_View.checkElement(driver, "free", "//input");
+		elementos.get(0).click();
+		elementos.get(1).click();
+		elementos.get(2).click();
+		
+		//Click a borrar
+		By boton = By.className("btn");
+		driver.findElement(boton).click();
+		
+		//Comprobamos que los usuarios no estan
+		SeleniumUtils.textoNoPresentePagina(driver, nombre1);
+		SeleniumUtils.textoNoPresentePagina(driver, nombre2);
+		SeleniumUtils.textoNoPresentePagina(driver, nombre3);
+		//Y que la lista es 3 menos
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 4);
 	}
 
 

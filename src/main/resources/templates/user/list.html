@@ -50,7 +50,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="user : ${usersList}">
-						<td><input type="checkbox" th:id="${'user' + user.id}"></input></td>
+						<td><input  type="checkbox" th:id="${'user' + user.id}"></input></td>
 						<td th:text="${user.email}"></td>
 						<td></td>
 						<td th:text="${user.name}"></td>
