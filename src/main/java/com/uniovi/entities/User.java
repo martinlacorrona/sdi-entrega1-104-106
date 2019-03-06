@@ -22,7 +22,7 @@ public class User {
 	@OneToMany(mappedBy = "buyerUser")
 	private Set<Bid> buyedBids;
 	
-	@OneToMany(mappedBy = "intersetedUser", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "interestedUser", cascade = CascadeType.ALL)
 	private Set<Conversation> conversationBuyer;
 	
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)

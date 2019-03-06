@@ -1,6 +1,5 @@
 package com.uniovi.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +8,16 @@ import org.springframework.stereotype.Service;
 import com.uniovi.entities.Bid;
 import com.uniovi.entities.Conversation;
 import com.uniovi.entities.User;
+import com.uniovi.repositories.BidsRepository;
 import com.uniovi.repositories.ConversationRepository;
 
 @Service
-public class ConversationsService {
+public class ConversationService {
 	@Autowired
 	private ConversationRepository conversationRepository;
+	
 	@Autowired
-	private BidsService bidsService;
+	private BidsRepository bidRepository;
 	
 	public List<Conversation> getConversations() {
 		List<Conversation> conversations = conversationRepository.findAll();
@@ -36,12 +37,20 @@ public class ConversationsService {
 	}
 	
 	public List<Conversation> getConversationUser(User user) {
-		List<Conversation> conversations = new ArrayList<Conversation>(user.getConversationBuyer());
+		//Todas las conversaciones en las que participa como comprador.
+		List<Conversation> conversations = conversationRepository.findConversationsByBuyer(user);
 		
-		for(Bid bid : bidsService.getBidsForUser(user))
+		//Todas las conversaciones en las que participa como vendedor.
+		//Y que no se repitan
+		for(Bid bid : bidRepository.findAllByUser(user))
 			for(Conversation conversation : bid.getConversations())
-				conversations.add(conversation);
+				if(!conversations.contains(conversation))
+					conversations.add(conversation);
 		
 		return conversations;
+	}
+	
+	public Conversation getConversationByBidAndInterested(Bid bid, User interestedUser) {
+		return conversationRepository.findConversationByBidAndUser(bid, interestedUser);
 	}
 }

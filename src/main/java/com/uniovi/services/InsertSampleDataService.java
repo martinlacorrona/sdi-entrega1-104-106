@@ -21,7 +21,7 @@ public class InsertSampleDataService {
 	@Autowired
 	private RolesService rolesService;
 	@Autowired
-	private ConversationsService conversationService;
+	private ConversationService conversationService;
 
 	@SuppressWarnings({ "serial", "rawtypes", "unchecked", "deprecation"})
 	@PostConstruct

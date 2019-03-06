@@ -15,6 +15,7 @@
 						<th th:text="#{conversation.list.bid_title}"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -24,11 +25,18 @@
 						<td />
 						<td><form class="navbar-form" action="/conversation"
 								method="post">
-								<input type="hidden" th:value="${conversation.bid.id}"
-									name="bid_id" /> <input type="hidden"
-									th:value="${conversation.bid.user.id}" name="seller_id" />
+								<input type="hidden" th:value="${conversation.id}"
+									name="conversation_id" />
 								<button type="submit" class="btn btn-default"
-									th:text="#{bid.list.contact}"></button>
+									th:text="#{conversation.list.contact}"></button>
+							</form></td>
+						<td><form class="navbar-form" action="/conversation/delete"
+								method="post">
+								<input type="hidden" th:value="${conversation.id}"
+									name="conversation_id" />
+								<button type="submit" class="btn btn-default"
+									th:text="#{conversation.list.delete}"
+									style="background-color: #C24641"></button>
 							</form></td>
 					</tr>
 				</tbody>

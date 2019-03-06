@@ -22,8 +22,8 @@ public class Conversation {
 	private Bid bid;
 	
 	@ManyToOne
-	@JoinColumn(name = "intersetedUser_id")
-	private User intersetedUser;
+	@JoinColumn(name = "interestedUser")
+	private User interestedUser;
 	
 	@OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
 	private Set<Message> messages;
@@ -34,7 +34,7 @@ public class Conversation {
 
 	public Conversation(User intersetedUser, Bid bid) {
 		super();
-		this.intersetedUser = intersetedUser;
+		this.interestedUser = intersetedUser;
 		this.bid = bid;
 	}
 
@@ -46,12 +46,12 @@ public class Conversation {
 		this.id = id;
 	}
 
-	public User getIntersetedUser() {
-		return intersetedUser;
+	public User getInterestedUser() {
+		return interestedUser;
 	}
 
-	public void setIntersetedUser(User intersetedUser) {
-		this.intersetedUser = intersetedUser;
+	public void setInterestedUser(User interestedUser) {
+		this.interestedUser = interestedUser;
 	}
 
 	public Set<Message> getMessages() {
@@ -72,7 +72,7 @@ public class Conversation {
 
 	@Override
 	public String toString() {
-		return "Conversation [id=" + id + ", bid=" + bid + ", intersetedUser=" + intersetedUser + ", messages="
+		return "Conversation [id=" + id + ", bid=" + bid + ", intersetedUser=" + interestedUser + ", messages="
 				+ messages + "]";
 	}
 }
