@@ -3,6 +3,8 @@ package com.uniovi.controllers;
 import java.util.Date;
 import java.util.LinkedList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -112,7 +114,7 @@ public class BidsController {
 	}
 	
 	@RequestMapping(value = "/bid/{id}/buyed", method = RequestMethod.GET)
-	public String setBuyedTrue(Model model, @PathVariable Long id) {
+	public String setBuyedTrue(Model model,HttpServletRequest request, @PathVariable Long id) {
 		//Datos del usuario
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
@@ -126,29 +128,30 @@ public class BidsController {
 			Double finalMoney = activeUser.getMoney() - precio;
 			activeUser.setMoney(finalMoney);
 			usersService.updateMoney(finalMoney, email);
+			request.getSession().setAttribute("money", activeUser.getMoney() + "€");
 		}
 		return "redirect:/bid/list";
 	}
 
-	@RequestMapping(value = "/bid/{id}/notbuyed", method = RequestMethod.GET)
-	public String setBuyedFalse(Model model, @PathVariable Long id) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
-		String titleBid = bidsService.getBid(id).getTitle();
-		double precio = bidsService.getBid(id).getPrice();
-		Long idActiveUser = activeUser.getId();
-		Long idBuyerUser = bidsService.getBid(id).getBuyerUser().getId();
-
-		//Si es el comprador y decide no comprarlo
-		if(idActiveUser==idBuyerUser ) {
-			bidsService.setUserBuyed(null, titleBid);
-			Double finalMoney = activeUser.getMoney() + precio;
-			activeUser.setMoney(finalMoney);
-			usersService.updateMoney(finalMoney, email);
-			
-		}
-		
-		return "redirect:/bid/list";
-	}
+//	@RequestMapping(value = "/bid/{id}/notbuyed", method = RequestMethod.GET)
+//	public String setBuyedFalse(Model model, @PathVariable Long id) {
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		String email = auth.getName();
+//		User activeUser = usersService.getUserByEmail(email);
+//		String titleBid = bidsService.getBid(id).getTitle();
+//		double precio = bidsService.getBid(id).getPrice();
+//		Long idActiveUser = activeUser.getId();
+//		Long idBuyerUser = bidsService.getBid(id).getBuyerUser().getId();
+//
+//		//Si es el comprador y decide no comprarlo
+//		if(idActiveUser==idBuyerUser ) {
+//			bidsService.setUserBuyed(null, titleBid);
+//			Double finalMoney = activeUser.getMoney() + precio;
+//			activeUser.setMoney(finalMoney);
+//			usersService.updateMoney(finalMoney, email);
+//			
+//		}
+//		
+//		return "redirect:/bid/list";
+//	}
 }
