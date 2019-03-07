@@ -32,6 +32,21 @@ public class PO_NavView extends PO_View {
 	//Tiene que haber un sólo elemento.
 			assertTrue(elementos.size() == 1);
 	}
+	
+	public static void clickOption2(WebDriver driver, String textOption, String criterio, String textoDestino) {
+		//CLickamos en la opción de registro y esperamos a que se cargue el enlace de Registro
+			List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "@id", textOption,
+						getTimeout());
+		//Tiene que haber un sólo elemento.
+				assertTrue(elementos.size() == 1);
+		//Ahora lo clickamos
+				WebElement el = elementos.get(0);
+				el.click();
+		//Esperamos a que sea visible un elemento concreto
+				elementos = SeleniumUtils.EsperaCargaPagina(driver, criterio, textoDestino, getTimeout());
+		//Tiene que haber un sólo elemento.
+				assertTrue(elementos.size() == 1);
+		}
 
 	/**
 	 * Selecciona el enlace de idioma correspondiente al texto textLanguage

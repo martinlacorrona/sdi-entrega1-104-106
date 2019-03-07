@@ -8,9 +8,8 @@
 	<div class="container">
 		<h2 th:text="#{list.users}"></h2>
 		<p th:text="#{list.p2}"></p>
-		<button class="btn btn-default" type="button" id="deleteButton"
-			style="background-color: #C24641; color: white">
-			<th th:text="#{users.delete}"></th>
+		<button class="btn btn-default" id="deleteButton"
+			style="background-color: #C24641; color: white" th:text="#{users.delete}">
 		</button>
 		<script th:inline="javascript">
 			/*<![CDATA[*/

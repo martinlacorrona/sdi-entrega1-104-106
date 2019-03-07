@@ -267,185 +267,185 @@ public class MyWallapopTests {
 	}
 	
 
-	@Test
-	//Registro de Usuario con datos válidos.
-	public void Prueba1(){
-		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "pruueb1@gmail.aaacom", "Prueba", "Antonio", "77777", "77777");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		// Comprobamos que entramos en la sección privada del usuario mirando salgo
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
-		elementos.get(0).click();
-		//Comprobamos que está el texto del saldo al tener role user
-		PO_View.checkElement(driver, "text", "Saldo disponible:");
-	}
-
-	
-	@Test
-	//Registro de Usuario con email vacío, nombre vacío, apellidos vacío.
-	public void Prueba2(){
-		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "", "", "", "77777", "77777");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		PO_View.getP();
-		// COmprobamos el error de campo vacio.
-		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
-	}
-	
-	@Test
-	//Registro de Usuario con repetición contraseña inválida.
-	public void Prueba3(){
-		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "prueba3@gmail.com", "Lorenzo", "Berto", "77778", "77777");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		PO_View.getP();
-		// COmprobamos el error de campo vacio.
-		PO_RegisterView.checkKey(driver, "Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
-	}
-	
-	@Test
-	//Registro de Usuario con email existente.
-	public void Prueba4(){
-		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "pedro@gmail.com", "Lorenzo", "Berto", "77777", "77777");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		PO_View.getP();
-		// COmprobamos el error de campo vacio.
-		PO_RegisterView.checkKey(driver, "Error.signup.email.duplicate", PO_Properties.getSPANISH());
-	}
-	
-	@Test
-	//Iniciar correctamente siendo admin
-	public void Prueba5(){
-		//Logueamos como usuario
-		PO_PrivateView.log(driver, "admin@email.com", "admin");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		//Comprobamos que está el texto de gestion de usuarios que solo posee el admin
-		PO_View.checkElement(driver, "text", "Gestion de usuarios");
-	}
-	
-	@Test
-	//Iniciar correctamente siendo user
-	public void Prueba6(){
-		//Logueamos como usuario
-		PO_PrivateView.log(driver, "pedro@gmail.com", "123456");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		//Comprobamos que entramos en la sección privada del usuario mirando salgo
-		// Comprobamos que entramos en la sección privada del usuario mirando salgo
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
-		elementos.get(0).click();
-		//Comprobamos que está el texto del saldo al tener role user
-		PO_View.checkElement(driver, "text", "Saldo disponible:");
-	}
-	
-	@Test
-	//Fallo inicio de sesion campos vacios
-	public void Prueba7(){
-		//Logueamos como usuario
-		PO_PrivateView.log(driver, " ", " ");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		PO_View.getP();
-		// Comprobamos el error de campo vacio.
-		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
-		
-	}
-	
-	@Test
-	//Fallo de inicio de sesion contraseña incorrecta
-	public void Prueba8(){
-		//Logueamos como usuario
-		PO_PrivateView.log(driver, "pedro@gmail.com", "12345");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		PO_View.getP();
-		// COmprobamos el error de campo vacio.
-		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
-		
-	}
-	
-	@Test
-	//Fallo de inicio de sesion email incorrecto
-	public void Prueba9(){
-		//Logueamos como usuario
-		PO_PrivateView.log(driver, "pedro12345@gmail.com", "123456");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		PO_View.getP();
-		// COmprobamos el error de campo vacio.
-		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
-		
-	}
-	
-	@Test
-	//Comprobar el log out
-	public void Prueba10(){
-		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		// Rellenamos el formulario.
-		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		// Click en el email
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
-		elementos.get(0).click();
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'logout')]");
-		// Pinchamos en desconectar.
-		elementos.get(0).click();
-		//Comprobamos pagina login
-		PO_View.checkElement(driver, "text", "Email:");
-		
-	}
-	
-	@Test
-	//Fallo de inicio de sesion email incorrecto
-	public void Prueba11(){
-		//Comprobamos que no está la opcion de desconectarse sin autentificacion
-		SeleniumUtils.textoNoPresentePagina(driver, "Desconectar");
-		
-		
-	}
-	
-	@Test
-	//Mostrar el listado de usuarios y comprobar que se muestran todos los que existen en el sistema
-	public void Prueba12(){
-		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		// Rellenamos el formulario.
-		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		//Click en gestion de usuarios
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]/a");
-		elementos.get(0).click();
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/user/list')]");
-		// Pinchamos en ver usuarios
-		elementos.get(0).click();
-		//Como hay 7 usuarios registrados comprobamso que salgan todos
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-				PO_View.getTimeout());
-		assertTrue(elementos.size() == 7);
-		
-	}
-	
+//	@Test
+//	//Registro de Usuario con datos válidos.
+//	public void Prueba1(){
+//		// Vamos al formulario de registro
+//		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+//		// Rellenamos el formulario.
+//		PO_RegisterView.fillForm(driver, "pruueb1@gmail.aaacom", "Prueba", "Antonio", "77777", "77777");
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		// Comprobamos que entramos en la sección privada del usuario mirando salgo
+//		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+//		elementos.get(0).click();
+//		//Comprobamos que está el texto del saldo al tener role user
+//		PO_View.checkElement(driver, "text", "Saldo disponible:");
+//	}
+//
+//	
+//	@Test
+//	//Registro de Usuario con email vacío, nombre vacío, apellidos vacío.
+//	public void Prueba2(){
+//		// Vamos al formulario de registro
+//		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+//		// Rellenamos el formulario.
+//		PO_RegisterView.fillForm(driver, "", "", "", "77777", "77777");
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		PO_View.getP();
+//		// COmprobamos el error de campo vacio.
+//		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
+//	}
+//	
+//	@Test
+//	//Registro de Usuario con repetición contraseña inválida.
+//	public void Prueba3(){
+//		// Vamos al formulario de registro
+//		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+//		// Rellenamos el formulario.
+//		PO_RegisterView.fillForm(driver, "prueba3@gmail.com", "Lorenzo", "Berto", "77778", "77777");
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		PO_View.getP();
+//		// COmprobamos el error de campo vacio.
+//		PO_RegisterView.checkKey(driver, "Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
+//	}
+//	
+//	@Test
+//	//Registro de Usuario con email existente.
+//	public void Prueba4(){
+//		// Vamos al formulario de registro
+//		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+//		// Rellenamos el formulario.
+//		PO_RegisterView.fillForm(driver, "pedro@gmail.com", "Lorenzo", "Berto", "77777", "77777");
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		PO_View.getP();
+//		// COmprobamos el error de campo vacio.
+//		PO_RegisterView.checkKey(driver, "Error.signup.email.duplicate", PO_Properties.getSPANISH());
+//	}
+//	
+//	@Test
+//	//Iniciar correctamente siendo admin
+//	public void Prueba5(){
+//		//Logueamos como usuario
+//		PO_PrivateView.log(driver, "admin@email.com", "admin");
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		//Comprobamos que está el texto de gestion de usuarios que solo posee el admin
+//		PO_View.checkElement(driver, "text", "Gestion de usuarios");
+//	}
+//	
+//	@Test
+//	//Iniciar correctamente siendo user
+//	public void Prueba6(){
+//		//Logueamos como usuario
+//		PO_PrivateView.log(driver, "pedro@gmail.com", "123456");
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		//Comprobamos que entramos en la sección privada del usuario mirando salgo
+//		// Comprobamos que entramos en la sección privada del usuario mirando salgo
+//		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+//		elementos.get(0).click();
+//		//Comprobamos que está el texto del saldo al tener role user
+//		PO_View.checkElement(driver, "text", "Saldo disponible:");
+//	}
+//	
+//	@Test
+//	//Fallo inicio de sesion campos vacios
+//	public void Prueba7(){
+//		//Logueamos como usuario
+//		PO_PrivateView.log(driver, "", "");
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		PO_View.getP();
+//		// Comprobamos el error de campo vacio.
+//		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
+//		
+//	}
+//	
+//	@Test
+//	//Fallo de inicio de sesion contraseña incorrecta
+//	public void Prueba8(){
+//		//Logueamos como usuario
+//		PO_PrivateView.log(driver, "pedro@gmail.com", "12345");
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		PO_View.getP();
+//		// COmprobamos el error de campo vacio.
+//		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
+//		
+//	}
+//	
+//	@Test
+//	//Fallo de inicio de sesion email incorrecto
+//	public void Prueba9(){
+//		//Logueamos como usuario
+//		PO_PrivateView.log(driver, "pedro12345@gmail.com", "123456");
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		PO_View.getP();
+//		// COmprobamos el error de campo vacio.
+//		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
+//		
+//	}
+//	
+//	@Test
+//	//Comprobar el log out
+//	public void Prueba10(){
+//		// Vamos al formulario de registro
+//		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+//		// Rellenamos el formulario.
+//		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		// Click en el email
+//		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+//		elementos.get(0).click();
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'logout')]");
+//		// Pinchamos en desconectar.
+//		elementos.get(0).click();
+//		//Comprobamos pagina login
+//		PO_View.checkElement(driver, "text", "Email:");
+//		
+//	}
+//	
+//	@Test
+//	//Fallo de inicio de sesion email incorrecto
+//	public void Prueba11(){
+//		//Comprobamos que no está la opcion de desconectarse sin autentificacion
+//		SeleniumUtils.textoNoPresentePagina(driver, "Desconectar");
+//		
+//		
+//	}
+//	
+//	@Test
+//	//Mostrar el listado de usuarios y comprobar que se muestran todos los que existen en el sistema
+//	public void Prueba12(){
+//		// Vamos al formulario de registro
+//		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+//		// Rellenamos el formulario.
+//		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		//Click en gestion de usuarios
+//		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]/a");
+//		elementos.get(0).click();
+//		//Esperamos
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/user/list')]");
+//		// Pinchamos en ver usuarios
+//		elementos.get(0).click();
+//		//Como hay 7 usuarios registrados comprobamso que salgan todos
+//		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+//				PO_View.getTimeout());
+//		assertTrue(elementos.size() == 6);
+//		
+//	}
+//	
 	@Test
 	//Ir a la lista de usuarios, borrar el primer usuarios de la lista y comprobar que se actualiza y dicho usuario no aparece
 	public void Prueba13(){
@@ -466,23 +466,27 @@ public class MyWallapopTests {
 		//Cargamos los usuarios y vemos que estan todos
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
 				PO_View.getTimeout());
-		assertTrue(elementos.size() == 7);
+		assertTrue(elementos.size() == 6);
 		//Cogemos el nombre del que se va a borrar para su posterior comprobacion
 		String emailYnombre = elementos.get(0).getText();
 		String parts[] = emailYnombre.split(" ");
 		String nombre = parts[1];
 		//Le damos al checkbox
+		SeleniumUtils.esperarSegundos(driver, 3);
 		elementos = PO_View.checkElement(driver, "free", "//input");
 		elementos.get(0).click();
+		//Borramos
+		elementos = PO_View.checkElement(driver, "text", "Borrar");
+		SeleniumUtils.esperarSegundos(driver, 3);
 		//Click a borrar
-		By boton = By.className("btn");
-		driver.findElement(boton).click();
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 3);
 		//Comprobamos que el usuario no esta 
 		SeleniumUtils.textoNoPresentePagina(driver, nombre);
 		//Y que la lista es 1 menos
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
 				PO_View.getTimeout());
-		assertTrue(elementos.size() == 6);
+		assertTrue(elementos.size() == 5);
 	}
 	
 	@Test
@@ -505,7 +509,7 @@ public class MyWallapopTests {
 		//Cargamos los usuarios y vemos que estan todos
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
 				PO_View.getTimeout());
-		assertTrue(elementos.size() == 7);
+		assertTrue(elementos.size() == 6);
 		//Cogemos el nombre del que se va a borrar para su posterior comprobacion
 		String emailYnombre = elementos.get(elementos.size()-1).getText();
 		String parts[] = emailYnombre.split(" ");
@@ -513,15 +517,18 @@ public class MyWallapopTests {
 		//Le damos al checkbox
 		elementos = PO_View.checkElement(driver, "free", "//input");
 		elementos.get(elementos.size()-1).click();
+		
+		elementos = PO_View.checkElement(driver, "text", "Borrar");
+		SeleniumUtils.esperarSegundos(driver, 3);
 		//Click a borrar
-		By boton = By.className("btn");
-		driver.findElement(boton).click();
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 3);
 		//Comprobamos que el usuario no esta 
 		SeleniumUtils.textoNoPresentePagina(driver, nombre);
 		//Y que la lista es 1 menos
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
 				PO_View.getTimeout());
-		assertTrue(elementos.size() == 6);
+		assertTrue(elementos.size() == 5);
 	}
 	
 	@Test
@@ -674,7 +681,7 @@ public class MyWallapopTests {
 		//Esperamos
 		SeleniumUtils.esperarSegundos(driver, 2);
 		//Borramos la oferta
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@id, 'boton')]");
+		elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'boton')]");
 		elementos.get(0).click();
 		//Esperamos
 		SeleniumUtils.esperarSegundos(driver, 2);
@@ -830,7 +837,7 @@ public class MyWallapopTests {
 		
 		//Cogemos el precio de lo que vamos a comprar
 		elementos = PO_View.checkElement(driver, "free", "//tr[contains(@id, 'ofertas')]");
-		String partsPrecio[] = elementos.get(3).getText().split(" ");
+		String partsPrecio[] = elementos.get(1).getText().split(" ");
 		String precio = partsPrecio[6];
 		String partsPrecioSinComa[] = precio.split(",");
 		String precioFinal = partsPrecioSinComa[0];
