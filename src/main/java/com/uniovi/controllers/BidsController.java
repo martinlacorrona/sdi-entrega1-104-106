@@ -100,15 +100,12 @@ public class BidsController {
 	public String getAllBids(Model model, Pageable pageable, HttpServletRequest request,
 			@RequestParam(value = "", required = false) String searchText) {
 		Page<Bid> bids = new PageImpl<Bid>(new LinkedList<Bid>());
-		if (searchText == null) // Si no se busca texto
-			bids = bidsService.getBidsPagination(pageable);
-		else // Si se busca texto
-			bids = bidsService.getBidsPaginationSearchTitle(pageable, searchText);
+		if (searchText == null)
+			searchText = "";
+		bids = bidsService.getBidsPaginationSearchTitle(pageable, searchText);
 
 		model.addAttribute("bidList", bids.getContent());
 		model.addAttribute("page", bids);
-		if (searchText == null) // Para que no falle la paginacion con busqueda
-			searchText = "";
 		model.addAttribute("urlPath", searchText);
 
 		return "bid/list";
