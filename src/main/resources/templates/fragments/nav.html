@@ -25,9 +25,9 @@
 							style="color: black"></a></li>
 					</ul></li>
 				<li id="bids-menu" class="dropdown" sec:authorize="hasRole('ROLE_USER')"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#" th:text="#{nav.bid.bids}"
-					style="color: black"> <span class="caret"></span>
-				</a>
+					data-toggle="dropdown" href="#"
+					style="color: black">
+				<span th:text="#{nav.bid.bids}"></span> <span class="caret"></span> </a> 
 					<ul class="dropdown-menu">
 						<li sec:authorize="hasRole('ROLE_USER')"><a
 							th:text="#{nav.bid.add}" href="/bid/add"></a></li>
@@ -68,8 +68,8 @@
 				<li sec:authorize="isAuthenticated()" id="user-menu"
 					class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false" href="#" th:text="${session.email}"
-					style="color: black"> <span class="caret"></span>
+					aria-expanded="false" href="#"
+					style="color: black"> <span th:text="${session.email}"></span> <span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu" >
 						<li sec:authorize="hasRole('ROLE_USER')" 
