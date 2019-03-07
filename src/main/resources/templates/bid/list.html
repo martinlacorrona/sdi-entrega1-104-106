@@ -38,7 +38,7 @@
 									th:text="#{bid.buyed}"></button>
 							</div>
 							<div th:unless="${bid.isBuyed()}">
-								<form th:action="${'/bid/' + bid.id + '/buyed'}">
+								<form id="botonBuy" th:action="${'/bid/' + bid.id + '/buyed'}">
 									<button type="submit" class="btn btn-default"
 										style="background-color: #3CD951; color: white"
 										th:text="#{bid.buy}"></button>

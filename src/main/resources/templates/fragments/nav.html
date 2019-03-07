@@ -76,7 +76,7 @@
 							style="text-align: center; font-size: 16pt" id="DropDownInfo"><a
 							th:text="#{money.available}"></a></li>
 						<li sec:authorize="hasRole('ROLE_USER')"
-							style="text-align: center; font-size: 16pt" id="DropDownInfo"><a
+							style="text-align: center; font-size: 16pt" id="DropDownInfo2"><a
 							th:text="${session.money}"></a></li>
 						<li sec:authorize="hasRole('ROLE_USER')"><a href="/conversation"
 							th:text="#{nav.conversations}"

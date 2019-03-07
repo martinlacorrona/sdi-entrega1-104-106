@@ -546,6 +546,188 @@ public class MyWallapopTests {
 			PO_View.checkElement(driver, "text", nombres[i]);
 		}
 		
+		
+	}
+	
+	@Test
+	//Hacer una busqueda de las ofertas con el campo algo que no aparece
+	//comprobar que se muestra la pagina vacia
+	public void Prueba22(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
+		// Pinchamos en ver mis ofertas
+		elementos.get(0).click();
+		
+		//Cogemos el nombre de las ofertas de la primera pagina
+		elementos = PO_View.checkElement(driver, "free", "//tr[contains(@id, 'ofertas')]");
+		String nombres[] = new String[5];
+		for(int i = 0; i<elementos.size();i++) {
+			String datos = elementos.get(i).getText();
+			String parts[] = datos.split(" ");
+			nombres[i]= parts[0]+ " "+ parts[1];
+		}
+		//Clickamos el buscador y buscamos algo que no existe
+		elementos = PO_View.checkElement(driver, "free", "//input");
+		elementos.get(0).click();
+		PO_SearchBidView.fillForm(driver,"zzzzzzz");
+		SeleniumUtils.esperarSegundos(driver, 3);
+		
+		//Comprobamos que esta vacia mirando a veri salen las ofertas que salian antes
+		SeleniumUtils.textoNoPresentePagina(driver, nombres[0]);
+		SeleniumUtils.textoNoPresentePagina(driver, nombres[1]);
+		SeleniumUtils.textoNoPresentePagina(driver, nombres[2]);
+		SeleniumUtils.textoNoPresentePagina(driver, nombres[3]);
+		SeleniumUtils.textoNoPresentePagina(driver, nombres[4]);
+		
+	}
+	
+	@Test
+	//Comprar y ver que se actualiza correctamente el saldo
+	public void Prueba23(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
+		// Pinchamos en ver ofertas
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		//Cogemos el dinero que tiene
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'DropDownInfo2')]/a");
+		String saldoActual = elementos.get(0).getText();
+		String parts[] = saldoActual.split(",");
+		String saldo = parts[0];
+		
+		//Cogemos el precio de lo que vamos a comprar
+		elementos = PO_View.checkElement(driver, "free", "//tr[contains(@id, 'ofertas')]");
+		String partsPrecio[] = elementos.get(0).getText().split(" ");
+		String precio = partsPrecio[6];
+		String partsPrecioSinComa[] = precio.split(",");
+		String precioFinal = partsPrecioSinComa[0];
+		//Compramos
+		elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'botonBuy')]");
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		//Miramos salgo
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		
+		//Comprbamos que el saldo sea la resta
+		int resta = Integer.parseInt(saldo) - Integer.parseInt(precioFinal);
+		//Comprobamos que está el texto del saldo al tener role user
+		System.out.println(String.valueOf(resta)+",00 €");
+		PO_View.checkElement(driver, "text", String.valueOf(resta)+",00 €");
+		
+		
+	}
+	
+	@Test
+	//Comprar y ver que se actualiza correctamente el saldo a 0 en este caso
+	public void Prueba24(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
+		// Pinchamos en ver ofertas
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		//Cogemos el dinero que tiene
+		//Miramos saldo
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		PO_View.checkElement(driver, "text", "100,00 €");
+		
+		//Clickamos el buscador y buscamos la oferta que cuesta 100
+		elementos = PO_View.checkElement(driver, "free", "//input");
+		elementos.get(0).click();
+		PO_SearchBidView.fillForm(driver,"D1");
+		//Compramos
+		elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'botonBuy')]");
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		//Miramos saldo
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		
+		
+		PO_View.checkElement(driver, "text", "0,00 €");
+		
+		
+	}
+	
+	@Test
+	//Comprar y ver que da error 
+	public void Prueba25(){
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
+		// Pinchamos en ver ofertas
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		//Cogemos el dinero que tiene
+		//Miramos saldo
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		PO_View.checkElement(driver, "text", "100,00 €");
+		
+		//Clickamos el buscador y buscamos la oferta que cuesta 100
+		elementos = PO_View.checkElement(driver, "free", "//input");
+		elementos.get(0).click();
+		PO_SearchBidView.fillForm(driver,"D2");
+		//Compramos
+		elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'botonBuy')]");
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		//Buscamos ese producto para ver el error 
+		PO_SearchBidView.fillForm(driver,"D2");
+		SeleniumUtils.esperarSegundos(driver, 2);
+		PO_RegisterView.checkKey(driver, "Error.buy", PO_Properties.getSPANISH());
+		
+		//Miramos saldo
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();	
+		PO_View.checkElement(driver, "text", "100,00 €");
+		
+		
 	}
 
 

@@ -88,8 +88,8 @@ public class InsertSampleDataService {
 				add(new Bid("Oferta D2", "Oferta de prueba D2", 20.2, user4));
 				add(new Bid("Oferta D3", "Oferta de prueba D3", 54.2, user4));
 				
-				add(new Bid("Super D1", "Super de prueba D3", 54.2, user4));
-				add(new Bid("Super D2", "Super de prueba D3", 54.2, user4));
+				add(new Bid("Super D1", "Super de prueba D3", 100.0, user4));
+				add(new Bid("Super D2", "Super de prueba D3", 110.0, user4));
 				add(new Bid("Super D3", "Super de prueba D3", 54.2, user4));
 				add(new Bid("Super D4", "Super de prueba D3", 54.2, user4));
 				add(new Bid("Super D5", "Super de prueba D3", 54.2, user4));
