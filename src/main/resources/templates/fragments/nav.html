@@ -14,24 +14,30 @@
 			th:object="${user}">
 			<ul class="nav navbar-nav">
 
-				<li><a href="/" th:text="#{nav.home}" style="color: black"></a></li>
+				<li><a href="/" style="color: black"> <i
+						class="glyphicon glyphicon-home"></i> <span th:text="#{nav.home}"></span>
+				</a></li>
 				<li id="users-menu" class="dropdown"
 					sec:authorize="hasRole('ROLE_ADMIN')"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#"
-					th:text="#{nav.user}" style="color: black"> <span class="caret"></span>
+					style="color: black"> <i class="glyphicon glyphicon-user"></i>
+						<span th:text="#{nav.user}"></span><span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/list" th:text="#{nav.user.view}"
 							style="color: black"></a></li>
 					</ul></li>
-				<li id="bids-menu" class="dropdown" sec:authorize="hasRole('ROLE_USER')"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"
-					style="color: black">
-				<span th:text="#{nav.bid.bids}"></span> <span class="caret"></span> </a> 
+				<li id="bids-menu" class="dropdown"
+					sec:authorize="hasRole('ROLE_USER')"><a
+					class="dropdown-toggle" data-toggle="dropdown" href="#"
+					style="color: black"> <i class="glyphicon glyphicon-lock">
+					</i> <span th:text="#{nav.bid.bids}"></span> <span class="caret"></span>
+				</a>
 					<ul class="dropdown-menu">
 						<li sec:authorize="hasRole('ROLE_USER')"><a
 							th:text="#{nav.bid.add}" href="/bid/add"></a></li>
-						<li sec:authorize="hasRole('ROLE_USER')"><a href="/bid/list" th:text="#{nav.bid.list}"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"><a href="/bid/list"
+							th:text="#{nav.bid.list}"></a></li>
 						<li sec:authorize="hasRole('ROLE_USER')"><a
 							href="/bid/mybids" th:text="#{nav.bid.mybids}"></a></li>
 						<li sec:authorize="hasRole('ROLE_USER')"><a
@@ -68,24 +74,26 @@
 				<li sec:authorize="isAuthenticated()" id="user-menu"
 					class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false" href="#"
-					style="color: black"> <span th:text="${session.email}"></span> <span class="caret"></span>
+					aria-expanded="false" href="#" style="color: black"> <span
+						th:text="${session.email}"></span> <span class="caret"></span>
 				</a>
-					<ul class="dropdown-menu" >
-						<li sec:authorize="hasRole('ROLE_USER')" 
+					<ul class="dropdown-menu">
+						<li sec:authorize="hasRole('ROLE_USER')"
 							style="text-align: center; font-size: 16pt" id="DropDownInfo"><a
 							th:text="#{money.available}"></a></li>
 						<li sec:authorize="hasRole('ROLE_USER')"
 							style="text-align: center; font-size: 16pt" id="DropDownInfo2"><a
 							th:text="${session.money}"></a></li>
-						<li sec:authorize="hasRole('ROLE_USER')"><a href="/conversation"
-							th:text="#{nav.conversations}"
-							style="color: black; text-align: center">
+						<li sec:authorize="hasRole('ROLE_USER')"><a
+							href="/conversation"
+							style="color: black; text-align: center; font-weight: bold">
+								<i class="glyphicon glyphicon-envelope"></i> <span
+								th:text="#{nav.conversations}"></span>
 						</a></li>
 						<li sec:authorize="isAuthenticated()"><a href="/logout"
-							th:text="#{logout.message}"
 							style="color: red; font-size: 18; text-align: center; font-weight: bold">
-								<span class="glyphicon glyphicon-log-in"></span>
+								<i class="glyphicon glyphicon-log-out"></i> <span
+								th:text="#{logout.message}"></span>
 						</a></li>
 					</ul></li>
 			</ul>
