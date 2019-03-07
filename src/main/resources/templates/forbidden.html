@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<h1 th:text="#{forbidden.title}" style="color: red"></h1>
+		<p th:text="#{forbidden.message}"></p>
+		<br />
+		<h2>
+			<p>
+				<a href="/" th:text="#{forbidden.click}"></a>
+			</p>
+	</div>
+	<footer th:replace=" fragments/footer" />
+</body>
+
+</html>

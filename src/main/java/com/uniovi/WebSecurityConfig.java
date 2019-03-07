@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
+import com.uniovi.handlers.CustomAccessDeniedHandler;
+import com.uniovi.handlers.CustomAuthenticationSuccessHandler;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -27,6 +30,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
 		return new CustomAuthenticationSuccessHandler();
 	}
+	
+	@Bean
+	public CustomAccessDeniedHandler customAccessDeniedHandler() {
+		return new CustomAccessDeniedHandler();
+	}
+
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -43,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				and()
 					.logout().
 				permitAll();
+		http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
 	}
 
 	@Autowired
