@@ -19,7 +19,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="bid : ${bidList}">
+					<tr id = "ofertas" th:each="bid : ${bidList}">
 						<td th:text="${bid.title}"></td>
 						<td th:text="${bid.description}"></td>
 						<td th:text="${bid.getPriceFormatted()}"></td>

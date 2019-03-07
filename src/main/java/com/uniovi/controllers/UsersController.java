@@ -73,7 +73,7 @@ public class UsersController {
 		user.setMoney(100.0);
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
-		return "redirect:home";
+		return "redirect:";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
