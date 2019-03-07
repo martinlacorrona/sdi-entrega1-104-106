@@ -1,4 +1,4 @@
-package com.uniovi;
+package com.uniovi.handlers;
  
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
