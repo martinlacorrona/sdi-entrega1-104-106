@@ -35,7 +35,7 @@
 						<td th:text="${bid.getPriceFormatted()}"></td>
 						<td><div th:if="${bid.isBuyed()}">
 								<button type="submit" class="btn btn-default"
-									th:text="#{bid.buyed}"></button>
+									th:text="#{bid.buyed}" disabled></button>
 							</div>
 							<div th:unless="${bid.isBuyed()}">
 								<div th:if="${bid.user.email} != ${session.email}">

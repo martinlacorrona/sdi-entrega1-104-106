@@ -33,7 +33,7 @@ public class BidsService {
 	 */
 	public List<Bid> getBidsForUser(User user) {
 		List<Bid> bids = new ArrayList<Bid>();
-		bids = bidsRepository.findAllByUserActive(user);
+		bids = bidsRepository.findAllByUserNotDeleted(user);
 		return bids;
 	}
 	
