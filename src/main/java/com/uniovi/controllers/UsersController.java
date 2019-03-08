@@ -1,5 +1,7 @@
 package com.uniovi.controllers;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -64,7 +66,7 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String signup(@Validated User user, BindingResult result) {
+	public String signup(@Validated User user, BindingResult result, HttpSession session) {
 		signUpFormValidator.validate(user, result);
 		if (result.hasErrors()) {
 			return "signup";
@@ -73,7 +75,13 @@ public class UsersController {
 		user.setMoney(100.0);
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
-		return "redirect:";
+		
+		//Agrega estos dos atributos ya que al hacer autologin no pasa por
+		//el handler de authenticationsucceshandler.
+		session.setAttribute("money", user.getMoneyFormatted());
+		session.setAttribute("email", user.getEmail());
+
+		return "redirect:login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
