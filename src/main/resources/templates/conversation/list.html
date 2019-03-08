@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<h2 th:text="#{conversation.list.title}"></h2>
+
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th th:text="#{conversation.list.partipants}"></th>
+						<th th:text="#{conversation.list.bid_title}"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="conversation : ${conversationList}">
+						<td th:text="${conversation.bid.user.email} + ', ' + ${conversation.interestedUser.email}"></td>
+						<td th:text="${conversation.bid.title}"></td>
+						<td />
+						<td><form action="/conversation"
+								method="post">
+								<input type="hidden" th:value="${conversation.id}"
+									name="conversation_id" />
+								<button type="submit" class="btn btn-default"
+									th:text="#{conversation.list.contact}"></button>
+							</form></td>
+						<td><form action="/conversation/delete"
+								method="post">
+								<input type="hidden" th:value="${conversation.id}"
+									name="conversation_id" />
+								<button type="submit" class="btn btn-default"
+									th:text="#{conversation.list.delete}"
+									style="background-color: #C24641; color: white"></button>
+							</form></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

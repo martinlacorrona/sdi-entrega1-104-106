@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<h2 th:text="#{bid.search.title}"></h2>
+		<form class="navbar-form" action="/bid/list">
+			<div class="form-group">
+				<input name="searchText" type="text" class="form-control" size="50"
+					th:placeholder="#{bid.search.placeholder}">
+			</div>
+			<button type="submit" class="btn btn-default"
+				th:text="#{bid.search.search}"></button>
+		</form>
+
+
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th th:text="#{bid.list.title}"></th>
+						<th th:text="#{bid.list.description}"></th>
+						<th th:text="#{bid.list.price}"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="ofertas" th:each="bid : ${bidList}">
+						<td th:text="${bid.title}"></td>
+						<td th:text="${bid.description}"></td>
+						<td th:text="${bid.getPriceFormatted()}"></td>
+						<td><div th:if="${bid.isBuyed()}">
+								<button type="submit" class="btn btn-default"
+									th:text="#{bid.buyed}"></button>
+							</div>
+							<div th:unless="${bid.isBuyed()}">
+								<div th:if="${bid.user.email} != ${session.email}">
+									<form id="botonBuy" th:action="${'/bid/' + bid.id + '/buyed'}">
+										<button type="submit" class="btn btn-default"
+											style="background-color: #3CD951; color: white"
+											th:text="#{bid.buy}"></button>
+									</form>
+								</div>
+								<span class="text-danger" th:if="${session.error}!=null">
+									<span class="text-danger" th:if="${session.id} == ${bid.id}"
+									th:text="#{Error.buy}"> </span>
+							</div></td>
+						<td><div th:if="${bid.user.email} != ${session.email}">
+								<form action="/conversation" method="post">
+									<input type="hidden" th:value="${bid.id}" name="bid_id" />
+									<button type="submit" class="btn btn-default"
+										style="background-color: #0C9DFE; color: white"
+										th:text="#{bid.list.contact}"></button>
+								</form>
+							</div>
+							<div th:unless="${bid.user.email} != ${session.email}">
+								<button class="btn btn-default" th:text="#{bid.yourbid}"></button>
+							</div></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer th:replace="fragments/pagination" />
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

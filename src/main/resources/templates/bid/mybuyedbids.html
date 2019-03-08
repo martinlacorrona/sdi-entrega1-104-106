@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<h2 th:text="#{bid.list.title}"></h2>
+		<p th:text="#{bid.buyed.parraf}"></p>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th th:text="#{bid.list.title}"></th>
+						<th th:text="#{bid.list.description}"></th>
+						<th th:text="#{bid.list.price}"></th>
+						<th th:text="#{bid.list.buyeremail}"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="bid : ${bidList}">
+						<td th:text="${bid.title}"></td>
+						<td th:text="${bid.description}"></td>
+						<td th:text="${bid.getPriceFormatted()}"></td>
+						<td th:text="${bid.user.email}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

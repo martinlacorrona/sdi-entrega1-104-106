@@ -1,6 +1,5 @@
-
 <!-- nav.html -->
-<nav class="navbar navbar-inverse">
+<nav class="navbar">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -8,59 +7,95 @@
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<img src="/img/student-48.png" alt="logo" />
+			<a href="/"> <img src="/img/Logo.png" alt="logo" />
+			</a>
 		</div>
-		<div class="collapse navbar-collapse" id="myNavbar">
-			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-				>
-				<li><a href="/">Home</a></li>
-				<li id="marks-menu" class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#" th:text="#{nav.mark}"><span
-						class="caret"></span> </a>
-					<ul class="dropdown-menu">
-						<li sec:authorize="hasRole('ROLE_PROFESSOR')"><a
-							href="/mark/add" th:text="#{nav.mark.add}"></a></li>
-						<li><a href="/mark/list" th:text="#{nav.mark.view}"></a></li>
-					</ul></li>
+		<div class="collapse navbar-collapse" id="myNavbar"
+			th:object="${user}">
+			<ul class="nav navbar-nav">
+
+				<li><a href="/" style="color: black"> <i
+						class="glyphicon glyphicon-home"></i> <span th:text="#{nav.home}"></span>
+				</a></li>
 				<li id="users-menu" class="dropdown"
 					sec:authorize="hasRole('ROLE_ADMIN')"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#"
-					th:text="#{nav.user}"> <span class="caret"></span>
+					style="color: black"> <i class="glyphicon glyphicon-user"></i>
+						<span th:text="#{nav.user}"></span><span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/user/add" th:text="#{nav.user.add}"></a></li>
-						<li><a href="/user/list" th:text="#{nav.user.view}"></a></li>
+						<li><a href="/user/list" th:text="#{nav.user.view}"
+							style="color: black"></a></li>
+					</ul></li>
+				<li id="bids-menu" class="dropdown"
+					sec:authorize="hasRole('ROLE_USER')"><a
+					class="dropdown-toggle" data-toggle="dropdown" href="#"
+					style="color: black"> <i class="glyphicon glyphicon-lock">
+					</i> <span th:text="#{nav.bid.bids}"></span> <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li sec:authorize="hasRole('ROLE_USER')"><a
+							th:text="#{nav.bid.add}" href="/bid/add"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"><a href="/bid/list"
+							th:text="#{nav.bid.list}"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"><a
+							href="/bid/mybids" th:text="#{nav.bid.mybids}"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"><a
+							href="/bid/mybuyedbids" th:text="#{nav.bid.mybuyedbids}"></a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a id="btnLanguage" href=" #"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"
-					aria-haspopup="true" aria-expanded="false"> <span
-						th:text="#{language.change}"></span> <span class="caret"></span>
+					aria-haspopup="true" aria-expanded="false" style="color: black">
+						<span th:text="#{language.change}"></span> <span class="caret"></span>
 				</a>
 					<ul id="languageDropdownMenuButton" class="dropdown-menu">
 						<li><a id="btnEnglish" value="EN"> <img
 								th:src="@{/img/if_uk_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.en}">Ingles</span>
+								th:text="#{language.en}" style="color: black"></span>
 						</a></li>
 						<li><a id="btnSpanish" value="ES"> <img
 								th:src="@{/img/if_spain_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.es}">Español</span>
+								th:text="#{language.es}" style="color: black"></span>
 						</a></li>
 					</ul></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/signup"
-					th:text="#{signup.message}"> <span
-						class="glyphicon glyphicon-user"></span> Registrate
+					th:text="#{signup.message}" style="color: black"> <span
+						class="glyphicon glyphicon-user"></span>
 				</a></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/login"
-					th:text="#{login.message}"> <span
-						class="glyphicon glyphicon-log-in"></span> Identificate
+					th:text="#{login.message}" style="color: black"> <span
+						class="glyphicon glyphicon-log-in"></span>
 				</a></li>
-				<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
-						class="glyphicon glyphicon-log-out"></span> Desconectar
-				</a></li>
+
+				<li sec:authorize="isAuthenticated()" id="user-menu"
+					class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false" href="#" style="color: black"> <span
+						th:text="${session.email}"></span> <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li sec:authorize="hasRole('ROLE_USER')"
+							style="text-align: center; font-size: 16pt" id="DropDownInfo"><a
+							th:text="#{money.available}"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"
+							style="text-align: center; font-size: 16pt" id="DropDownInfo2"><a
+							th:text="${session.money}"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"><a
+							href="/conversation"
+							style="color: black; text-align: center; font-weight: bold">
+								<i class="glyphicon glyphicon-envelope"></i> <span
+								th:text="#{nav.conversations}"></span>
+						</a></li>
+						<li sec:authorize="isAuthenticated()"><a href="/logout"
+							style="color: red; font-size: 18; text-align: center; font-weight: bold">
+								<i class="glyphicon glyphicon-log-out"></i> <span
+								th:text="#{logout.message}"></span>
+						</a></li>
+					</ul></li>
 			</ul>
 		</div>
 	</div>
