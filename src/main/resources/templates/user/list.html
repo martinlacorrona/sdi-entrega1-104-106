@@ -8,8 +8,7 @@
 	<div class="container">
 		<h2 th:text="#{list.users}"></h2>
 		<p th:text="#{list.p2}"></p>
-		<button class="btn btn-default" id="deleteButton"
-			style="background-color: #C24641; color: white" th:text="#{users.delete}">
+		<button class="btn btn-default" id="deleteButton" th:text="#{users.delete}">
 		</button>
 		<script th:inline="javascript">
 			/*<![CDATA[*/
@@ -21,11 +20,12 @@
 				for (var r = 1, n = table.rows.length; r < n; r++) {
 					// Parse id users
 					var id = String(table.rows[r].cells[0].innerHTML);
-					id = id.slice(0, id.length - 2);
-					id = id.substr(31);
-
+					var res = id.split(" ");
+					var res2 = res[2].split("="); // "userx"
+					var res3= res2[1].split('"');
+					var idCheckbox = res3[1];
+					id = idCheckbox.slice(4,idCheckbox.length);
 					//If checkbox is mark, added to list
-					var idCheckbox = 'user' + id;
 					if (document.getElementById(idCheckbox).checked) {
 						listIds[totalUsersToDelete] = id;
 						totalUsersToDelete++;
@@ -34,6 +34,7 @@
 				if (listIds.length > 0)
 					window.location.replace(urlUpdate + listIds);
 			});
+			/*]]>*/
 			/*]]>*/
 		</script>
 		<div class="table-responsive">
