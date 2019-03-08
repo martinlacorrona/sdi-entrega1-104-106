@@ -50,7 +50,12 @@
 				</thead>
 				<tbody>
 					<tr th:each="user : ${usersList}">
-						<td><input  type="checkbox" th:id="${'user' + user.id}"></input></td>
+						<div th:if="${user.email} != ${session.email}">
+							<td><input  type="checkbox" th:id="${'user' + user.id}" ></input></td>
+						</div>
+						<div th:unless="${user.email} != ${session.email}">
+							<td><input  type="checkbox" th:id="${'user' + user.id}" disabled ></input></td>
+						</div>
 						<td th:text="${user.email}"></td>
 						<td></td>
 						<td th:text="${user.name}"></td>
