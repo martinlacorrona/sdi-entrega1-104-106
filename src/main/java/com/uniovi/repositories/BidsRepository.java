@@ -90,4 +90,12 @@ public interface BidsRepository extends CrudRepository<Bid, Long> {
 	@Transactional
 	@Query("UPDATE Bid SET status = 'BUYED' WHERE id = ?1 ")
 	void updateStatusBuyed(Long id_bid);
+	
+	/**
+	 * Destaca una BID poniendo el specialBid a true
+	 */
+	@Modifying
+	@Transactional
+	@Query("UPDATE Bid SET specialBid = true WHERE id = ?1 ")
+	void updateToTrueSepecialBid(Long id_bid);
 }

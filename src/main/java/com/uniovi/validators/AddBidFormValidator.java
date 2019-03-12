@@ -37,5 +37,6 @@ public class AddBidFormValidator implements Validator {
 		if (bid.getPrice() > 10000) {
 			errors.rejectValue("price", "Error.bid.add.price.max");
 		}
+		
 	}
 }

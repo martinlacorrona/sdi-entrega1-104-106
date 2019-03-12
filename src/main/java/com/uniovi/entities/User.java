@@ -132,6 +132,13 @@ public class User {
 		}
 		return false;
 	}
+	
+	public boolean isOutstanding() {
+		if (this.money - 20 >= 0) {
+			return true;
+		}
+		return false;
+	}
 
 	public void setMoney(Double money) {
 		this.money = money;

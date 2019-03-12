@@ -141,5 +141,24 @@ public class BidsController {
 
 		return "redirect:/bid/list";
 	}
+	
+	@RequestMapping("/bid/mybids/oustanding/{id}")
+	public String oustanding(@PathVariable Long id,  HttpServletRequest request,Principal principal) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		Bid bid = bidsService.getBid(id);
+		// Actualizamos dinero del user
+		Double finalMoney = activeUser.getMoney() - 20;
+		//Tiene que tener dinero y estar activada la oferta.
+		if (activeUser.isOutstanding() && bid.getStatus() == BidStatus.ACTIVED) {
+			bidsService.updateToTrueSpecialBid(id);
+			activeUser.setMoney(finalMoney);
+			usersService.updateMoney(finalMoney, email);
+			request.getSession().setAttribute("money", activeUser.getMoneyFormatted());
+			bid.setSpecialBid(true);
+		}
+		return "redirect:/bid/mybids";
+	}
 
 }

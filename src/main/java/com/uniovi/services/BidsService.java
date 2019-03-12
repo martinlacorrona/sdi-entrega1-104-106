@@ -119,4 +119,10 @@ public class BidsService {
 		bidsRepository.updateStatusBuyed(id_bid);
 	}
 	
+	/**
+	 * Metodo para destacar una oferta.
+	 */
+	public void updateToTrueSpecialBid(Long id) {
+		bidsRepository.updateToTrueSepecialBid(id);
+	}
 }
