@@ -70,9 +70,9 @@ public class BidsService {
 	 * @param searchText
 	 * @return
 	 */
-	public Page<Bid> getBidsPaginationSearchTitle(Pageable pageable, String searchText) {
+	public Page<Bid> getBidsPaginationSearchTitle(Pageable pageable, String searchText, User userSearched) {
 		searchText = "%" + searchText + "%";
-		return bidsRepository.searchByTitle(pageable, searchText);
+		return bidsRepository.searchByTitle(pageable, searchText, userSearched);
 	}
 	
 	/**

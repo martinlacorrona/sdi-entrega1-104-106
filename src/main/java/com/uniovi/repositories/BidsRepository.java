@@ -75,8 +75,8 @@ public interface BidsRepository extends CrudRepository<Bid, Long> {
 	 * @param seachtext
 	 * @return
 	 */
-	@Query("SELECT r FROM Bid r WHERE (LOWER(r.title) LIKE LOWER(?1)) ")
-	Page<Bid> searchByTitle(Pageable pageable, String seachtext);
+	@Query("SELECT r FROM Bid r WHERE (LOWER(r.title) LIKE LOWER(?1)) AND r.user != ?2 ")
+	Page<Bid> searchByTitle(Pageable pageable, String seachtext, User userSearched);
 	
 	/**
 	 * Compra una Bid.

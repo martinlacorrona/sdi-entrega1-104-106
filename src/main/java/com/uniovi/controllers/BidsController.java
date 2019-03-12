@@ -81,7 +81,7 @@ public class BidsController {
 	}
 
 	@RequestMapping("/bid/mybids/delete/{id}")
-	public String delete(@PathVariable Long id) {
+	public String delete(@PathVariable Long id, Principal principal) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
@@ -92,12 +92,13 @@ public class BidsController {
 	}
 
 	@RequestMapping(value = "/bid/list", method = RequestMethod.GET)
-	public String getAllBids(Model model, Pageable pageable, HttpServletRequest request,
+	public String getAllBids(Model model, Pageable pageable, HttpServletRequest request, Principal principal,
 			@RequestParam(value = "", required = false) String searchText) {
+		User activeUser = usersService.getUserByEmail(principal.getName());
 		Page<Bid> bids = new PageImpl<Bid>(new LinkedList<Bid>());
 		if (searchText == null)
 			searchText = "";
-		bids = bidsService.getBidsPaginationSearchTitle(pageable, searchText);
+		bids = bidsService.getBidsPaginationSearchTitle(pageable, searchText, activeUser);
 
 		model.addAttribute("bidList", bids.getContent());
 		model.addAttribute("page", bids);
@@ -107,7 +108,8 @@ public class BidsController {
 	}
 
 	@RequestMapping(value = "/bid/{id}/buyed", method = RequestMethod.GET)
-	public String setBuyedTrue(Model model, HttpServletRequest request, Principal principal, @PathVariable Long id, String error) {
+	public String setBuyedTrue(Model model, HttpServletRequest request, Principal principal, @PathVariable Long id,
+			String error) {
 		// Datos del usuario
 		String email = principal.getName();
 		User activeUser = usersService.getUserByEmail(email);
@@ -116,19 +118,19 @@ public class BidsController {
 		double precio = bid.getPrice();
 		// Si tiene dinero suficiente lo compra
 		if (activeUser.isPurschable(precio)) {
-			//Actualizamos dinero del comprador
+			// Actualizamos dinero del comprador
 			bidsService.setUserBuyed(idBuyer, id);
 			Double finalMoney = activeUser.getMoney() - precio;
 			activeUser.setMoney(finalMoney);
 			usersService.updateMoney(finalMoney, email);
 			request.getSession().setAttribute("money", activeUser.getMoneyFormatted());
 
-			//Actualizamos dinero del vendedor
+			// Actualizamos dinero del vendedor
 			User seller = usersService.getUserByEmail(bid.getUser().getEmail());
-			Double finalMoneySeller = seller.getMoney() + precio; //Dinero que tendria ahora.
+			Double finalMoneySeller = seller.getMoney() + precio; // Dinero que tendria ahora.
 			seller.setMoney(finalMoneySeller);
 			usersService.updateMoney(finalMoneySeller, seller.getEmail());
-			
+
 			// Reiniciamos
 			request.getSession().setAttribute("error", null);
 			request.getSession().setAttribute("id", id);
