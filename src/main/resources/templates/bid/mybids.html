@@ -22,7 +22,7 @@
 					<tr id = "ofertas" th:each="bid : ${bidList}">
 						<td th:text="${bid.title}"></td>
 						<td th:text="${bid.description}"></td>
-						<td th:text="${bid.getPriceFormatted()}></td>
+						<td th:text="${bid.getPriceFormatted()"}></td>
 						<td />
 						<div th:if="${bid.status == T(com.uniovi.entities.BidStatus).ACTIVED}">
 							<td><form id="boton" th:action="${'/bid/mybids/delete/' + bid.id}">
