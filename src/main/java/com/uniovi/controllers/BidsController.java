@@ -112,15 +112,23 @@ public class BidsController {
 		String email = principal.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		Long idBuyer = activeUser.getId();
-		double precio = bidsService.getBid(id).getPrice();
+		Bid bid = bidsService.getBid(id);
+		double precio = bid.getPrice();
 		// Si tiene dinero suficiente lo compra
 		if (activeUser.isPurschable(precio)) {
+			//Actualizamos dinero del comprador
 			bidsService.setUserBuyed(idBuyer, id);
 			Double finalMoney = activeUser.getMoney() - precio;
 			activeUser.setMoney(finalMoney);
 			usersService.updateMoney(finalMoney, email);
 			request.getSession().setAttribute("money", activeUser.getMoneyFormatted());
 
+			//Actualizamos dinero del vendedor
+			User seller = usersService.getUserByEmail(bid.getUser().getEmail());
+			Double finalMoneySeller = seller.getMoney() + precio; //Dinero que tendria ahora.
+			seller.setMoney(finalMoneySeller);
+			usersService.updateMoney(finalMoneySeller, seller.getEmail());
+			
 			// Reiniciamos
 			request.getSession().setAttribute("error", null);
 			request.getSession().setAttribute("id", id);

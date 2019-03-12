@@ -45,6 +45,13 @@
 											th:text="#{bid.buy}"></button>
 									</form>
 								</div>
+								<div th:unless="${bid.user.email} != ${session.email}">
+									<form id="botonBuy" th:action="${'/bid/' + bid.id + '/buyed'}">
+										<button type="submit" class="btn btn-default"
+											style="background-color: #3CD951; color: white"
+											th:text="#{bid.buy}" disabled></button>
+									</form>
+								</div>
 								<span class="text-danger" th:if="${session.error}!=null">
 									<span class="text-danger" th:if="${session.id} == ${bid.id}"
 									th:text="#{Error.buy}"> </span>
@@ -58,7 +65,7 @@
 								</form>
 							</div>
 							<div th:unless="${bid.user.email} != ${session.email}">
-								<button class="btn btn-default" th:text="#{bid.yourbid}"></button>
+								<button class="btn btn-default" th:text="#{bid.yourbid}" disabled></button>
 							</div></td>
 					</tr>
 				</tbody>
