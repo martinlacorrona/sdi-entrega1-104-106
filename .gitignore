@@ -19,3 +19,6 @@
 /nbdist/
 /.nb-gradle/
 /build/
+
+#Word y excel
+/doc/*.temp
