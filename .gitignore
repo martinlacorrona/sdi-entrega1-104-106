@@ -21,4 +21,4 @@
 /build/
 
 #Word y excel
-/doc/*.temp
+/docs/*.tmp
