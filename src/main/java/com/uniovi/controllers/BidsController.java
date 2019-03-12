@@ -59,7 +59,7 @@ public class BidsController {
 		bid.setUser(activeUser);
 		bid.setDate(new Date());
 		bid.setStatus(BidStatus.ACTIVED);
-
+		//bid.setSpecialBid(specialBid);
 		bidsService.addBid(bid);
 		return "redirect:/bid/mybids";
 	}
