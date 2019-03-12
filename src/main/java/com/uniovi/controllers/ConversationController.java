@@ -153,4 +153,24 @@ public class ConversationController {
 
 		return "redirect:/conversation";
 	}
+	
+	@RequestMapping("/conversation/{id}/update")
+	public String updateList(Model model, HttpServletRequest request, @PathVariable Long id) {
+		Conversation c = conversationService.getConversation(id);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		// Chequeo, comprobar si es suya la conversacion, si no sera expulsado a la
+		// vista de conversaciones.
+		// Comprobamos si es el que envia o el que lo vende.
+		if (c.getBid().getUser().getId() != activeUser.getId() && c.getInterestedUser().getId() != activeUser.getId())
+			return "redirect:/conversation";
+
+		// Mostrar mensajes actuales
+		List<Message> messages = messageService.getMessagesFromConversation(c);
+
+		model.addAttribute("messageList", messages);
+		
+		return "conversation/chat :: tableChat";
+	}
 }
