@@ -1,13 +1,12 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,10 +39,8 @@ public class ConversationController {
 	private MessageService messageService;
 
 	@RequestMapping(value = "/conversation", method = RequestMethod.GET)
-	public String getConversations(Model model, HttpServletRequest request) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
+	public String getConversations(Model model, HttpServletRequest request, Principal principal) {
+		User activeUser = usersService.getUserByEmail(principal.getName());
 
 		List<Conversation> conversations = conversationService.getConversationUser(activeUser);
 
@@ -53,15 +50,13 @@ public class ConversationController {
 	}
 
 	@RequestMapping(value = "/conversation", method = RequestMethod.POST)
-	public String getConversationsPost(HttpServletRequest request,
+	public String getConversationsPost(HttpServletRequest request, Principal principal,
 			@RequestParam(value = "bid_id", required = false) String bid_id,
 			@RequestParam(value = "conversation_id", required = false) String conversation_id) {
 		// Si ya existe la conversacion que vaya directamente a la conversacion
 		if (conversation_id != null && conversation_id.length() > 0)
 			return "redirect:/conversation/" + conversation_id;
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
+		User activeUser = usersService.getUserByEmail(principal.getName());
 
 		Long conversationID;
 		Bid bid = bidService.getBid(Long.parseLong(bid_id));
@@ -82,11 +77,10 @@ public class ConversationController {
 	}
 
 	@RequestMapping(value = "/conversation/{id}", method = RequestMethod.GET)
-	public String getConversationId(Model model, HttpServletRequest request, @PathVariable Long id) {
+	public String getConversationId(Model model, HttpServletRequest request, Principal principal,
+			@PathVariable Long id) {
 		Conversation c = conversationService.getConversation(id);
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
+		User activeUser = usersService.getUserByEmail(principal.getName());
 		// Chequeo, comprobar si es suya la conversacion, si no sera expulsado a la
 		// vista de conversaciones.
 		// Comprobamos si es el que envia o el que lo vende.
@@ -104,12 +98,10 @@ public class ConversationController {
 	}
 
 	@RequestMapping(value = "/conversation/{id}", method = RequestMethod.POST)
-	public String getConversationIdPost(Model model, HttpServletRequest request,
+	public String getConversationIdPost(Model model, HttpServletRequest request, Principal principal,
 			@RequestParam("message") String message, @PathVariable Long id) {
 		Conversation c = conversationService.getConversation(id);
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
+		User activeUser = usersService.getUserByEmail(principal.getName());
 		// Chequeo, comprobar si es suya la conversacion, si no sera expulsado a la
 		// vista de conversaciones.
 		// Comprobamos si es el que envia o el que lo vende.
@@ -134,14 +126,12 @@ public class ConversationController {
 	}
 
 	@RequestMapping(value = "/conversation/delete", method = RequestMethod.POST)
-	public String getConversationIdPost(Model model, HttpServletRequest request,
+	public String getConversationIdPost(Model model, HttpServletRequest request, Principal principal,
 			@RequestParam("conversation_id") Long conversation_id) {
 		Conversation c = conversationService.getConversation(conversation_id);
 		if (c == null) // Si no existe no hay nada que borrar
 			return "redirect:/conversation/";
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
+		User activeUser = usersService.getUserByEmail(principal.getName());
 		// Chequeo, comprobar si es suya la conversacion, si no sera expulsado a la
 		// vista de conversaciones.
 		// Comprobamos si es el que envia o el que lo vende.
@@ -153,13 +143,11 @@ public class ConversationController {
 
 		return "redirect:/conversation";
 	}
-	
+
 	@RequestMapping("/conversation/{id}/update")
-	public String updateList(Model model, HttpServletRequest request, @PathVariable Long id) {
+	public String updateList(Model model, HttpServletRequest request, Principal principal, @PathVariable Long id) {
 		Conversation c = conversationService.getConversation(id);
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
+		User activeUser = usersService.getUserByEmail(principal.getName());
 		// Chequeo, comprobar si es suya la conversacion, si no sera expulsado a la
 		// vista de conversaciones.
 		// Comprobamos si es el que envia o el que lo vende.
@@ -170,7 +158,7 @@ public class ConversationController {
 		List<Message> messages = messageService.getMessagesFromConversation(c);
 
 		model.addAttribute("messageList", messages);
-		
+
 		return "conversation/chat :: tableChat";
 	}
 }

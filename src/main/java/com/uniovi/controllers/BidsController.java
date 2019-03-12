@@ -1,5 +1,6 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -46,16 +47,14 @@ public class BidsController {
 	}
 
 	@RequestMapping(value = "/bid/add", method = RequestMethod.POST)
-	public String setBid(@Validated Bid bid, BindingResult result, HttpServletRequest request) {
+	public String setBid(@Validated Bid bid, BindingResult result, HttpServletRequest request, Principal principal) {
 		addBidFormValidator.validate(bid, result);
 		if (result.hasErrors()) {
 			return "bid/add";
 		}
 
 		// Sacamos el usuario
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
+		User activeUser = usersService.getUserByEmail(principal.getName());
 
 		bid.setUser(activeUser);
 		bid.setDate(new Date());
@@ -66,20 +65,16 @@ public class BidsController {
 	}
 
 	@RequestMapping(value = "/bid/mybids", method = RequestMethod.GET)
-	public String getListBid(Model model, HttpServletRequest request) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
+	public String getListBid(Model model, HttpServletRequest request, Principal principal) {
+		User activeUser = usersService.getUserByEmail(principal.getName());
 
 		model.addAttribute("bidList", bidsService.getBidsForUser(activeUser));
 		return "bid/mybids";
 	}
 
 	@RequestMapping(value = "/bid/mybuyedbids", method = RequestMethod.GET)
-	public String getBuyedListBid(Model model, HttpServletRequest request) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
+	public String getBuyedListBid(Model model, HttpServletRequest request, Principal principal) {
+		User activeUser = usersService.getUserByEmail(principal.getName());
 
 		model.addAttribute("bidList", bidsService.getBuyedBids(activeUser));
 		return "bid/mybuyedbids";
@@ -112,10 +107,9 @@ public class BidsController {
 	}
 
 	@RequestMapping(value = "/bid/{id}/buyed", method = RequestMethod.GET)
-	public String setBuyedTrue(Model model, HttpServletRequest request, @PathVariable Long id, String error) {
+	public String setBuyedTrue(Model model, HttpServletRequest request, Principal principal, @PathVariable Long id, String error) {
 		// Datos del usuario
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
+		String email = principal.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		Long idBuyer = activeUser.getId();
 		double precio = bidsService.getBid(id).getPrice();

@@ -1,10 +1,10 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,11 +46,9 @@ public class UsersController {
 	}
 
 	@RequestMapping("/user/delete/{ids}")
-	public String delete(@PathVariable String[] ids) {
+	public String delete(Principal principal, @PathVariable String[] ids) {
 		// Vamos a sacar la ID del usuario logueado para que no lo borre
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
+		User activeUser = usersService.getUserByEmail(principal.getName());
 		Long idLoguedUser = activeUser.getId();
 
 		for (String id : ids)
@@ -75,9 +73,9 @@ public class UsersController {
 		user.setMoney(100.0);
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
-		
-		//Agrega estos dos atributos ya que al hacer autologin no pasa por
-		//el handler de authenticationsucceshandler.
+
+		// Agrega estos dos atributos ya que al hacer autologin no pasa por
+		// el handler de authenticationsucceshandler.
 		session.setAttribute("money", user.getMoneyFormatted());
 		session.setAttribute("email", user.getEmail());
 
