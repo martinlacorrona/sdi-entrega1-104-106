@@ -19,14 +19,9 @@
 				var totalUsersToDelete = 0;
 				for (var r = 1, n = table.rows.length; r < n; r++) {
 					// Parse id users
-					var id = String(table.rows[r].cells[0].innerHTML);
-					var res = id.split(" ");
-					var res2 = res[2].split("="); // "userx"
-					var res3= res2[1].split('"');
-					var idCheckbox = res3[1];
-					id = idCheckbox.slice(4,idCheckbox.length);
+					var id = table.rows[r].cells[1].innerHTML;
 					//If checkbox is mark, added to list
-					if (document.getElementById(idCheckbox).checked) {
+					if (document.getElementById(id).checked) {
 						listIds[totalUsersToDelete] = id;
 						totalUsersToDelete++;
 					}
@@ -52,10 +47,10 @@
 				<tbody>
 					<tr th:each="user : ${usersList}">
 						<div th:if="${user.email} != ${session.email}">
-							<td><input  type="checkbox" th:id="${'user' + user.id}" ></input></td>
+							<td><input  type="checkbox" th:id="${user.id}" ></input></td>
 						</div>
 						<div th:unless="${user.email} != ${session.email}">
-							<td><input  type="checkbox" th:id="${'user' + user.id}" disabled ></input></td>
+							<td><input  type="checkbox" th:id="${user.id}" disabled ></input></td>
 						</div>
 						<td th:text="${user.id}"></td>
 						<td th:text="${user.email}"></td>
