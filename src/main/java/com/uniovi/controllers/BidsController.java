@@ -41,8 +41,14 @@ public class BidsController {
 	private AddBidFormValidator addBidFormValidator;
 
 	@RequestMapping(value = "/bid/add", method = RequestMethod.GET)
-	public String getBid(Model model) {
+	public String getBid(Model model, @RequestParam(value = "error", required = false) String error) {
 		model.addAttribute("bid", new Bid());
+		
+		//Si no tiene dinero suficiente mandara este error.
+		if(error != null) {
+			model.addAttribute("errorSpecialBid", true);
+		}
+			
 		return "bid/add";
 	}
 
@@ -56,21 +62,21 @@ public class BidsController {
 		}
 		// Sacamos el usuario
 		User activeUser = usersService.getUserByEmail(principal.getName());
-		if(bid.isSpecialBid()) {
-			if(!activeUser.isOutstanding()) {
-				return "bid/add";
+		if (bid.isSpecialBid()) {
+			if (!activeUser.isOutstanding()) {
+				return "redirect:/bid/add?error=true";
 			}
 		}
-		//Actualizamos el dinero
+		// Actualizamos el dinero
 		Double finalMoney = activeUser.getMoney() - 20;
 		activeUser.setMoney(finalMoney);
 		usersService.updateMoney(finalMoney, email);
 		request.getSession().setAttribute("money", activeUser.getMoneyFormatted());
-		//Añadimos la oferta
+		// Añadimos la oferta
 		bid.setUser(activeUser);
 		bid.setDate(new Date());
 		bid.setStatus(BidStatus.ACTIVED);
-		//bid.setSpecialBid(specialBid);
+		// bid.setSpecialBid(specialBid);
 		bidsService.addBid(bid);
 		return "redirect:/bid/mybids";
 	}
@@ -80,21 +86,21 @@ public class BidsController {
 		User activeUser = usersService.getUserByEmail(principal.getName());
 
 		model.addAttribute("bidList", bidsService.getBidsForUser(activeUser));
-		
-		if(request.getSession().getAttribute("mybids.error") != null) {
+
+		if (request.getSession().getAttribute("mybids.error") != null) {
 			model.addAttribute("mybids_error", "true");
-			request.getSession().setAttribute("mybids.error", null); 
+			request.getSession().setAttribute("mybids.error", null);
 		} else {
 			model.addAttribute("mybids_error", null);
 		}
-		
-		if(request.getSession().getAttribute("mybids.succes") != null) {
+
+		if (request.getSession().getAttribute("mybids.succes") != null) {
 			model.addAttribute("mybids_succes", "true");
-			request.getSession().setAttribute("mybids.succes", null); 
+			request.getSession().setAttribute("mybids.succes", null);
 		} else {
 			model.addAttribute("mybids_succes", null);
 		}
-		
+
 		return "bid/mybids";
 	}
 
@@ -130,15 +136,15 @@ public class BidsController {
 		model.addAttribute("page", bids);
 		model.addAttribute("urlPath", searchText);
 		request.getSession().setAttribute("url", "list");
-		
-		if(request.getSession().getAttribute("error") != null) {
+
+		if (request.getSession().getAttribute("error") != null) {
 			model.addAttribute("error", "true");
-			request.getSession().setAttribute("error", null); 
+			request.getSession().setAttribute("error", null);
 		}
-		
-		if(request.getSession().getAttribute("buyed") != null) {
+
+		if (request.getSession().getAttribute("buyed") != null) {
 			model.addAttribute("buyed", "true");
-			request.getSession().setAttribute("buyed", null); 
+			request.getSession().setAttribute("buyed", null);
 		}
 
 		return "bid/list";
@@ -168,46 +174,45 @@ public class BidsController {
 			seller.setMoney(finalMoneySeller);
 			usersService.updateMoney(finalMoneySeller, seller.getEmail());
 
-			//Atributo de comprado a la sesion
+			// Atributo de comprado a la sesion
 			request.getSession().setAttribute("buyed", "true");
 		} else {
 			request.getSession().setAttribute("error", "Error.buy");
 			request.getSession().setAttribute("id", id);
 		}
 
-		if(request.getSession().getAttribute("url") == "list") {
+		if (request.getSession().getAttribute("url") == "list") {
 			return "redirect:/bid/list";
 		} else {
 			return "redirect:/";
 		}
-		
+
 	}
-	
+
 	@RequestMapping("/bid/mybids/oustanding/{id}")
-	public String oustanding(@PathVariable Long id,  HttpServletRequest request,Principal principal) {
+	public String oustanding(@PathVariable Long id, HttpServletRequest request, Principal principal) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		Bid bid = bidsService.getBid(id);
-		
-		//Comprueba que es tuya la oferta
-		if(bid.getUser().getId() != activeUser.getId())
+
+		// Comprueba que es tuya la oferta
+		if (bid.getUser().getId() != activeUser.getId())
 			return "redirect:/bid/mybids";
-		
-		
+
 		// Actualizamos dinero del user
 		Double finalMoney = activeUser.getMoney() - 20;
 
-		//Dejamos los errores o si fue correcto enviado.
-		if(activeUser.isOutstanding()) {
+		// Dejamos los errores o si fue correcto enviado.
+		if (activeUser.isOutstanding()) {
 			request.getSession().setAttribute("mybids.succes", "true");
 			request.getSession().setAttribute("mybids.error", null);
 		} else {
 			request.getSession().setAttribute("mybids.error", "true");
 			request.getSession().setAttribute("mybids.succes", null);
 		}
-		
-		//Tiene que tener dinero y estar activada la oferta.
+
+		// Tiene que tener dinero y estar activada la oferta.
 		if (activeUser.isOutstanding() && bid.getStatus() == BidStatus.ACTIVED) {
 			bidsService.updateToTrueSpecialBid(id);
 			activeUser.setMoney(finalMoney);
