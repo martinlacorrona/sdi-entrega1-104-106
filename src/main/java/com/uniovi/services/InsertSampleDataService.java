@@ -63,6 +63,12 @@ public class InsertSampleDataService {
 		Bid c2 = new Bid("Oferta C2", "Oferta de prueba C2", 15.2, user3);
 		Bid d2 = new Bid("Oferta D2", "Oferta de prueba D2", 20.2, user4);
 		
+		Bid b4 = new Bid("Oferta B4", "Oferta de prueba B4", 30.2, user2);
+		Bid c4 = new Bid("Oferta C4", "Oferta de prueba C4", 30.2, user3);
+		
+		b4.setSpecialBid(true);
+		c4.setSpecialBid(true);
+		
 		Set user1Bids = new HashSet<Bid>() {
 			{
 				add(a1);
@@ -83,7 +89,7 @@ public class InsertSampleDataService {
 				add(b1);
 				add(b2);
 				add(new Bid("Oferta B3", "Oferta de prueba B3", 20.2, user2));
-				add(new Bid("Oferta B4", "Oferta de prueba B4", 30.2, user2));
+				add(b4);
 			}
 		};
 		user2.setBids(user2Bids);
@@ -92,7 +98,7 @@ public class InsertSampleDataService {
 				add(c1);
 				add(c2);
 				add(new Bid("Oferta C3", "Oferta de prueba C3", 20.2, user3));
-				add(new Bid("Oferta C4", "Oferta de prueba C4", 30.2, user3));
+				add(c4);
 			}
 		};
 		user3.setBids(user3Bids);

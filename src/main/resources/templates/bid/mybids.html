@@ -7,6 +7,12 @@
 	<div class="container">
 		<h2 th:text="#{bid.list.title}"></h2>
 		<p th:text="#{bid.list.parraf}"></p>
+		
+		<p>
+			<span th:if="${mybids_error} != null" class="alert alert-danger" th:text="#{bid.outstanding.error}"></span>
+			<span th:if="${mybids_succes} !=null" class="alert alert-success" th:text="#{bid.outstanding.succes}"></span>
+		</p>
+		
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
@@ -15,46 +21,53 @@
 						<th th:text="#{bid.list.description}"></th>
 						<th th:text="#{bid.list.price}"></th>
 						<th></th>
-						<th th:text="#{bid.list.type}" ></th>
-						<th class="col-md-1"></th>
+						<th th:text="#{bid.list.type}"></th>
 						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr id = "ofertas" th:each="bid : ${bidList}">
+					<tr id="ofertas" th:each="bid : ${bidList}">
 						<td th:text="${bid.title}"></td>
 						<td th:text="${bid.description}"></td>
 						<td th:text="${bid.getPriceFormatted()}"></td>
-						<div th:if="${bid.status == T(com.uniovi.entities.BidStatus).ACTIVED}">
-							<td><form id="boton" th:action="${'/bid/mybids/delete/' + bid.id}">
-							<button type="submit" class="btn btn-default"
-									th:text="#{bid.list.delete}"
-									style="background-color: #C24641; color: white"></button>
-							</form></td>
+						<div
+							th:if="${bid.status == T(com.uniovi.entities.BidStatus).ACTIVED}">
+							<td><form id="boton"
+									th:action="${'/bid/mybids/delete/' + bid.id}">
+									<button type="submit" class="btn btn-default"
+										th:text="#{bid.list.delete}"
+										style="background-color: #C24641; color: white"></button>
+								</form></td>
 						</div>
-						<div th:unless="${bid.status == T(com.uniovi.entities.BidStatus).ACTIVED}">
+						<div
+							th:unless="${bid.status == T(com.uniovi.entities.BidStatus).ACTIVED}">
 							<td>
-							<button class="btn btn-default"
-									th:text="#{bid.buyed}"
-									disabled></button></td>
+								<button class="btn btn-default" th:text="#{bid.buyed}" disabled></button>
+							</td>
 						</div>
-						<div th:if="${bid.specialBid == true}" >
+						<div th:if="${bid.specialBid}">
 							<td>
-								<button class="btn btn-default" th:text="#{bid.list.outstanding}" style="background-color: yellow; 
-								color: black"></button>
+								<button class="btn btn-default"
+									th:text="#{bid.list.outstanding}"
+									style="background-color: yellow; color: black" disabled></button>
 							</td>
 							<td></td>
 						</div>
-						
-						<div th:if="${bid.specialBid == false}">
+
+						<div th:unless="${bid.specialBid}">
 							<td>
-								<button class="btn btn-default" th:text="#{bid.list.normal}" style="background-color: light-yellow"disabled></button>
+								<button class="btn btn-default" th:text="#{bid.list.normal}"
+									disabled></button>
 							</td>
-							<td>
-								<form id="boton2" th:action="${'/bid/mybids/oustanding/' + bid.id}">
-								<button  type="submit" class="btn btn-default"
+							<td th:if="${bid.status == T(com.uniovi.entities.BidStatus).ACTIVED}">
+								<form id="boton2"
+									th:action="${'/bid/mybids/oustanding/' + bid.id}">
+									<button type="submit" class="btn btn-default"
 										th:text=#{bid.list.destacar}></button>
-								</form></td>
+								</form>
+							</td>
+							<td th:unless="${bid.status == T(com.uniovi.entities.BidStatus).ACTIVED}">
+							</td>
 						</div>
 					</tr>
 				</tbody>
