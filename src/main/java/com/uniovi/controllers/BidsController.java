@@ -174,6 +174,11 @@ public class BidsController {
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		Bid bid = bidsService.getBid(id);
+		
+		//Comprueba que es tuya la oferta
+		if(bid.getUser().getId() != activeUser.getId())
+			return "redirect:/bid/mybids";
+		
 		// Actualizamos dinero del user
 		Double finalMoney = activeUser.getMoney() - 20;
 		//Tiene que tener dinero y estar activada la oferta.
