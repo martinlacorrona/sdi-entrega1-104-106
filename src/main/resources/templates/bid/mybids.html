@@ -7,6 +7,12 @@
 	<div class="container">
 		<h2 th:text="#{bid.list.title}"></h2>
 		<p th:text="#{bid.list.parraf}"></p>
+		
+		<p>
+			<span th:if="${mybids_error} != null" class="alert alert-danger" th:text="#{bid.outstanding.error}"></span>
+			<span th:if="${mybids_succes} !=null" class="alert alert-success" th:text="#{bid.outstanding.succes}"></span>
+		</p>
+		
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>

@@ -80,6 +80,21 @@ public class BidsController {
 		User activeUser = usersService.getUserByEmail(principal.getName());
 
 		model.addAttribute("bidList", bidsService.getBidsForUser(activeUser));
+		
+		if(request.getSession().getAttribute("mybids.error") != null) {
+			model.addAttribute("mybids_error", "true");
+			request.getSession().setAttribute("mybids.error", null); 
+		} else {
+			model.addAttribute("mybids_error", null);
+		}
+		
+		if(request.getSession().getAttribute("mybids.succes") != null) {
+			model.addAttribute("mybids_succes", "true");
+			request.getSession().setAttribute("mybids.succes", null); 
+		} else {
+			model.addAttribute("mybids_succes", null);
+		}
+		
 		return "bid/mybids";
 	}
 
@@ -179,8 +194,19 @@ public class BidsController {
 		if(bid.getUser().getId() != activeUser.getId())
 			return "redirect:/bid/mybids";
 		
+		
 		// Actualizamos dinero del user
 		Double finalMoney = activeUser.getMoney() - 20;
+
+		//Dejamos los errores o si fue correcto enviado.
+		if(activeUser.isOutstanding()) {
+			request.getSession().setAttribute("mybids.succes", "true");
+			request.getSession().setAttribute("mybids.error", null);
+		} else {
+			request.getSession().setAttribute("mybids.error", "true");
+			request.getSession().setAttribute("mybids.succes", null);
+		}
+		
 		//Tiene que tener dinero y estar activada la oferta.
 		if (activeUser.isOutstanding() && bid.getStatus() == BidStatus.ACTIVED) {
 			bidsService.updateToTrueSpecialBid(id);
