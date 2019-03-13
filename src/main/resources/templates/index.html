@@ -10,8 +10,10 @@
 	<div class="container"  sec:authorize="isAuthenticated()">
 		<h2 th:text="#{bid.outstanding.title}"></h2>
 		
+		<p>
 		<span th:if="${error}!=null" class="alert alert-danger" th:text="#{Error.buy}"></span>
 		<span th:if="${buyed}!=null" class="alert alert-success" th:text="#{buy.list.buyedSucces}"></span>
+		</p>
 
 		<div class="table-responsive">
 			<table class="table table-hover">
@@ -28,7 +30,7 @@
 				</thead>
 				<tbody>
 					<tr id="ofertas" th:each="bid : ${bidList}">
-						<td><i class="glyphicon glyphicon-star" style="color: yellow"></i></td>
+						<td><i id="star" class="glyphicon glyphicon-star" style="color: orange"></i></td>
 						<td th:text="${bid.title}"></td>
 						<td th:text="${bid.description}"></td>
 						<td th:text="${bid.getPriceFormatted()}"></td>
