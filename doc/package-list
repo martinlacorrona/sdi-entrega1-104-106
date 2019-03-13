@@ -1,0 +1,7 @@
+com.uniovi
+com.uniovi.controllers
+com.uniovi.entities
+com.uniovi.handlers
+com.uniovi.repositories
+com.uniovi.services
+com.uniovi.validators

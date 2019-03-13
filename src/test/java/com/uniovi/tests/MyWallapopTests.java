@@ -1,49 +1,48 @@
 package com.uniovi.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-
+import com.uniovi.entities.Bid;
+import com.uniovi.entities.Conversation;
+import com.uniovi.entities.Message;
+import com.uniovi.entities.User;
+import com.uniovi.repositories.UsersRepository;
+import com.uniovi.services.BidsService;
+import com.uniovi.services.ConversationService;
+import com.uniovi.services.RolesService;
+import com.uniovi.services.UsersService;
 import com.uniovi.tests.pageobjects.PO_AddBidView;
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_OfertasView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
-import com.uniovi.entities.Bid;
-import com.uniovi.entities.Conversation;
-import com.uniovi.entities.Message;
-import com.uniovi.entities.User;
-import com.uniovi.services.BidsService;
-import com.uniovi.services.ConversationService;
-import com.uniovi.services.RolesService;
-import com.uniovi.services.UsersService;
-import com.uniovi.repositories.BidsRepository;
-import com.uniovi.repositories.ConversationRepository;
-import com.uniovi.repositories.MessageRepository;
-import com.uniovi.repositories.UsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_SearchBidView;
 import com.uniovi.tests.pageobjects.PO_UsersView;
 import com.uniovi.tests.pageobjects.PO_View;
 import com.uniovi.tests.util.SeleniumUtils;
-
-
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 //Ordenamos las pruebas por el nombre del método
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(SpringRunner.class)
@@ -60,12 +59,6 @@ public class MyWallapopTests {
 	private ConversationService conversationService;
 	@Autowired
 	private UsersRepository usersRepository;
-	@Autowired
-	private BidsRepository bidsRepository;
-	@Autowired
-	private MessageRepository messageRepository;
-	@Autowired
-	private ConversationRepository conversationRepository;
 	
 	// En Windows (Debe ser la versión 65.0.1 y desactivar las actualizacioens
 	// automáticas)):
