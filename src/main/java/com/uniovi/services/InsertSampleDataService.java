@@ -51,7 +51,7 @@ public class InsertSampleDataService {
 		Bid a2 = new Bid("Oferta A2", "Oferta de prueba A2", 15.0, user1);
 		Bid a3 = new Bid("Oferta A3", "Oferta de prueba A3", 20.0, user1);
 		Bid a4 = new Bid("Oferta A4", "Oferta de prueba A4", 30.0, user1);
-		Bid a5 = new Bid("Oferta A5", "Oferta de prueba A5", 30.0, user1);
+		Bid a5 = new Bid("Oferta A5", "Oferta de prueba A5", 32.0, user1);
 		Bid a6 = new Bid("Oferta A6", "Oferta de prueba A6", 10.0, user1);
 		Bid a7 = new Bid("Oferta A7", "Oferta de prueba A7", 15.0, user1);
 		Bid a8 = new Bid("Oferta A8", "Oferta de prueba A8", 20.0, user1);
@@ -177,7 +177,6 @@ public class InsertSampleDataService {
 		a2.setBuyerUser(user4);
 		a3.setBuyerUser(user5);
 		a4.setBuyerUser(user4);
-		a5.setBuyerUser(user5);
 		b1.setBuyerUser(user1);
 		b2.setBuyerUser(user3);
 		c1.setBuyerUser(user1);

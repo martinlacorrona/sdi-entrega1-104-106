@@ -84,7 +84,7 @@
 						<li sec:authorize="hasRole('ROLE_USER')"
 							style="text-align: center; font-size: 16pt" id="DropDownInfo2"><a
 							th:text="${session.money}"></a></li>
-						<li sec:authorize="hasRole('ROLE_USER')"><a
+						<li sec:authorize="hasRole('ROLE_USER')" id="DropDownInfo3"><a
 							href="/conversation"
 							style="color: black; text-align: center; font-weight: bold">
 								<i class="glyphicon glyphicon-envelope"></i> <span

@@ -58,8 +58,8 @@
 							</div></td>
 						<td><div th:if="${bid.user.email} != ${session.email}">
 								<form action="/conversation" method="post">
-									<input type="hidden" th:value="${bid.id}" name="bid_id" />
-									<button type="submit" class="btn btn-default"
+									<input  type="hidden" th:value="${bid.id}" name="bid_id" />
+									<button id="contact" type="submit" class="btn btn-default"
 										style="background-color: #0C9DFE; color: white"
 										th:text="#{bid.list.contact}"></button>
 								</form>

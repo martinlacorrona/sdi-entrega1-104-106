@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.uniovi.tests.util.SeleniumUtils;
+
 public class PO_RegisterView extends PO_NavView {
 	
 	static public void fillForm(WebDriver driver, String emailp, String namep, String lastnamep, String passwordp,String passwordconfp) {
@@ -31,4 +33,12 @@ public class PO_RegisterView extends PO_NavView {
 			By boton = By.className("btn");
 			driver.findElement(boton).click();
 		}
+	
+	/**
+	 * Método para comprobar que estamos en esta vista
+	 */
+	static public void checPOLoginView(WebDriver driver, int language) {
+		// Esperamos a que se cargue el saludo de bienvenida en Español
+		SeleniumUtils.EsperaCargaPagina(driver, "text", p.getString("singup.name", language), getTimeout());
+	}
 }
