@@ -40,7 +40,7 @@ public interface BidsRepository extends CrudRepository<Bid, Long> {
 	 * @param user sobre el que se busca
 	 * @return todas las ofertas no borradas del usuario
 	 */
-	@Query("SELECT r FROM Bid r WHERE r.user = ?1 AND r.status != 'DELETED' ORDER BY r.id ASC ")
+	@Query("SELECT r FROM Bid r WHERE r.user = ?1 AND r.status != 'DELETED' ORDER BY r.price ASC ")
 	List<Bid> findAllByUserNotDeleted(User user);
 	
 	/**

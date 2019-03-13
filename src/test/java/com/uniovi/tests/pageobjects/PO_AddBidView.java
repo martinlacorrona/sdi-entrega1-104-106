@@ -1,8 +1,12 @@
 package com.uniovi.tests.pageobjects;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import com.uniovi.tests.util.SeleniumUtils;
 
 public class PO_AddBidView extends PO_NavView {
 	
@@ -23,4 +27,15 @@ public class PO_AddBidView extends PO_NavView {
 			By boton = By.className("btn");
 			driver.findElement(boton).click();
 		}
+	/**
+	 * Método para comprobar que estamos en esta vista
+	 */
+	static public boolean checkPOAddView(WebDriver driver, int language) {
+		// Esperamos a que se cargue el saludo de bienvenida en Español
+		List<WebElement> list = SeleniumUtils.EsperaCargaPagina(driver, "text", p.getString("bid.add.title", language), getTimeout());
+		if(list.size() >= 1) {
+			return true;
+		}
+		return false;
+	}
 }

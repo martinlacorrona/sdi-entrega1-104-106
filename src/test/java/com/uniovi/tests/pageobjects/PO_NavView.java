@@ -65,4 +65,16 @@ public class PO_NavView extends PO_View {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", textLanguage, getTimeout());
 		elementos.get(0).click();
 	}
+	
+	/**
+	 * Método para comprobar texto del nav
+	 */
+	static public boolean checkPONavView(WebDriver driver,String messageProperties, int language) {
+		// Esperamos a que se cargue el saludo de bienvenida en Español
+		List<WebElement> list = SeleniumUtils.EsperaCargaPagina(driver, "text", p.getString(messageProperties, language), getTimeout());
+		if(list.size() >= 1) {
+			return true;
+		}
+		return false;
+	}
 }

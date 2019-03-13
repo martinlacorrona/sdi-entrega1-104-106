@@ -25,9 +25,9 @@
 						<td th:text="${bid.title}"></td>
 						<td th:text="${bid.description}"></td>
 						<td th:text="${bid.getPriceFormatted()}"></td>
-						<div th:if="${bid.status == T(com.uniovi.entities.BidStatus).ACTIVED}">
-							<td><form id="boton" th:action="${'/bid/mybids/delete/' + bid.id}">
-							<button type="submit" class="btn btn-default"
+						<div  th:if="${bid.status == T(com.uniovi.entities.BidStatus).ACTIVED}">
+							<td><form  th:action="${'/bid/mybids/delete/' + bid.id}">
+							<button id="boton" type="submit" class="btn btn-default"
 									th:text="#{bid.list.delete}"
 									style="background-color: #C24641; color: white"></button>
 							</form></td>
@@ -51,7 +51,7 @@
 								<button class="btn btn-default" th:text="#{bid.list.normal}" style="background-color: light-yellow"disabled></button>
 							</td>
 							<td>
-								<form id="boton2" th:action="${'/bid/mybids/oustanding/' + bid.id}">
+								<form id="outstandingButton" th:action="${'/bid/mybids/oustanding/' + bid.id}">
 								<button  type="submit" class="btn btn-default"
 										th:text=#{bid.list.destacar}></button>
 								</form></td>

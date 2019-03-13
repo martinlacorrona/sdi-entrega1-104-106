@@ -35,6 +35,8 @@ public class SeleniumUtils {
 		List<WebElement> list = driver.findElements(By.xpath("//*[contains(text(),'" + texto + "')]"));		
 		assertTrue("Texto " + texto + " aun presente !", list.size() == 0);			
 	}
+	
+	
 
 	/**
 	 * Aborta si el "texto" está presente en la página actual tras timeout segundos.
