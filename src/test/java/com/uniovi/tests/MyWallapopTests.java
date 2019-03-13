@@ -35,6 +35,7 @@ import com.uniovi.services.ConversationService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.UsersService;
 import com.uniovi.tests.pageobjects.PO_AddBidView;
+import com.uniovi.tests.pageobjects.PO_ChatView;
 import com.uniovi.tests.pageobjects.PO_ForbiddenView;
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_ListBidView;
@@ -123,7 +124,7 @@ public class MyWallapopTests {
 		Bid a4 = new Bid("Oferta A4", "Oferta de prueba A4", 30.0, user1);
 		Bid a5 = new Bid("Oferta A5", "Oferta de prueba A5", 32.0, user1);
 		Bid a6 = new Bid("Oferta A6", "Oferta de prueba A6", 10.0, user1);
-		Bid a7 = new Bid("Oferta A7", "Oferta de prueba A7", 15.0, user1);
+		Bid a7 = new Bid("Oferta A7", "Oferta de prueba A7", 82.0, user1);
 		Bid a8 = new Bid("Oferta A8", "Oferta de prueba A8", 20.0, user1);
 		Bid a9 = new Bid("Oferta A9", "Oferta de prueba A9", 30.0, user1);
 		Bid a10 = new Bid("Oferta A10", "Oferta de prueba A10", 30.0, user1);
@@ -423,11 +424,7 @@ public class MyWallapopTests {
 						.until(ExpectedConditions.invisibilityOfElementLocated
 								(By.xpath("//*[contains(@href,'" + "/logout" + "')]"))));
 		
-		assertTrue(resultado);
-		
-		
-		
-		
+		assertTrue(resultado);	
 	}
 	
 	@Test
@@ -1107,7 +1104,246 @@ public class MyWallapopTests {
 		
 	}
 	
-
+	@Test
+	//Sobre una búsqueda determinada de ofertas (a elección de desarrollador), enviar un mensaje
+	//a una oferta concreta. Se abriría dicha conversación por primera vez. Comprobar que el mensaje aparece
+	//en el listado de mensajes.
+	public void Prueba31(){
+		//Logueamos
+		PO_LoginView.log(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
+		// Pinchamos en ver ofertas
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		//Clickamos el buscador 
+		elementos = PO_View.checkElement(driver, "free", "//input");
+		elementos.get(0).click();
+		PO_ListBidView.fillForm(driver,"D1");
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		//Contactamos con el vendedor mandandole el mensaje
+		elementos = PO_View.checkElement(driver, "free", "//button[contains(@id, 'contact')]");
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		PO_ChatView.fillForm(driver, "Hola");
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		//Comprobamos la existencia del mensaje
+		SeleniumUtils.textoPresentePagina(driver, "Hola");
+		
+	}
+	
+	@Test
+	//Sobre el listado de conversaciones enviar un mensaje a una conversación ya abierta.
+	//Comprobar que el mensaje aparece en la lista de mensajes.
+	public void Prueba32(){
+		//Logueamos
+		PO_LoginView.log(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		List<WebElement>elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Abrimos conversaciones
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'DropDownInfo3')]/a");
+		elementos.get(0).click();
+		//Abrimos chats 
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "@class", "btn btn-default");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		
+		PO_ChatView.fillForm(driver, "Hola");
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		//Comprobamos la existencia del mensaje
+		SeleniumUtils.textoPresentePagina(driver, "Hola");
+		
+	}
+	
+	@Test
+	//Mostrar el listado de conversaciones ya abiertas. Comprobar que el listado contiene las
+	//conversaciones que deben ser.
+	public void Prueba33(){
+		//Logueamos
+		PO_LoginView.log(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		List<WebElement>elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Abrimos conversaciones
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'DropDownInfo3')]/a");
+		elementos.get(0).click();
+		//Cogemos la tabla
+//		SeleniumUtils.esperarSegundos(driver, 1);
+//		elementos = PO_View.checkElement(driver, "free", "//td");
+//		System.out.println(elementos.get(2).getText());
+//		//Parseamos:
+//		String partsChat1[] = elementos.get(0).getText().split(", ");
+//		String partsChat2[] = elementos.get(2).getText().split(", ");
+//		
+//		//Comprobamos los dos miembros del chat, uno tiene que ser Pedro, el usuario autentificado
+//		assertTrue(partsChat1[1].equals("pedro@gmail.com"));
+//		//assertTrue(partsChat2[1].equals("pedro@gmail.com"));
+		
+	}
+	
+	@Test
+	//Al crear una oferta marcar dicha oferta como destacada y a continuación comprobar: i) que
+	//aparece en el listado de ofertas destacadas para los usuarios y que el saldo del usuario se actualiza
+	//adecuadamente en la vista del ofertante (-20).
+	public void Prueba36(){
+		//Logueamos
+		PO_LoginView.log(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
+		// Pinchamos añadir oferta
+		elementos.get(0).click();
+		// Rellenamos el formulario.
+		PO_AddBidView.fillFormOustanding(driver, "Prueba", "Descricpion","10");
+		
+		//Vamos al home 
+		driver.navigate().to("http://localhost:8090/");
+		//Comprobamos que este
+		PO_View.checkElement(driver, "text", "Prueba");
+		//Miramos q el saldo sea 100-20=80
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();	
+		PO_View.checkElement(driver, "text", "80,00 €");
+	}
+	
+	@Test
+	//Sobre el listado de ofertas de un usuario con menos de 20 euros de saldo, pinchar en el
+	//enlace Destacada y a continuación comprobar: i) que aparece en el listado de ofertas destacadas para los
+	//usuarios y que el saldo del usuario se actualiza adecuadamente en la vista del ofertante (-20).
+	public void Prueba37(){
+		//Logueamos
+		PO_LoginView.log(driver, "lucas@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
+		// Pinchamos en ver ofertas
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		//Clickamos el buscador y buscamos una oferta
+		elementos = PO_View.checkElement(driver, "free", "//input");
+		elementos.get(0).click();
+		PO_ListBidView.fillForm(driver,"A7");
+		
+		//Compramos
+		elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'botonBuy')]");
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		//Tenemos menos de 20€
+		//Miramos q el saldo sea 100-20=80
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();	
+		PO_View.checkElement(driver, "text", "18,00 €");
+		
+		//Vamos a mis ofertas e intentamos destacar una
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/mybids')]");
+		// Pinchamos en ver mis ofertas
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 3);
+		//Cogemos e intentamos destacar Oferta A6  que sería la primera que nos sale
+		elementos = PO_View.checkElement(driver, "text", "Destacar");
+		// Pinchamos en ver mis ofertas
+		elementos.get(2).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Comprobamos el tipo
+		elementos = PO_View.checkElement(driver, "text", "Normal");
+		// Pinchamos en ver mis ofertas
+		elementos.get(2).click();
+		//Miramos q el saldo sea igual
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();	
+		PO_View.checkElement(driver, "text", "18,00 €");
+	}
+	
+	@Test
+	public void Prueba38() {
+		//Logueamos
+		PO_LoginView.log(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Click en ofertas
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
+		// Pinchamos añadir oferta
+		elementos.get(0).click();
+		// Rellenamos el formulario.
+		PO_AddBidView.fillFormOustanding(driver, "Prueba", "Descricpion","10");
+		//Desconectamos
+		// Click en el email
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'logout')]");
+		// Pinchamos en desconectar.
+		elementos.get(0).click();
+		
+		//Logueamos
+		PO_LoginView.log(driver, "lucas@gmail.com", "123456");
+		//Click en ofertas
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
+		// Pinchamos en ver ofertas
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		//Clickamos el buscador y buscamos una oferta
+		elementos = PO_View.checkElement(driver, "free", "//input");
+		elementos.get(0).click();
+		PO_ListBidView.fillForm(driver,"A7");
+		
+		//Compramos
+		elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'botonBuy')]");
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		//Vamos al home 
+		driver.navigate().to("http://localhost:8090/");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 5);
+	}
 //
 //	// PR03. OPción de navegación. Pinchar en el enlace Identificate en la página
 //	// home
