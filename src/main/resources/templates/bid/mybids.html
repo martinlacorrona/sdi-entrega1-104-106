@@ -7,6 +7,12 @@
 	<div class="container">
 		<h2 th:text="#{bid.list.title}"></h2>
 		<p th:text="#{bid.list.parraf}"></p>
+		
+		<p>
+			<span th:if="${mybids_error} != null" class="alert alert-danger" th:text="#{bid.outstanding.error}"></span>
+			<span th:if="${mybids_succes} !=null" class="alert alert-success" th:text="#{bid.outstanding.succes}"></span>
+		</p>
+		
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
@@ -38,23 +44,26 @@
 									th:text="#{bid.buyed}"
 									disabled></button></td>
 						</div>
-						<div th:if="${bid.specialBid == true}" >
+						<div th:if="${bid.specialBid}">
 							<td>
 								<button class="btn btn-default" th:text="#{bid.list.outstanding}" style="background-color: yellow; 
 								color: black"></button>
 							</td>
 							<td></td>
 						</div>
-						
-						<div th:if="${bid.specialBid == false}">
+
+						<div th:unless="${bid.specialBid}">
 							<td>
 								<button class="btn btn-default" th:text="#{bid.list.normal}" style="background-color: light-yellow"disabled></button>
 							</td>
-							<td>
+							<td th:if="${bid.status == T(com.uniovi.entities.BidStatus).ACTIVED}">
 								<form id="outstandingButton" th:action="${'/bid/mybids/oustanding/' + bid.id}">
 								<button  type="submit" class="btn btn-default"
 										th:text=#{bid.list.destacar}></button>
-								</form></td>
+								</form>
+							</td>
+							<td th:unless="${bid.status == T(com.uniovi.entities.BidStatus).ACTIVED}">
+							</td>
 						</div>
 					</tr>
 				</tbody>

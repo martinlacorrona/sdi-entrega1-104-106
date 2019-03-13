@@ -5,8 +5,10 @@
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<span th:if="${error}!=null" class="alert alert-danger" th:text="#{Error.buy}"></span>
-		<span th:if="${buyed}!=null" class="alert alert-success" th:text="#{buy.list.buyedSucces}"></span>
+		<p>
+			<span th:if="${error}!=null" class="alert alert-danger" th:text="#{Error.buy}"></span>
+			<span th:if="${buyed}!=null" class="alert alert-success" th:text="#{buy.list.buyedSucces}"></span>
+		</p>
 		<h2 th:text="#{bid.search.title}"></h2>
 		<form class="navbar-form" action="/bid/list">
 			<div class="form-group">
