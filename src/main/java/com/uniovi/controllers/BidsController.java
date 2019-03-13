@@ -49,13 +49,24 @@ public class BidsController {
 	@RequestMapping(value = "/bid/add", method = RequestMethod.POST)
 	public String setBid(@Validated Bid bid, BindingResult result, HttpServletRequest request, Principal principal) {
 		addBidFormValidator.validate(bid, result);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
 		if (result.hasErrors()) {
 			return "bid/add";
 		}
-
 		// Sacamos el usuario
 		User activeUser = usersService.getUserByEmail(principal.getName());
-
+		if(bid.isSpecialBid()) {
+			if(!activeUser.isOutstanding()) {
+				return "bid/add";
+			}
+		}
+		//Actualizamos el dinero
+		Double finalMoney = activeUser.getMoney() - 20;
+		activeUser.setMoney(finalMoney);
+		usersService.updateMoney(finalMoney, email);
+		request.getSession().setAttribute("money", activeUser.getMoneyFormatted());
+		//Añadimos la oferta
 		bid.setUser(activeUser);
 		bid.setDate(new Date());
 		bid.setStatus(BidStatus.ACTIVED);
