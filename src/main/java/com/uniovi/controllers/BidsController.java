@@ -103,6 +103,16 @@ public class BidsController {
 		model.addAttribute("bidList", bids.getContent());
 		model.addAttribute("page", bids);
 		model.addAttribute("urlPath", searchText);
+		
+		if(request.getSession().getAttribute("error") != null) {
+			model.addAttribute("error", "true");
+			request.getSession().setAttribute("error", null); 
+		}
+		
+		if(request.getSession().getAttribute("buyed") != null) {
+			model.addAttribute("buyed", "true");
+			request.getSession().setAttribute("buyed", null); 
+		}
 
 		return "bid/list";
 	}
@@ -131,9 +141,8 @@ public class BidsController {
 			seller.setMoney(finalMoneySeller);
 			usersService.updateMoney(finalMoneySeller, seller.getEmail());
 
-			// Reiniciamos
-			request.getSession().setAttribute("error", null);
-			request.getSession().setAttribute("id", id);
+			//Atributo de comprado a la sesion
+			request.getSession().setAttribute("buyed", "true");
 		} else {
 			request.getSession().setAttribute("error", "Error.buy");
 			request.getSession().setAttribute("id", id);
