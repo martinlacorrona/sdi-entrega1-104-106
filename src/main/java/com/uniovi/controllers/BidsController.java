@@ -114,6 +114,7 @@ public class BidsController {
 		model.addAttribute("bidList", bids.getContent());
 		model.addAttribute("page", bids);
 		model.addAttribute("urlPath", searchText);
+		request.getSession().setAttribute("url", "list");
 
 		return "bid/list";
 	}
@@ -150,7 +151,12 @@ public class BidsController {
 			request.getSession().setAttribute("id", id);
 		}
 
-		return "redirect:/bid/list";
+		if(request.getSession().getAttribute("url") == "list") {
+			return "redirect:/bid/list";
+		}else {
+			return "redirect:/";
+		}
+		
 	}
 	
 	@RequestMapping("/bid/mybids/oustanding/{id}")

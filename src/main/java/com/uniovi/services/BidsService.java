@@ -125,4 +125,12 @@ public class BidsService {
 	public void updateToTrueSpecialBid(Long id) {
 		bidsRepository.updateToTrueSepecialBid(id);
 	}
+	
+	/**
+	 * Metodo para obtener las ofertas destacadas.
+	 * @return 
+	 */
+	public List<Bid> getOustandingBid() {
+		return bidsRepository.findAllOustanding();
+	}
 }
