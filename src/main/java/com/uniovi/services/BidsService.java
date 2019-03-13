@@ -27,9 +27,8 @@ public class BidsService {
 	
 	/**
 	 * Devuelve las ofertas por usuario.
-	 * @param pageable
-	 * @param user
-	 * @return
+	 * @param user del cual se quieren buscar las ofertas
+	 * @return La lista de ofertas de un usuario.
 	 */
 	public List<Bid> getBidsForUser(User user) {
 		List<Bid> bids = new ArrayList<Bid>();
@@ -39,7 +38,7 @@ public class BidsService {
 	
 	/**
 	 * Devuelve todas las ofertas disponibles.
-	 * @return
+	 * @return Todas las ofertas
 	 */
 	public List<Bid> getBids() {
 		List<Bid> bids = bidsRepository.findAll();
@@ -48,7 +47,8 @@ public class BidsService {
 	
 	/**
 	 * Devuelve todas las ofertas compradas por un usuario.
-	 * @return
+	 * @param user Usuario sobre el cual se busca
+	 * @return Ofertas compradas por un usuarios.
 	 */
 	public List<Bid> getBuyedBids(User user) {
 		List<Bid> bids = bidsRepository.findAllBuyedByUser(user);
@@ -57,8 +57,8 @@ public class BidsService {
 	
 	/**
 	 * Devuelve todas las ofertas disponibles en modo paginacion
-	 * @param pageable
-	 * @return
+	 * @param pageable el Pageable correspondiente
+	 * @return la lista de BIDS en una pagina.
 	 */
 	public Page<Bid> getBidsPagination(Pageable pageable) {
 		return bidsRepository.findAllActive(pageable);
@@ -66,9 +66,10 @@ public class BidsService {
 	
 	/**
 	 * Devuelve todas las ofertas disponibles en modo paginacion buscando por el titulo.
-	 * @param pageable
-	 * @param searchText
-	 * @return
+	 * @param pageable objeto Pageable de paginacion
+	 * @param searchText texto el cual se busca
+	 * @param userSearched usuario que se busca
+	 * @return pagina con las ofertas buscada por un titulo de oferta
 	 */
 	public Page<Bid> getBidsPaginationSearchTitle(Pageable pageable, String searchText, User userSearched) {
 		searchText = "%" + searchText + "%";
@@ -77,8 +78,8 @@ public class BidsService {
 	
 	/**
 	 * Devuelve una oferta por su id.
-	 * @param id
-	 * @return
+	 * @param id id de la oferta que se busca
+	 * @return la oferta
 	 */
 	public Bid getBid(Long id) {
 		@SuppressWarnings("unchecked")
@@ -94,7 +95,7 @@ public class BidsService {
 	
 	/**
 	 * Metodo para añadir una nueva oferta.
-	 * @param bid
+	 * @param bid la oferta que se quiere añadir.
 	 */
 	public void addBid(Bid bid) {
 		bidsRepository.save(bid);
@@ -103,7 +104,7 @@ public class BidsService {
 	/**
 	 * Metodo para borrar la oferta.
 	 * REALMENTE, no la borra, la pone en estado DELETED.
-	 * @param id
+	 * @param id de la oferta que se quiere borrar
 	 */
 	public void deleteBid(Long id) {
 		bidsRepository.deleteById(id);
@@ -111,8 +112,8 @@ public class BidsService {
 	
 	/**
 	 * Pone una oferta un id, haciendo que esté comprada.
-	 * @param id
-	 * @return
+	 * @param id_user id del usuario
+	 * @param id_bid id de la oferta
 	 */
 	public void setUserBuyed(Long id_user, Long id_bid) {
 		bidsRepository.buyedById(id_user,id_bid);

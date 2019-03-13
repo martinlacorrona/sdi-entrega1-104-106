@@ -41,10 +41,9 @@ public class UsersService {
 	}
 	
 	/**
-	 * Pone una oferta un id, haciendo que esté comprada.
-	 * @param Double dinero
-	 * @param String email
-	 * @return
+	 * Actualiza el dinero de un usuario
+	 * @param money que se quiere actualizar
+	 * @param email del usuario
 	 */
 	public void updateMoney(Double money , String email) {
 		usersRepository.updateMoney(money,email);

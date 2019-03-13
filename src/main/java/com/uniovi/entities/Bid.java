@@ -149,7 +149,7 @@ public class Bid {
 
 	/**
 	 * Devuelve true si esta oferta fue comprada.
-	 * @return
+	 * @return Si esta oferta fue comprada o no.
 	 */
 	public boolean isBuyed() {
 		return status.equals(BidStatus.BUYED);

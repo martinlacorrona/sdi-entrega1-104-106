@@ -16,7 +16,9 @@ public interface UsersRepository extends CrudRepository<User, Long> {
 	User findByEmail(String email);
 	
 	/**
-	 * Compra una Bid.
+	 * Actualiza el dinero de un usuario
+	 * @param money dinero que se le quiere poner
+	 * @param email del usuario (es su identificador)
 	 */
 	@Modifying
 	@Transactional

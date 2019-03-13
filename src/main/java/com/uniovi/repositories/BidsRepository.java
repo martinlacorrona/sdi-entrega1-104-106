@@ -21,42 +21,41 @@ public interface BidsRepository extends CrudRepository<Bid, Long> {
 	/**
 	 * Busca las ofertas que estan activas, las borradas
 	 * no las muestra.
-	 * @param pageable
-	 * @return
+	 * @param pageable atributo pageable
+	 * @return pagina con lista de bids
 	 */
 	@Query("SELECT r FROM Bid r WHERE r.status = 'ACTIVED' ")
 	Page<Bid> findAllActive(Pageable pageable);
 	
 	/**
 	 * Busca todas las bids publicadas por un usuario.
-	 * @param user
-	 * @return
+	 * @param user del cual se quieren sacar las ofertas
+	 * @return lista de bids de un usuario
 	 */
 	@Query("SELECT r FROM Bid r WHERE r.user = ?1 ORDER BY r.id ASC ")
 	List<Bid> findAllByUser(User user);
 	
 	/**
 	 * Busca todas las bids publicadas por un usuario activas.
-	 * @param user
-	 * @return
+	 * @param user sobre el que se busca
+	 * @return todas las ofertas no borradas del usuario
 	 */
 	@Query("SELECT r FROM Bid r WHERE r.user = ?1 AND r.status != 'DELETED' ORDER BY r.id ASC ")
 	List<Bid> findAllByUserNotDeleted(User user);
 	
 	/**
 	 * Busca todas las bids publicadas por un usuario.
-	 * @param pageable
-	 * @param user
-	 * @return
+	 * @param pageable atributo pageable
+	 * @param user sobre el que se busca
+	 * @return pagina de bids
 	 */
 	@Query("SELECT r FROM Bid r WHERE r.user = ?1 ORDER BY r.id ASC ")
 	Page<Bid> findAllByUser(Pageable pageable, User user);
 	
 	/**
 	 * Busca las bids que ha comprado un usuario.
-	 * @param pageable
-	 * @param user
-	 * @return
+	 * @param user usario sobre el que se hace
+	 * @return lista de bids compradas por el usuario
 	 */
 	@Query("SELECT r FROM Bid r WHERE r.buyerUser = ?1 ORDER BY r.id ASC ")
 	List<Bid> findAllBuyedByUser(User user);
@@ -71,15 +70,18 @@ public interface BidsRepository extends CrudRepository<Bid, Long> {
 	
 	/**
 	 * Busca una oferta por su titulo.
-	 * @param pageable
-	 * @param seachtext
-	 * @return
+	 * @param pageable atributo pageable
+	 * @param seachtext texto el cual se busca
+	 * @param userSearched el usuario que busca
+	 * @return pagina de bids
 	 */
 	@Query("SELECT r FROM Bid r WHERE (LOWER(r.title) LIKE LOWER(?1)) AND r.user != ?2 ")
 	Page<Bid> searchByTitle(Pageable pageable, String seachtext, User userSearched);
 	
 	/**
-	 * Compra una Bid.
+	 * Compra una bid.
+	 * @param id_user usuario que la compra
+	 * @param id_bid bid que es comprada
 	 */
 	@Modifying
 	@Transactional
