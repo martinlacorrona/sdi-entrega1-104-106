@@ -1187,17 +1187,67 @@ public class MyWallapopTests {
 		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'DropDownInfo3')]/a");
 		elementos.get(0).click();
 		//Cogemos la tabla
-//		SeleniumUtils.esperarSegundos(driver, 1);
-//		elementos = PO_View.checkElement(driver, "free", "//td");
-//		System.out.println(elementos.get(2).getText());
-//		//Parseamos:
-//		String partsChat1[] = elementos.get(0).getText().split(", ");
-//		String partsChat2[] = elementos.get(2).getText().split(", ");
-//		
-//		//Comprobamos los dos miembros del chat, uno tiene que ser Pedro, el usuario autentificado
-//		assertTrue(partsChat1[1].equals("pedro@gmail.com"));
-//		//assertTrue(partsChat2[1].equals("pedro@gmail.com"));
-		
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//td");
+		//Comprobamos que salen las dos conversaciones que tiene pedro mirando los emails:
+		SeleniumUtils.textoPresentePagina(driver, "lucas@gmail.com, pedro@gmail.com");
+		SeleniumUtils.textoPresentePagina(driver, "maria@gmail.com, pedro@gmail.com");
+	}
+	
+	@Test
+	//Sobre el listado de conversaciones ya abiertas. Pinchar el enlace Eliminar de la primera y
+	//comprobar que el listado se actualiza correctamente
+	public void Prueba34(){
+		//Logueamos
+		PO_LoginView.log(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		List<WebElement>elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Abrimos conversaciones
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'DropDownInfo3')]/a");
+		elementos.get(0).click();
+		//Cogemos la tabla
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//td");
+		//Cogemos los emails del primero que esl que vamos a eliminar y comprobar despues
+		String emails = elementos.get(0).getText();
+		//Eliminamos
+		elementos.get(4).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 3);
+		//Comprobamos que no está el texto
+		SeleniumUtils.textoNoPresentePagina(driver, emails);
+	}
+	
+	@Test
+	//Sobre el listado de conversaciones ya abiertas. Pinchar el enlace Eliminar de la última y
+	//comprobar que el listado se actualiza correctamente.
+	public void Prueba35(){
+		//Logueamos
+		PO_LoginView.log(driver, "pedro@gmail.com", "123456");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		List<WebElement>elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Abrimos conversaciones
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'DropDownInfo3')]/a");
+		elementos.get(0).click();
+		//Cogemos la tabla
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//td");
+		//Cogemos los emails del ultimo que esl que vamos a eliminar y comprobar despues
+		String emails = elementos.get(elementos.size()-5).getText();
+		//Eliminamos
+		elementos.get(elementos.size()-1).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 3);
+		//Comprobamos que no está el texto
+		SeleniumUtils.textoNoPresentePagina(driver, emails);
 	}
 	
 	@Test
@@ -1235,6 +1285,42 @@ public class MyWallapopTests {
 	//enlace Destacada y a continuación comprobar: i) que aparece en el listado de ofertas destacadas para los
 	//usuarios y que el saldo del usuario se actualiza adecuadamente en la vista del ofertante (-20).
 	public void Prueba37(){
+		//Logueamos
+		PO_LoginView.log(driver, "pedro@gmail.com", "123456");
+		//Esperamos y vamos a mis ofertas
+		SeleniumUtils.esperarSegundos(driver, 1);
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/mybids')]");
+		// Pinchamos en ver mis ofertas
+		elementos.get(0).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 3);
+		//Cogemos e intentamos destacar 
+		elementos = PO_View.checkElement(driver, "text", "Destacar");
+		// Pinchamos 
+		elementos.get(1).click();
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 1);
+		//Vamos al home 
+		driver.navigate().to("http://localhost:8090/");
+		//Esperamos
+		SeleniumUtils.esperarSegundos(driver, 3);
+		//Comprobamos que esté la oferta
+		SeleniumUtils.textoPresentePagina(driver, "Oferta A8");
+		//Y miramos que el salgo ha bajado 20, es decir 100-20 = 80.
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+		elementos.get(0).click();	
+		PO_View.checkElement(driver, "text", "80,00 €");
+		
+	}
+	
+	@Test
+	//Sobre el listado de ofertas de un usuario con menos de 20 euros de saldo, pinchar en el
+	//enlace Destacada y a continuación comprobar que se muestra el mensaje de saldo no suficiente.
+	public void Prueba38() {
 		//Logueamos
 		PO_LoginView.log(driver, "lucas@gmail.com", "123456");
 		//Esperamos
@@ -1275,10 +1361,10 @@ public class MyWallapopTests {
 		elementos.get(0).click();
 		//Esperamos
 		SeleniumUtils.esperarSegundos(driver, 3);
-		//Cogemos e intentamos destacar Oferta A6  que sería la primera que nos sale
+		//Cogemos e intentamos destacar 
 		elementos = PO_View.checkElement(driver, "text", "Destacar");
-		// Pinchamos en ver mis ofertas
-		elementos.get(2).click();
+		// Pinchamos 
+		elementos.get(1).click();
 		//Esperamos
 		SeleniumUtils.esperarSegundos(driver, 1);
 		//Comprobamos el tipo
@@ -1290,339 +1376,57 @@ public class MyWallapopTests {
 		elementos.get(0).click();	
 		PO_View.checkElement(driver, "text", "18,00 €");
 	}
-	
-	@Test
-	public void Prueba38() {
-		//Logueamos
-		PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		//Click en ofertas
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
-		elementos.get(0).click();
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
-		// Pinchamos añadir oferta
-		elementos.get(0).click();
-		// Rellenamos el formulario.
-		PO_AddBidView.fillFormOustanding(driver, "Prueba", "Descricpion","10");
-		//Desconectamos
-		// Click en el email
-		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
-		elementos.get(0).click();
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'logout')]");
-		// Pinchamos en desconectar.
-		elementos.get(0).click();
-		
-		//Logueamos
-		PO_LoginView.log(driver, "lucas@gmail.com", "123456");
-		//Click en ofertas
-		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
-		elementos.get(0).click();
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 1);
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
-		// Pinchamos en ver ofertas
-		elementos.get(0).click();
-		SeleniumUtils.esperarSegundos(driver, 2);
-		
-		//Clickamos el buscador y buscamos una oferta
-		elementos = PO_View.checkElement(driver, "free", "//input");
-		elementos.get(0).click();
-		PO_ListBidView.fillForm(driver,"A7");
-		
-		//Compramos
-		elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'botonBuy')]");
-		elementos.get(0).click();
-		SeleniumUtils.esperarSegundos(driver, 2);
-		
-		//Vamos al home 
-		driver.navigate().to("http://localhost:8090/");
-		//Esperamos
-		SeleniumUtils.esperarSegundos(driver, 5);
-	}
-//
-//	// PR03. OPción de navegación. Pinchar en el enlace Identificate en la página
-//	// home
-//	@Test
-//	public void PR03() {
-//		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-//	}
-//	//PR04. OPción de navegación. Cambio de idioma de Español a Ingles y vuelta a Español
-//	@Test
-//	public void PR04() {
-//		PO_HomeView.checkChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
-//				PO_Properties.getENGLISH());
-//		// SeleniumUtils.esperarSegundos(driver, 2);
-//	}
+//	//Logueamos
+//			PO_LoginView.log(driver, "pedro@gmail.com", "123456");
+//			//Esperamos
+//			SeleniumUtils.esperarSegundos(driver, 1);
+//			//Click en ofertas
+//			List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+//			elementos.get(0).click();
+//			//Esperamos
+//			SeleniumUtils.esperarSegundos(driver, 1);
+//			elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
+//			// Pinchamos añadir oferta
+//			elementos.get(0).click();
+//			// Rellenamos el formulario.
+//			PO_AddBidView.fillFormOustanding(driver, "Prueba", "Descricpion","10");
+//			//Desconectamos
+//			// Click en el email
+//			elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
+//			elementos.get(0).click();
+//			//Esperamos
+//			SeleniumUtils.esperarSegundos(driver, 1);
+//			elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'logout')]");
+//			// Pinchamos en desconectar.
+//			elementos.get(0).click();
+//			
+//			//Logueamos
+//			PO_LoginView.log(driver, "lucas@gmail.com", "123456");
+//			//Click en ofertas
+//			elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
+//			elementos.get(0).click();
+//			//Esperamos
+//			SeleniumUtils.esperarSegundos(driver, 1);
+//			elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
+//			// Pinchamos en ver ofertas
+//			elementos.get(0).click();
+//			SeleniumUtils.esperarSegundos(driver, 2);
+//			
+//			//Clickamos el buscador y buscamos una oferta
+//			elementos = PO_View.checkElement(driver, "free", "//input");
+//			elementos.get(0).click();
+//			PO_ListBidView.fillForm(driver,"A7");
+//			
+//			//Compramos
+//			elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'botonBuy')]");
+//			elementos.get(0).click();
+//			SeleniumUtils.esperarSegundos(driver, 2);
+//			
+//			//Vamos al home 
+//			driver.navigate().to("http://localhost:8090/");
+//			//Esperamos
+//			SeleniumUtils.esperarSegundos(driver, 5);
 //	
-	//PR05. Prueba del formulario de registro. registro con datos correctos
-//	@Test
-//	public void PR05() {
-//		// Vamos al formulario de registro
-//		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-//		// Rellenamos el formulario.
-//		PO_RegisterView.fillForm(driver, "77777774A", "Josefo", "Perez", "77777", "77777");
-//		
-//		// Comprobamos que entramos en la sección privada
-//		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'dropdown-menu')]/a");
-//		elementos.get(0).click();
-//	}
-//	
-//	//PR06. Prueba del formulario de registro. DNI repetido en la BD, Nombre corto, .... pagination pagination-­‐centered, Error.signup.dni.length
-//	@Test
-//	public void PR06() {
-//		// Vamos al formulario de registro
-//		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-//		// Rellenamos el formulario.
-//		PO_RegisterView.fillForm(driver, "99999990A", "Josefo", "Perez", "77777", "77777");
-//		PO_View.getP();
-//		// COmprobamos el error de DNI repetido.
-//		PO_RegisterView.checkKey(driver, "Error.signup.dni.duplicate", PO_Properties.getSPANISH());
-//		// Rellenamos el formulario.
-//		PO_RegisterView.fillForm(driver, "99999990B", "Jose", "Perez", "77777", "77777");
-//		// COmprobamos el error de Nombre corto .
-//		PO_RegisterView.checkKey(driver, "Error.signup.name.length", PO_Properties.getSPANISH());
-//		// Rellenamos el formulario.
-//		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Per", "77777", "77777");
-//	}
-//	
-//	//PRN. Loguearse con exito desde el ROl de Usuario, 99999990D, 123456
-//	@Test
-//	public void PR07() {
-//		// Vamos al formulario de logueo.
-//		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-//		// Rellenamos el formulario
-//		PO_LoginView.fillForm(driver, "99999990A", "123456");
-//		// COmprobamos que entramos en la pagina privada de Alumno
-//		PO_View.checkElement(driver, "text", "Notas del usuario");
-//	}
-//	
-//	@Test
-//	public void PR08() {
-//		// Vamos al formulario de logueo.
-//		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-//		// Rellenamos el formulario
-//		PO_LoginView.fillForm(driver, "99999993D", "123456");
-//
-//		PO_View.checkElement(driver, "text", "99999993D");
-//	}
-//	
-//	@Test
-//	public void PR09() {
-//		// Vamos al formulario de logueo.
-//		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-//		// Rellenamos el formulario
-//		PO_LoginView.fillForm(driver, "99999988F", "123456");
-//		// COmprobamos que entramos en la pagina privada del admin mirando su nav
-//		PO_View.checkElement(driver, "text", "Gestión de Usuarios");
-//	}
-//	
-//	@Test
-//	public void PR10() {
-//		// Vamos al formulario de logueo.
-//		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-//		// Rellenamos el formulario
-//		PO_LoginView.fillForm(driver, "99999990AA", "123456");
-//		// COmprobamos que sigue en la misma pagina.
-//		PO_View.checkElement(driver, "text", "DNI");
-//	}
-//	
-//	@Test
-//	public void PR11() {
-//		// Vamos al formulario de logueo.
-//		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-//		// Rellenamos el formulario
-//		PO_LoginView.fillForm(driver, "99999990A", "123456");
-//		//COmprobamos que entramos en la pagina privada de Alumno
-//		PO_View.checkElement(driver, "text", "Notas del usuario");
-//		//Y desconexion
-//		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
-//	}
-//	
-//	//PR12. Loguearse, comprobar que se visualizan 4 filas de notas y desconectarse usando el rol de
-//	//estudiante.
-//	@Test
-//	public void PR12() {
-//		PO_PrivateView.log(driver,"99999990A","123456");
-//		// Contamos el número de filas de notas
-//		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-//				PO_View.getTimeout());
-//		assertTrue(elementos.size() == 4);
-//		// Ahora nos desconectamos
-//		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
-//	}
-//	
-//	// PR13. Loguearse como estudiante y ver los detalles de la nota con Descripcion
-//	// = Nota A2.
-//	// P13. Ver la lista de Notas.
-//	@Test
-//	public void PR13() {
-//		PO_PrivateView.log(driver,"99999990A","123456");
-//		SeleniumUtils.esperarSegundos(driver, 1);
-//		// Contamos las notas
-//		By enlace = By.xpath("//td[contains(text(), 'Nota A2')]/following-sibling::*[2]"); //Segundo TD despues de NOTA A2
-//		driver.findElement(enlace).click();
-//		SeleniumUtils.esperarSegundos(driver, 1);
-//		// Esperamos por la ventana de detalle
-//		PO_View.checkElement(driver, "text", "Detalles de la nota");
-//		SeleniumUtils.esperarSegundos(driver, 1);
-//		// Ahora nos desconectamos
-//		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
-//	}
-//
-//	// P14. Loguearse como profesor y Agregar Nota A2.
-//	// P14. Esta prueba podría encapsularse mejor ...
-//	@Test
-//	public void PR14() {
-//		PO_PrivateView.log(driver,"99999993D","123456");
-//		// Pinchamos en la opción de menu de Notas: //li[contains(@id,
-//		// 'marks-­‐menu')]/a
-//		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'marks-menu')]/a");
-//		elementos.get(0).click();
-//		// Esperamos a aparezca la opción de añadir nota: //a[contains(@href,
-//		// 'mark/add')]
-//		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'mark/add')]");
-//		// Pinchamos en agregar Nota.
-//		elementos.get(0).click();
-//		// Ahora vamos a rellenar la nota. //option[contains(@value, '4')]
-//		PO_PrivateView.fillFormAddMark(driver, 3, "Nota Nueva 1", "8");
-//		// Esperamos a que se muestren los enlaces de paginación la lista de notas
-//		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
-//		// Nos vamos a la última página
-//		elementos.get(3).click();
-//		// Comprobamos que aparece la nota en la pagina
-//		elementos = PO_View.checkElement(driver, "text", "Nota Nueva 1");
-//		// Ahora nos desconectamos
-//		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
-//	}
-//	
-//	//PRN. Loguearse como profesor, vamos a la ultima página y Eliminamos la Nota Nueva 1.
-//	//PRN. Ver la lista de Notas.
-//	@Test
-//	public void PR15() {
-//		PO_PrivateView.log(driver,"99999993D","123456");
-//		//Pinchamos en la opción de menu de Notas: //li[contains(@id, 'marks-­‐menu')]/a
-//		List<WebElement> elementos = PO_View.checkElement(driver, "free","//li[contains(@id, 'marks-menu')]/a");
-//		elementos.get(0).click();
-//		//Pinchamos en la opción de lista de notas.
-//		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href,'mark/list')]");
-//		elementos.get(0).click();
-//		//Esperamos a que se muestren los enlaces de paginacion la lista de notas
-//		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
-//		//Nos vamos a la última página
-//		elementos.get(3).click();
-//		//Esperamos a que aparezca la Nueva nota en la ultima pagina
-//		//Y Pinchamos en el enlace de borrado de la Nota "Nota Nueva 1"
-//		//td[contains(text(), 'Nota Nueva 1')]/following-­‐sibling::*/a[contains(text(),'mark/delete')]"
-//		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
-//		elementos.get(0).click();
-//		//Volvemos a la última pagina
-//		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
-//		elementos.get(3).click();
-//		//Y esperamos a que NO aparezca la ultima "Nueva Nota 1"
-//		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Nota Nueva1",PO_View.getTimeout() );
-//		//Ahora nos desconectamos
-//		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
-//		}
-//	
-//	//TEST Agregar usuario
-//	@Test
-//	public void PR16() {
-//		//Iniciamos como un admin
-//		PO_PrivateView.log(driver,"99999988F","123456");
-//		//Pinchamos en la opción de menu de Notas: //li[contains(@id, 'marks-­‐menu')]/a
-//		List<WebElement> elementos = PO_View.checkElement(driver, "free","//li[contains(@id, 'users-menu')]/a");
-//		elementos.get(0).click();
-//		//Pinchamos en la lista de agregar usuario
-//		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href,'user/add')]");
-//		elementos.get(0).click();
-//		// Ahora vamos a rellenar el usuario
-//		PO_PrivateView.fillFormAddUser(driver, "asdasdasdasda","aaaaaaaa","aaaaaa","123456");
-//		//Esperamos
-//		SeleniumUtils.esperarSegundos(driver, 1);
-//		// Comprobamos que aparece la nota en la pagina
-//		elementos = PO_View.checkElement(driver, "text", "aaaaaaaa");
-//		// Ahora nos desconectamos
-//		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
-//		
-//	}
-//	
-//	@Test
-//	public void PR17() {
-//		//Iniciamos como un admin
-//		PO_PrivateView.log(driver,"99999988F","123456");
-//		//Pinchamos en la opción de menu de Notas: //li[contains(@id, 'marks-­‐menu')]/a
-//		List<WebElement> elementos = PO_View.checkElement(driver, "free","//li[contains(@id, 'users-menu')]/a");
-//		elementos.get(0).click();
-//		//Pinchamos en la lista de agregar usuario
-//		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href,'user/list')]");
-//		elementos.get(0).click();
-//		//Esperamos
-//		SeleniumUtils.esperarSegundos(driver, 1);
-//		By enlace = By.xpath("//td[contains(text(), 'Pedro')]/following-sibling::*[2]"); //Segundo TD despues de NOTA A2
-//		driver.findElement(enlace).click();
-//		SeleniumUtils.esperarSegundos(driver, 1);
-//		
-//		// Esperamos por la ventana de detalle
-////		PO_View.checkElement(driver, "text", "Detalles de usuario");
-////		SeleniumUtils.esperarSegundos(driver, 1);
-////		// Ahora nos desconectamos
-////		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
-//		
-//	}
-//	
-//	@Test
-//	public void PR18() {
-//		//Iniciamos como un admin
-//		PO_PrivateView.log(driver,"99999988F","123456");
-//		//Pinchamos en la opción de menu de Notas: //li[contains(@id, 'marks-­‐menu')]/a
-//		List<WebElement> elementos = PO_View.checkElement(driver, "free","//li[contains(@id, 'users-menu')]/a");
-//		elementos.get(0).click();
-//		//Pinchamos en la lista de agregar usuario
-//		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href,'user/list')]");
-//		elementos.get(0).click();
-//		//Esperamos
-//		SeleniumUtils.esperarSegundos(driver, 1);
-//		By enlace = By.xpath("//td[contains(text(), 'Edward')]/following-sibling::*[1]"); 
-//		driver.findElement(enlace).click();
-//		SeleniumUtils.esperarSegundos(driver, 1);
-//		
-//		
-//		//Rellenariaos los datos como en el anterior pero como no existe la vista edit....
-//		
-//	}
-//	
-//	@Test
-//	public void PR19() {
-//		//Iniciamos como un admin
-//		PO_PrivateView.log(driver,"99999988F","123456");
-//		//Pinchamos en la opción de menu de Notas: //li[contains(@id, 'marks-­‐menu')]/a
-//		List<WebElement> elementos = PO_View.checkElement(driver, "free","//li[contains(@id, 'users-menu')]/a");
-//		elementos.get(0).click();
-//		//Pinchamos en la lista de agregar usuario
-//		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href,'user/list')]");
-//		elementos.get(0).click();
-//		//Esperamos
-//		SeleniumUtils.esperarSegundos(driver, 1);
-//		By enlace = By.xpath("//td[contains(text(), 'Josefo')]/following-sibling::*[4]"); 
-//		driver.findElement(enlace).click();
-//		SeleniumUtils.esperarSegundos(driver, 1);
-//		
-//		//TODO Comprobar que se ha borrado
-//		// Esperamos por la ventana de detalle
-//		int numEl = PO_View.checkElement(driver, "text", "Josefo").size();
-//		assertEquals(0,numEl);
-//		SeleniumUtils.esperarSegundos(driver, 1);
-//		// Ahora nos desconectamos
-//		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
-//		
-//	}
-//		
-	
 	
 	// Después de cada prueba se borran las cookies del navegador
 	@After
