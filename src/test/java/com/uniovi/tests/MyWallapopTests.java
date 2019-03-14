@@ -1376,57 +1376,7 @@ public class MyWallapopTests {
 		elementos.get(0).click();	
 		PO_View.checkElement(driver, "text", "18,00 €");
 	}
-//	//Logueamos
-//			PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-//			//Esperamos
-//			SeleniumUtils.esperarSegundos(driver, 1);
-//			//Click en ofertas
-//			List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
-//			elementos.get(0).click();
-//			//Esperamos
-//			SeleniumUtils.esperarSegundos(driver, 1);
-//			elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
-//			// Pinchamos añadir oferta
-//			elementos.get(0).click();
-//			// Rellenamos el formulario.
-//			PO_AddBidView.fillFormOustanding(driver, "Prueba", "Descricpion","10");
-//			//Desconectamos
-//			// Click en el email
-//			elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
-//			elementos.get(0).click();
-//			//Esperamos
-//			SeleniumUtils.esperarSegundos(driver, 1);
-//			elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'logout')]");
-//			// Pinchamos en desconectar.
-//			elementos.get(0).click();
-//			
-//			//Logueamos
-//			PO_LoginView.log(driver, "lucas@gmail.com", "123456");
-//			//Click en ofertas
-//			elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
-//			elementos.get(0).click();
-//			//Esperamos
-//			SeleniumUtils.esperarSegundos(driver, 1);
-//			elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
-//			// Pinchamos en ver ofertas
-//			elementos.get(0).click();
-//			SeleniumUtils.esperarSegundos(driver, 2);
-//			
-//			//Clickamos el buscador y buscamos una oferta
-//			elementos = PO_View.checkElement(driver, "free", "//input");
-//			elementos.get(0).click();
-//			PO_ListBidView.fillForm(driver,"A7");
-//			
-//			//Compramos
-//			elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'botonBuy')]");
-//			elementos.get(0).click();
-//			SeleniumUtils.esperarSegundos(driver, 2);
-//			
-//			//Vamos al home 
-//			driver.navigate().to("http://localhost:8090/");
-//			//Esperamos
-//			SeleniumUtils.esperarSegundos(driver, 5);
-//	
+	
 	
 	// Después de cada prueba se borran las cookies del navegador
 	@After
