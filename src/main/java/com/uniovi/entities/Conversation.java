@@ -13,66 +13,66 @@ import javax.persistence.OneToMany;
 @Entity
 public class Conversation {
 
-	@Id 
-	@GeneratedValue
-	private Long id;
-	
-	@ManyToOne
-	@JoinColumn(name = "bid_id")
-	private Bid bid;
-	
-	@ManyToOne
-	@JoinColumn(name = "interestedUser")
-	private User interestedUser;
-	
-	@OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
-	private Set<Message> messages;
-	
-	public Conversation() {
-		
-	}
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	public Conversation(User intersetedUser, Bid bid) {
-		super();
-		this.interestedUser = intersetedUser;
-		this.bid = bid;
-	}
+    @ManyToOne
+    @JoinColumn(name = "bid_id")
+    private Bid bid;
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne
+    @JoinColumn(name = "interestedUser")
+    private User interestedUser;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
+    private Set<Message> messages;
 
-	public User getInterestedUser() {
-		return interestedUser;
-	}
+    public Conversation() {
 
-	public void setInterestedUser(User interestedUser) {
-		this.interestedUser = interestedUser;
-	}
+    }
 
-	public Set<Message> getMessages() {
-		return messages;
-	}
+    public Conversation(User intersetedUser, Bid bid) {
+	super();
+	this.interestedUser = intersetedUser;
+	this.bid = bid;
+    }
 
-	public void setMessages(Set<Message> messages) {
-		this.messages = messages;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public Bid getBid() {
-		return bid;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public void setBid(Bid bid) {
-		this.bid = bid;
-	}
+    public User getInterestedUser() {
+	return interestedUser;
+    }
 
-	@Override
-	public String toString() {
-		return "Conversation [id=" + id + ", bid=" + bid + ", intersetedUser=" + interestedUser + ", messages="
-				+ messages + "]";
-	}
+    public void setInterestedUser(User interestedUser) {
+	this.interestedUser = interestedUser;
+    }
+
+    public Set<Message> getMessages() {
+	return messages;
+    }
+
+    public void setMessages(Set<Message> messages) {
+	this.messages = messages;
+    }
+
+    public Bid getBid() {
+	return bid;
+    }
+
+    public void setBid(Bid bid) {
+	this.bid = bid;
+    }
+
+    @Override
+    public String toString() {
+	return "Conversation [id=" + id + ", bid=" + bid + ", intersetedUser=" + interestedUser + ", messages="
+		+ messages + "]";
+    }
 }

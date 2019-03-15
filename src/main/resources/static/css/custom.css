@@ -10,7 +10,6 @@ body {
 
 .navbar{
 	background-color: #13c1ac;
-	
 }
 
 footer {
@@ -21,5 +20,13 @@ footer {
 	background-color: #13c1ac;
 	text-align: center;
 	line-height: 60px
+}
+
+.navbar-toggle .icon-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: black;
+  border-radius: 100px;
 }
 /* Sticky footer styles-------------------------------------------------- */

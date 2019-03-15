@@ -13,44 +13,44 @@ import com.uniovi.repositories.ConversationRepository;
 
 @Service
 public class ConversationService {
-	@Autowired
-	private ConversationRepository conversationRepository;
-	
-	@Autowired
-	private BidsRepository bidRepository;
-	
-	public List<Conversation> getConversations() {
-		List<Conversation> conversations = conversationRepository.findAll();
-		return conversations;
-	}
+    @Autowired
+    private ConversationRepository conversationRepository;
 
-	public Conversation getConversation(Long id) {
-		return conversationRepository.findById(id).get();
-	}
+    @Autowired
+    private BidsRepository bidRepository;
 
-	public void addConversation(Conversation conversation) {
-		conversationRepository.save(conversation);
-	}
+    public List<Conversation> getConversations() {
+	List<Conversation> conversations = conversationRepository.findAll();
+	return conversations;
+    }
 
-	public void deleteConversation(Long id) {
-		conversationRepository.deleteById(id);
-	}
-	
-	public List<Conversation> getConversationUser(User user) {
-		//Todas las conversaciones en las que participa como comprador.
-		List<Conversation> conversations = conversationRepository.findConversationsByBuyer(user);
-		
-		//Todas las conversaciones en las que participa como vendedor.
-		//Y que no se repitan
-		for(Bid bid : bidRepository.findAllByUser(user))
-			for(Conversation conversation : bid.getConversations())
-				if(!conversations.contains(conversation))
-					conversations.add(conversation);
-		
-		return conversations;
-	}
-	
-	public Conversation getConversationByBidAndInterested(Bid bid, User interestedUser) {
-		return conversationRepository.findConversationByBidAndUser(bid, interestedUser);
-	}
+    public Conversation getConversation(Long id) {
+	return conversationRepository.findById(id).get();
+    }
+
+    public void addConversation(Conversation conversation) {
+	conversationRepository.save(conversation);
+    }
+
+    public void deleteConversation(Long id) {
+	conversationRepository.deleteById(id);
+    }
+
+    public List<Conversation> getConversationUser(User user) {
+	// Todas las conversaciones en las que participa como comprador.
+	List<Conversation> conversations = conversationRepository.findConversationsByBuyer(user);
+
+	// Todas las conversaciones en las que participa como vendedor.
+	// Y que no se repitan
+	for (Bid bid : bidRepository.findAllByUser(user))
+	    for (Conversation conversation : bid.getConversations())
+		if (!conversations.contains(conversation))
+		    conversations.add(conversation);
+
+	return conversations;
+    }
+
+    public Conversation getConversationByBidAndInterested(Bid bid, User interestedUser) {
+	return conversationRepository.findConversationByBidAndUser(bid, interestedUser);
+    }
 }

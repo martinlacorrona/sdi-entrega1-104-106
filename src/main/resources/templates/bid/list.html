@@ -5,6 +5,10 @@
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
+		<p>
+			<span th:if="${error}!=null" class="alert alert-danger" th:text="#{Error.buy}"></span>
+			<span th:if="${buyed}!=null" class="alert alert-success" th:text="#{buy.list.buyedSucces}"></span>
+		</p>
 		<h2 th:text="#{bid.search.title}"></h2>
 		<form class="navbar-form" action="/bid/list">
 			<div class="form-group">
@@ -14,7 +18,6 @@
 			<button type="submit" class="btn btn-default"
 				th:text="#{bid.search.search}"></button>
 		</form>
-
 
 		<div class="table-responsive">
 			<table class="table table-hover">
@@ -35,7 +38,7 @@
 						<td th:text="${bid.getPriceFormatted()}"></td>
 						<td><div th:if="${bid.isBuyed()}">
 								<button type="submit" class="btn btn-default"
-									th:text="#{bid.buyed}"></button>
+									th:text="#{bid.buyed}" disabled></button>
 							</div>
 							<div th:unless="${bid.isBuyed()}">
 								<div th:if="${bid.user.email} != ${session.email}">
@@ -45,20 +48,25 @@
 											th:text="#{bid.buy}"></button>
 									</form>
 								</div>
-								<span class="text-danger" th:if="${session.error}!=null">
-									<span class="text-danger" th:if="${session.id} == ${bid.id}"
-									th:text="#{Error.buy}"> </span>
+								<div th:unless="${bid.user.email} != ${session.email}">
+									<form id="botonBuy" th:action="${'/bid/' + bid.id + '/buyed'}">
+										<button type="submit" class="btn btn-default"
+											style="background-color: #3CD951; color: white"
+											th:text="#{bid.buy}" disabled></button>
+									</form>
+								</div>
 							</div></td>
 						<td><div th:if="${bid.user.email} != ${session.email}">
 								<form action="/conversation" method="post">
-									<input type="hidden" th:value="${bid.id}" name="bid_id" />
-									<button type="submit" class="btn btn-default"
+									<input  type="hidden" th:value="${bid.id}" name="bid_id" />
+									<button id="contact" type="submit" class="btn btn-default"
 										style="background-color: #0C9DFE; color: white"
 										th:text="#{bid.list.contact}"></button>
 								</form>
 							</div>
 							<div th:unless="${bid.user.email} != ${session.email}">
-								<button class="btn btn-default" th:text="#{bid.yourbid}"></button>
+								<button class="btn btn-default" th:text="#{bid.yourbid}"
+									disabled></button>
 							</div></td>
 					</tr>
 				</tbody>

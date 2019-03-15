@@ -11,23 +11,23 @@ import com.uniovi.repositories.MessageRepository;
 
 @Service
 public class MessageService {
-	@Autowired
-	private MessageRepository messageRepository;
-	
-	public List<Message> getAllMessages() {
-		List<Message> messages = messageRepository.findAll();
-		return messages;
-	}
+    @Autowired
+    private MessageRepository messageRepository;
 
-	public List<Message> getMessagesFromConversation(Conversation conversation) {
-		return messageRepository.findByConversationId(conversation);
-	}
+    public List<Message> getAllMessages() {
+	List<Message> messages = messageRepository.findAll();
+	return messages;
+    }
 
-	public void addMessage(Message message) {
-		messageRepository.save(message);
-	}
-	
-	public void addMessage(Long id) {
-		messageRepository.deleteById(id);
-	}
+    public List<Message> getMessagesFromConversation(Conversation conversation) {
+	return messageRepository.findByConversationId(conversation);
+    }
+
+    public void addMessage(Message message) {
+	messageRepository.save(message);
+    }
+
+    public void addMessage(Long id) {
+	messageRepository.deleteById(id);
+    }
 }
