@@ -11,9 +11,9 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
-	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exc)
-			throws IOException, ServletException {
-		response.sendRedirect(request.getContextPath() + "/forbidden");
-	}
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exc)
+	    throws IOException, ServletException {
+	response.sendRedirect(request.getContextPath() + "/forbidden");
+    }
 }

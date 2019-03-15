@@ -5,176 +5,176 @@ import java.util.Set; //A collection that contains no duplicate elements
 
 @Entity
 public class User {
-	@Id
-	@GeneratedValue
-	private long id;
+    @Id
+    @GeneratedValue
+    private long id;
 
-	@Column(unique = true)
-	private String email;
-	private String name;
-	private String lastName;
-	private String role;
-	private Double money;
+    @Column(unique = true)
+    private String email;
+    private String name;
+    private String lastName;
+    private String role;
+    private Double money;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<Bid> bids;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Bid> bids;
 
-	@OneToMany(mappedBy = "buyerUser")
-	private Set<Bid> buyedBids;
+    @OneToMany(mappedBy = "buyerUser")
+    private Set<Bid> buyedBids;
 
-	@OneToMany(mappedBy = "interestedUser", cascade = CascadeType.ALL)
-	private Set<Conversation> conversationBuyer;
+    @OneToMany(mappedBy = "interestedUser", cascade = CascadeType.ALL)
+    private Set<Conversation> conversationBuyer;
 
-	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-	private Set<Message> sentMessages;
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    private Set<Message> sentMessages;
 
-	private String password;
-	@Transient // propiedad que no se almacena en la tabla.
-	private String passwordConfirm;
+    private String password;
+    @Transient // propiedad que no se almacena en la tabla.
+    private String passwordConfirm;
 
-	public User() {
+    public User() {
 
+    }
+
+    /**
+     * Borrarmos todos los setBuyedUser ya que si no se fastidiara la persistencia.
+     */
+    @PreRemove
+    private void preRemove() {
+	for (Bid b : buyedBids) {
+	    b.setBuyerUser(null);
 	}
+    }
 
-	/**
-	 * Borrarmos todos los setBuyedUser ya que si no se fastidiara la persistencia.
-	 */
-	@PreRemove
-	private void preRemove() {
-		for (Bid b : buyedBids) {
-			b.setBuyerUser(null);
-		}
-	}
+    public User(String email, String name, String lastName) {
+	super();
+	this.email = email;
+	this.name = name;
+	this.lastName = lastName;
+	this.money = 100.0;
+    }
 
-	public User(String email, String name, String lastName) {
-		super();
-		this.email = email;
-		this.name = name;
-		this.lastName = lastName;
-		this.money = 100.0;
-	}
+    public long getId() {
+	return id;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public void setId(long id) {
+	this.id = id;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public String getEmail() {
+	return email;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setEmail(String email) {
+	this.email = email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getLastName() {
+	return lastName;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public void setLastName(String lastName) {
+	this.lastName = lastName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getFullName() {
+	return this.name + " " + this.lastName;
+    }
 
-	public String getFullName() {
-		return this.name + " " + this.lastName;
-	}
+    public String getPassword() {
+	return password;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setPassword(String password) {
+	this.password = password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPasswordConfirm() {
+	return passwordConfirm;
+    }
 
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
+    public void setPasswordConfirm(String passwordConfirm) {
+	this.passwordConfirm = passwordConfirm;
+    }
 
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
+    public String getRole() {
+	return role;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    public void setRole(String role) {
+	this.role = role;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public Set<Bid> getBids() {
+	return bids;
+    }
 
-	public Set<Bid> getBids() {
-		return bids;
-	}
+    public void setBids(Set<Bid> bids) {
+	this.bids = bids;
+    }
 
-	public void setBids(Set<Bid> bids) {
-		this.bids = bids;
-	}
+    public Double getMoney() {
+	return money;
+    }
 
-	public Double getMoney() {
-		return money;
+    public boolean isPurschable(Double precio) {
+	if (this.money - precio >= 0) {
+	    return true;
 	}
+	return false;
+    }
 
-	public boolean isPurschable(Double precio) {
-		if (this.money - precio >= 0) {
-			return true;
-		}
-		return false;
+    public boolean isOutstanding() {
+	if (this.money - 20 >= 0) {
+	    return true;
 	}
-	
-	public boolean isOutstanding() {
-		if (this.money - 20 >= 0) {
-			return true;
-		}
-		return false;
-	}
+	return false;
+    }
 
-	public void setMoney(Double money) {
-		this.money = money;
+    public void setMoney(Double money) {
+	this.money = money;
 
-	}
+    }
 
-	public Set<Bid> getBuyedBids() {
-		return buyedBids;
-	}
+    public Set<Bid> getBuyedBids() {
+	return buyedBids;
+    }
 
-	public void setBuyedBids(Set<Bid> buyedBids) {
-		this.buyedBids = buyedBids;
-	}
+    public void setBuyedBids(Set<Bid> buyedBids) {
+	this.buyedBids = buyedBids;
+    }
 
-	public Set<Conversation> getConversationBuyer() {
-		return conversationBuyer;
-	}
+    public Set<Conversation> getConversationBuyer() {
+	return conversationBuyer;
+    }
 
-	public void setConversationBuyer(Set<Conversation> conversationBuyer) {
-		this.conversationBuyer = conversationBuyer;
-	}
+    public void setConversationBuyer(Set<Conversation> conversationBuyer) {
+	this.conversationBuyer = conversationBuyer;
+    }
 
-	public Set<Message> getSentMessages() {
-		return sentMessages;
-	}
+    public Set<Message> getSentMessages() {
+	return sentMessages;
+    }
 
-	public void setSentMessages(Set<Message> sentMessages) {
-		this.sentMessages = sentMessages;
-	}
+    public void setSentMessages(Set<Message> sentMessages) {
+	this.sentMessages = sentMessages;
+    }
 
-	/**
-	 * Devuelve el dinero con dos decimales para tener un formato acorde con la UI.
-	 * 
-	 * @return El string del dinero formateado.
-	 */
-	public String getMoneyFormatted() {
-		return String.format("%.2f", money) + " €";
-	}
+    /**
+     * Devuelve el dinero con dos decimales para tener un formato acorde con la UI.
+     * 
+     * @return El string del dinero formateado.
+     */
+    public String getMoneyFormatted() {
+	return String.format("%.2f", money) + " €";
+    }
 }

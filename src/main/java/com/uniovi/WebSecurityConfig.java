@@ -18,55 +18,47 @@ import com.uniovi.handlers.CustomAuthenticationSuccessHandler;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-	public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
-		return new CustomAuthenticationSuccessHandler();
-	}
-	
-	@Bean
-	public CustomAccessDeniedHandler customAccessDeniedHandler() {
-		return new CustomAccessDeniedHandler();
-	}
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+	return new BCryptPasswordEncoder();
+    }
 
+    @Bean
+    public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+	return new CustomAuthenticationSuccessHandler();
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests()
-					.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup", "/login/**").permitAll()
-					.antMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN")
-					.anyRequest().authenticated()
-				.and().
-				formLogin().
-					loginPage("/login").permitAll().
-					defaultSuccessUrl("/").
-					successHandler(customAuthenticationSuccessHandler()).
-				and()
-					.logout().
-				permitAll();
-		http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
-	}
+    @Bean
+    public CustomAccessDeniedHandler customAccessDeniedHandler() {
+	return new CustomAccessDeniedHandler();
+    }
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-	}
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+	http.csrf().disable().authorizeRequests()
+		.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup", "/login/**").permitAll()
+		.antMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN").anyRequest().authenticated().and().formLogin()
+		.loginPage("/login").permitAll().defaultSuccessUrl("/")
+		.successHandler(customAuthenticationSuccessHandler()).and().logout().permitAll();
+	http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
+    }
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
-	
-	@Bean
-	public SpringSecurityDialect securityDialect() {
-		return new SpringSecurityDialect();
-	}
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+	auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+	return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public SpringSecurityDialect securityDialect() {
+	return new SpringSecurityDialect();
+    }
 }

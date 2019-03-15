@@ -15,166 +15,168 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Bid {
-	
-	@Id 
-	@GeneratedValue
-	private Long id;
-	
-	private String title;
-	private String description;
-	private Date date;
-	private double price;
-	private boolean specialBid;
-	
-	@Enumerated(EnumType.STRING)
-	private BidStatus status;
-	
-	@ManyToOne
-	@JoinColumn(name = "user_id") //la relacion sera a traves d este campo
-	private User user;
 
-	/**
-	 * Usuario que ha comprado el objeto, en caso de que no haya comprado nadie,
-	 * sera null.
-	 */
-	@ManyToOne
-	@JoinColumn(name = "buyerUser_id")
-	private User buyerUser;
-	
-	@OneToMany(mappedBy = "bid", cascade = CascadeType.ALL)
-	private Set<Conversation> conversations;
-	
-	public Bid() { }
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	public Bid(Long id, String title, String description, double price, User user) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.date = new Date();
-		this.price = price;
-		this.specialBid = false;
-		this.user = user;
-		this.status = BidStatus.ACTIVED;
-		this.buyerUser = null;
-	}
+    private String title;
+    private String description;
+    private Date date;
+    private double price;
+    private boolean specialBid;
 
-	public Bid(String title, String description, double price, User user) {
-		super();
-		this.title = title;
-		this.description = description;
-		this.date = new Date();
-		this.price = price;
-		this.specialBid = false;
-		this.user = user;
-		this.status = BidStatus.ACTIVED;
-		this.buyerUser = null;
-	}
+    @Enumerated(EnumType.STRING)
+    private BidStatus status;
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne
+    @JoinColumn(name = "user_id") // la relacion sera a traves d este campo
+    private User user;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * Usuario que ha comprado el objeto, en caso de que no haya comprado nadie,
+     * sera null.
+     */
+    @ManyToOne
+    @JoinColumn(name = "buyerUser_id")
+    private User buyerUser;
 
-	public String getTitle() {
-		return title;
-	}
+    @OneToMany(mappedBy = "bid", cascade = CascadeType.ALL)
+    private Set<Conversation> conversations;
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public Bid() {
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public Bid(Long id, String title, String description, double price, User user) {
+	super();
+	this.id = id;
+	this.title = title;
+	this.description = description;
+	this.date = new Date();
+	this.price = price;
+	this.specialBid = false;
+	this.user = user;
+	this.status = BidStatus.ACTIVED;
+	this.buyerUser = null;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public Bid(String title, String description, double price, User user) {
+	super();
+	this.title = title;
+	this.description = description;
+	this.date = new Date();
+	this.price = price;
+	this.specialBid = false;
+	this.user = user;
+	this.status = BidStatus.ACTIVED;
+	this.buyerUser = null;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public double getPrice() {
-		return price;
-	}
+    public String getTitle() {
+	return title;
+    }
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+    public void setTitle(String title) {
+	this.title = title;
+    }
 
-	public boolean isSpecialBid() {
-		return specialBid;
-	}
+    public String getDescription() {
+	return description;
+    }
 
-	public void setSpecialBid(boolean specialBid) {
-		this.specialBid = specialBid;
-	}
+    public void setDescription(String description) {
+	this.description = description;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public Date getDate() {
+	return date;
+    }
 
-	public void setUser(User user) {
-		if(user != null)
-			this.status = BidStatus.BUYED;
-		this.user = user;
-	}
+    public void setDate(Date date) {
+	this.date = date;
+    }
 
-	public User getBuyerUser() {
-		return buyerUser;
-	}
+    public double getPrice() {
+	return price;
+    }
 
-	public void setBuyerUser(User buyerUser) {
-		if(buyerUser != null)
-			this.status = BidStatus.BUYED;
-		this.buyerUser = buyerUser;
-	}
+    public void setPrice(double price) {
+	this.price = price;
+    }
 
-	public BidStatus getStatus() {
-		return status;
-	}
+    public boolean isSpecialBid() {
+	return specialBid;
+    }
 
-	public void setStatus(BidStatus status) {
-		this.status = status;
-	}
+    public void setSpecialBid(boolean specialBid) {
+	this.specialBid = specialBid;
+    }
 
-	/**
-	 * Devuelve true si esta oferta fue comprada.
-	 * @return Si esta oferta fue comprada o no.
-	 */
-	public boolean isBuyed() {
-		return status.equals(BidStatus.BUYED);
-	}
-	
-	public Set<Conversation> getConversations() {
-		return conversations;
-	}
+    public User getUser() {
+	return user;
+    }
 
-	public void setConversations(Set<Conversation> conversations) {
-		this.conversations = conversations;
-	}
+    public void setUser(User user) {
+	if (user != null)
+	    this.status = BidStatus.BUYED;
+	this.user = user;
+    }
 
-	@Override
-	public String toString() {
-		return "Bid [id=" + id + ", title=" + title + ", description=" + description + ", date=" + date + ", price="
-				+ price + ", specialBid=" + specialBid + ", user=" + user + "]";
-	}
-	
-	/**
-	 * Devuelve el dinero con dos decimales para tener un formato acorde con la UI.
-	 * 
-	 * @return El string del dinero formateado.
-	 */
-	public String getPriceFormatted() {
-		return String.format("%.2f", price) + " €";
-	}
+    public User getBuyerUser() {
+	return buyerUser;
+    }
+
+    public void setBuyerUser(User buyerUser) {
+	if (buyerUser != null)
+	    this.status = BidStatus.BUYED;
+	this.buyerUser = buyerUser;
+    }
+
+    public BidStatus getStatus() {
+	return status;
+    }
+
+    public void setStatus(BidStatus status) {
+	this.status = status;
+    }
+
+    /**
+     * Devuelve true si esta oferta fue comprada.
+     * 
+     * @return Si esta oferta fue comprada o no.
+     */
+    public boolean isBuyed() {
+	return status.equals(BidStatus.BUYED);
+    }
+
+    public Set<Conversation> getConversations() {
+	return conversations;
+    }
+
+    public void setConversations(Set<Conversation> conversations) {
+	this.conversations = conversations;
+    }
+
+    @Override
+    public String toString() {
+	return "Bid [id=" + id + ", title=" + title + ", description=" + description + ", date=" + date + ", price="
+		+ price + ", specialBid=" + specialBid + ", user=" + user + "]";
+    }
+
+    /**
+     * Devuelve el dinero con dos decimales para tener un formato acorde con la UI.
+     * 
+     * @return El string del dinero formateado.
+     */
+    public String getPriceFormatted() {
+	return String.format("%.2f", price) + " €";
+    }
 }

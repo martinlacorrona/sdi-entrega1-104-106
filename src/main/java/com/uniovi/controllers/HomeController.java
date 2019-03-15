@@ -17,34 +17,34 @@ import com.uniovi.services.BidsService;
 
 @Controller
 public class HomeController {
-	
-	@Autowired
-	BidsService bidsService;
 
-	@RequestMapping("/")
-	public String index(Model model,HttpServletRequest request, Principal principal) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		List<Bid> bids = bidsService.getOustandingBid();
-		model.addAttribute("bidList", bids);
+    @Autowired
+    BidsService bidsService;
 
-		if(auth.isAuthenticated()) {
-			if(request.getSession().getAttribute("error") != null) {
-				model.addAttribute("error", "true");
-				request.getSession().setAttribute("error", null); 
-			}
-			
-			if(request.getSession().getAttribute("buyed") != null) {
-				model.addAttribute("buyed", "true");
-				request.getSession().setAttribute("buyed", null); 
-			}
-		}
-		
-		request.getSession().setAttribute("url", "home");
-		return "index";
+    @RequestMapping("/")
+    public String index(Model model, HttpServletRequest request, Principal principal) {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	List<Bid> bids = bidsService.getOustandingBid();
+	model.addAttribute("bidList", bids);
+
+	if (auth.isAuthenticated()) {
+	    if (request.getSession().getAttribute("error") != null) {
+		model.addAttribute("error", "true");
+		request.getSession().setAttribute("error", null);
+	    }
+
+	    if (request.getSession().getAttribute("buyed") != null) {
+		model.addAttribute("buyed", "true");
+		request.getSession().setAttribute("buyed", null);
+	    }
 	}
 
-	@RequestMapping("/forbidden")
-	public String forbidden() {
-		return "forbidden";
-	}
+	request.getSession().setAttribute("url", "home");
+	return "index";
+    }
+
+    @RequestMapping("/forbidden")
+    public String forbidden() {
+	return "forbidden";
+    }
 }
