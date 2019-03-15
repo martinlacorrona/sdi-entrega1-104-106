@@ -666,7 +666,6 @@ public class MyWallapopTests {
 		String datos = elementos.get(0).getText();
 		String parts[] = datos.split(" ");
 		String nombre = parts[0]+ " "+ parts[1];
-		System.out.println(nombre);
 		//Esperamos
 		SeleniumUtils.esperarSegundos(driver, 2);
 		//Borramos la oferta
