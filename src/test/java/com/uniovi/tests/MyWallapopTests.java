@@ -864,7 +864,7 @@ public class MyWallapopTests {
 	resultado = PO_AddBidView.checkPOAddView(driver, PO_Properties.getENGLISH());
 	assertTrue(resultado);
 	// Cambiamos de idioma
-	PO_HomeView.changeIdiom(driver, "btnSpanish")
+	PO_HomeView.changeIdiom(driver, "btnSpanish");
 	// Cerramos sesion e iniciamos como admin
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
