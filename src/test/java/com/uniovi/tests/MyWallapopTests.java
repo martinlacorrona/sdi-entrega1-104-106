@@ -285,8 +285,6 @@ public class MyWallapopTests {
 	PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 	// Rellenamos el formulario.
 	PO_RegisterView.fillForm(driver, "pruueb1@gmail.aaacom", "Prueba", "Antonio", "77777", "77777");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Comprobamos que entramos en la sección privada del usuario mirando salgo
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
@@ -302,8 +300,6 @@ public class MyWallapopTests {
 	PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 	// Rellenamos el formulario.
 	PO_RegisterView.fillForm(driver, "", "", "", "77777", "77777");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	PO_View.getP();
 	// COmprobamos el error de campo vacio.
 	PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
@@ -316,8 +312,6 @@ public class MyWallapopTests {
 	PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 	// Rellenamos el formulario.
 	PO_RegisterView.fillForm(driver, "prueba3@gmail.com", "Lorenzo", "Berto", "77778", "77777");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	PO_View.getP();
 	// COmprobamos el error de campo vacio.
 	PO_RegisterView.checkKey(driver, "Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
@@ -330,8 +324,6 @@ public class MyWallapopTests {
 	PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 	// Rellenamos el formulario.
 	PO_RegisterView.fillForm(driver, "pedro@gmail.com", "Lorenzo", "Berto", "77777", "77777");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	PO_View.getP();
 	// COmprobamos el error de campo vacio.
 	PO_RegisterView.checkKey(driver, "Error.signup.email.duplicate", PO_Properties.getSPANISH());
@@ -342,8 +334,6 @@ public class MyWallapopTests {
     public void Prueba05() {
 	// Logueamos como usuario
 	PO_LoginView.log(driver, "admin@email.com", "admin");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Comprobamos que está el texto de gestion de usuarios que solo posee el admin
 	boolean resultado = PO_NavView.checkPONavView(driver, "nav.user", PO_Properties.getSPANISH());
 	assertTrue(resultado);
@@ -354,8 +344,6 @@ public class MyWallapopTests {
     public void Prueba06() {
 	// Logueamos como usuario
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Comprobamos que entramos en la sección privada del usuario mirando saldo
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
@@ -369,8 +357,6 @@ public class MyWallapopTests {
     public void Prueba07() {
 	// Logueamos como usuario
 	PO_LoginView.log(driver, "", "");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	PO_View.getP();
 	// Comprobamos el error de campo vacio.
 	PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
@@ -382,8 +368,6 @@ public class MyWallapopTests {
     public void Prueba08() {
 	// Logueamos como usuario
 	PO_LoginView.log(driver, "pedro@gmail.com", "12345");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	PO_View.getP();
 	// COmprobamos el error de campo vacio.
 	PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
@@ -395,8 +379,6 @@ public class MyWallapopTests {
     public void Prueba09() {
 	// Logueamos como usuario
 	PO_LoginView.log(driver, "pedro12345@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	PO_View.getP();
 	// COmprobamos el error de campo vacio.
 	PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
@@ -408,13 +390,9 @@ public class MyWallapopTests {
     public void Prueba10() {
 	// Logueamos
 	PO_LoginView.log(driver, "admin@email.com", "admin");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en el email
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'logout')]");
 	// Pinchamos en desconectar.
 	elementos.get(0).click();
@@ -427,7 +405,6 @@ public class MyWallapopTests {
     // Comprobar que el boton de cerrar sesion no esta si no nos hemos autentificado
     public void Prueba11() {
 	// Comprobamos que no está la opcion de desconectarse sin autentificacion
-
 	PO_HomeView.checkPOHomeView(driver, PO_Properties.getSPANISH());
 	// Comprobamos que no esté el href logout
 	Boolean resultado = (new WebDriverWait(driver, PO_NavView.getTimeout()).until(
@@ -442,13 +419,9 @@ public class MyWallapopTests {
     public void Prueba12() {
 	// Logueamos
 	PO_LoginView.log(driver, "admin@email.com", "admin");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en gestion de usuarios
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/user/list')]");
 	// Pinchamos en ver usuarios
 	elementos.get(0).click();
@@ -464,13 +437,9 @@ public class MyWallapopTests {
     public void Prueba13() {
 	// Logueamos
 	PO_LoginView.log(driver, "admin@email.com", "admin");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en gestion de usuarios
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/user/list')]");
 	// Pinchamos en ver usuarios
 	elementos.get(0).click();
@@ -482,15 +451,12 @@ public class MyWallapopTests {
 	String parts[] = emailYnombre.split(" ");
 	String nombre = parts[1];
 	// Le damos al checkbox
-	SeleniumUtils.esperarSegundos(driver, 3);
 	elementos = PO_View.checkElement(driver, "free", "//input");
 	elementos.get(0).click();
 	// Borramos
 	elementos = PO_View.checkElement(driver, "text", "Borrar");
-	SeleniumUtils.esperarSegundos(driver, 3);
 	// Click a borrar
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 3);
 	// Comprobamos que el usuario no esta
 	SeleniumUtils.textoNoPresentePagina(driver, nombre);
 	// Y que la lista es 1 menos
@@ -504,13 +470,9 @@ public class MyWallapopTests {
     public void Prueba14() {
 	// Logueamos
 	PO_LoginView.log(driver, "admin@email.com", "admin");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en gestion de usuarios
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/user/list')]");
 	// Pinchamos en ver usuarios
 	elementos.get(0).click();
@@ -525,12 +487,9 @@ public class MyWallapopTests {
 	// Le damos al checkbox
 	elementos = PO_View.checkElement(driver, "free", "//input");
 	elementos.get(elementos.size() - 2).click();
-
 	elementos = PO_View.checkElement(driver, "text", "Borrar");
-	SeleniumUtils.esperarSegundos(driver, 3);
 	// Click a borrar
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 3);
 	// Comprobamos que el usuario no esta
 	SeleniumUtils.textoNoPresentePagina(driver, nombre);
 	// Y que la lista es 1 menos
@@ -544,21 +503,15 @@ public class MyWallapopTests {
     public void Prueba15() {
 	// Logueamos
 	PO_LoginView.log(driver, "admin@email.com", "admin");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en gestion de usuarios
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/user/list')]");
 	// Pinchamos en ver usuarios
 	elementos.get(0).click();
-
 	// Cargamos los usuarios y vemos que estan todos
 	elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", PO_View.getTimeout());
 	assertTrue(elementos.size() == 6);
-
 	// Cogemos el nombre del primer Usuario
 	String emailYnombre1 = elementos.get(0).getText();
 	String parts1[] = emailYnombre1.split(" ");
@@ -596,13 +549,9 @@ public class MyWallapopTests {
     public void Prueba16() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
 	// Pinchamos añadir oferta
 	elementos.get(0).click();
@@ -617,13 +566,9 @@ public class MyWallapopTests {
     public void Prueba17() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
 	// Pinchamos añadir oferta
 	elementos.get(0).click();
@@ -639,13 +584,9 @@ public class MyWallapopTests {
     public void Prueba18() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/mybids')]");
 	// Pinchamos en ver mis ofertas
 	elementos.get(0).click();
@@ -659,13 +600,9 @@ public class MyWallapopTests {
     public void Prueba19() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/mybids')]");
 	// Pinchamos en ver mis ofertas
 	elementos.get(0).click();
@@ -673,13 +610,9 @@ public class MyWallapopTests {
 	String datos = elementos.get(0).getText();
 	String parts[] = datos.split(" ");
 	String nombre = parts[0] + " " + parts[1];
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 2);
 	// Borramos la oferta
 	elementos = PO_View.checkElement(driver, "free", "//button[contains(@id, 'boton')]");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 2);
 	// Comprobamos que no esta
 	SeleniumUtils.textoNoPresentePagina(driver, nombre);
     }
@@ -689,13 +622,9 @@ public class MyWallapopTests {
     public void Prueba20() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/mybids')]");
 	// Pinchamos en ver mis ofertas
 	elementos.get(0).click();
@@ -704,13 +633,9 @@ public class MyWallapopTests {
 	String datos = elementos.get(elementos.size() - 1).getText();
 	String parts[] = datos.split(" ");
 	String nombre = parts[0] + " " + parts[1];
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 2);
 	// Borramos la oferta
 	elementos = PO_View.checkElement(driver, "free", "//button[contains(@id, 'boton')]");
 	elementos.get(elementos.size() - 1).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 2);
 	// Comprobamos que no esta
 	SeleniumUtils.textoNoPresentePagina(driver, nombre);
 
@@ -723,13 +648,9 @@ public class MyWallapopTests {
     public void Prueba21() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
 	// Pinchamos en ver mis ofertas
 	elementos.get(0).click();
@@ -746,8 +667,6 @@ public class MyWallapopTests {
 	elementos = PO_View.checkElement(driver, "free", "//input");
 	elementos.get(0).click();
 	PO_ListBidView.fillForm(driver, "");
-
-	SeleniumUtils.esperarSegundos(driver, 3);
 	// Comprobamos la pagina que está igual
 	elementos = PO_View.checkElement(driver, "free", "//tr[contains(@id, 'ofertas')]");
 	for (int i = 0; i < elementos.size(); i++) {
@@ -762,17 +681,12 @@ public class MyWallapopTests {
     public void Prueba22() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
 	// Pinchamos en ver mis ofertas
 	elementos.get(0).click();
-
 	// Cogemos el nombre de las ofertas de la primera pagina
 	elementos = PO_View.checkElement(driver, "free", "//tr[contains(@id, 'ofertas')]");
 	String nombres[] = new String[5];
@@ -785,8 +699,6 @@ public class MyWallapopTests {
 	elementos = PO_View.checkElement(driver, "free", "//input");
 	elementos.get(0).click();
 	PO_ListBidView.fillForm(driver, "zzzzzzz");
-	SeleniumUtils.esperarSegundos(driver, 3);
-
 	// Comprobamos que esta vacia mirando a veri salen las ofertas que salian antes
 	SeleniumUtils.textoNoPresentePagina(driver, nombres[0]);
 	SeleniumUtils.textoNoPresentePagina(driver, nombres[1]);
@@ -801,17 +713,12 @@ public class MyWallapopTests {
     public void Prueba23() {
 	// Logueamos
 	PO_LoginView.log(driver, "lucas@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
 	// Pinchamos en ver ofertas
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 2);
 	// Cogemos el dinero que tiene
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
@@ -819,24 +726,18 @@ public class MyWallapopTests {
 	String saldoActual = elementos.get(0).getText();
 	String parts[] = saldoActual.split(",");
 	String saldo = parts[0];
-
 	// Clickamos el buscador y buscamos una oferta
 	elementos = PO_View.checkElement(driver, "free", "//input");
 	elementos.get(0).click();
 	PO_ListBidView.fillForm(driver, "A8");
-
 	// El saldo final tendria que ser el saldo -20 los del precio.
 	int saldoFinal = Integer.parseInt(saldo) - 20;
-
 	// Compramos
 	elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'botonBuy')]");
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 2);
-
 	// Miramos saldo
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
-
 	// Comprbamos que el saldo sea la resta
 	PO_View.checkElement(driver, "text", String.valueOf(saldoFinal) + ",00 €");
 
@@ -847,23 +748,17 @@ public class MyWallapopTests {
     public void Prueba24() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
 	// Pinchamos en ver ofertas
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 2);
 	// Cogemos el dinero que tiene
 	// Miramos saldo
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
 	PO_View.checkElement(driver, "text", "100,00 €");
-
 	// Clickamos el buscador y buscamos la oferta que cuesta 100
 	elementos = PO_View.checkElement(driver, "free", "//input");
 	elementos.get(0).click();
@@ -871,12 +766,9 @@ public class MyWallapopTests {
 	// Compramos
 	elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'botonBuy')]");
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 2);
-
 	// Miramos saldo
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
-
 	PO_View.checkElement(driver, "text", "0,00 €");
 
     }
@@ -886,23 +778,17 @@ public class MyWallapopTests {
     public void Prueba25() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
 	// Pinchamos en ver ofertas
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 2);
 	// Cogemos el dinero que tiene
 	// Miramos saldo
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
 	PO_View.checkElement(driver, "text", "100,00 €");
-
 	// Clickamos el buscador y buscamos la oferta que cuesta 100
 	elementos = PO_View.checkElement(driver, "free", "//input");
 	elementos.get(0).click();
@@ -910,16 +796,12 @@ public class MyWallapopTests {
 	// Compramos
 	elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'botonBuy')]");
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 2);
-
 	// Buscamos ese producto para ver el error
 	PO_RegisterView.checkKey(driver, "Error.buy", PO_Properties.getSPANISH());
-
 	// Miramos saldo
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
 	PO_View.checkElement(driver, "text", "100,00 €");
-
     }
 
     @Test
@@ -927,22 +809,15 @@ public class MyWallapopTests {
     public void Prueba26() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/mybuyedbids')]");
 	// Pinchamos en ver ofertas compradas
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 2);
-
 	// Este usuario tiene dos ofertas compradas, lo comprobamos:
 	elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", PO_View.getTimeout());
 	assertTrue(elementos.size() == 2);
-
     }
 
     @Test
@@ -950,91 +825,68 @@ public class MyWallapopTests {
     public void Prueba27() {
 	// Checkeamos el mensaje de bienvenido en español
 	PO_HomeView.checkPOHomeView(driver, PO_Properties.getSPANISH());
-
 	// Cambiamos de idioma
 	PO_HomeView.changeIdiom(driver, "btnEnglish");
-
 	// Checkeamos el mensaje en ingles
 	PO_HomeView.checkPOHomeView(driver, PO_Properties.getENGLISH());
-
 	// Cambiamos de idioma
 	PO_HomeView.changeIdiom(driver, "btnSpanish");
-
 	// Logueamos como usuario
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/mybuyedbids')]");
 	// Pinchamos en ver ofertas compradas
 	elementos.get(0).click();
-
 	// Checkeamos el mensaje de ofertas
 	boolean resultado = PO_OfertasView.checkPOfertasView(driver, PO_Properties.getSPANISH());
 	assertTrue(resultado);
 	// Cambiamos de idioma
 	PO_HomeView.changeIdiom(driver, "btnEnglish");
-
 	// Checkeamos el mensaje en ingles
 	resultado = PO_OfertasView.checkPOfertasView(driver, PO_Properties.getENGLISH());
 	assertTrue(resultado);
 	// Cambiamos de idioma
 	PO_HomeView.changeIdiom(driver, "btnSpanish");
-
 	// Click en ofertas
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
 	// Pinchamos en ver ofertas compradas
 	elementos.get(0).click();
-
 	// Checkeamos el mensaje de ofertas
 	resultado = PO_AddBidView.checkPOAddView(driver, PO_Properties.getSPANISH());
 	assertTrue(resultado);
 	// Cambiamos de idioma
 	PO_HomeView.changeIdiom(driver, "btnEnglish");
-
 	// Checkeamos el mensaje en ingles
 	resultado = PO_AddBidView.checkPOAddView(driver, PO_Properties.getENGLISH());
 	assertTrue(resultado);
 	// Cambiamos de idioma
 	PO_HomeView.changeIdiom(driver, "btnSpanish");
-
 	// Cerramos sesion e iniciamos como admin
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'logout')]");
 	elementos.get(0).click();
 	PO_LoginView.log(driver, "admin@email.com", "admin");
-
 	// Click en gestion de usuarios
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/user/list')]");
 	// Pinchamos en ver usuarios
 	elementos.get(0).click();
-
 	// Checkeamos el mensaje de ofertas
 	resultado = PO_UsersView.checkPOUsersView(driver, PO_Properties.getSPANISH());
 	assertTrue(resultado);
 	// Cambiamos de idioma
 	PO_HomeView.changeIdiom(driver, "btnEnglish");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 5);
 	// Checkeamos el mensaje en ingles
 	resultado = PO_UsersView.checkPOUsersView(driver, PO_Properties.getENGLISH());
 	assertTrue(resultado);
-
 	// Cambiamos de idioma
 	PO_HomeView.changeIdiom(driver, "btnSpanish");
-
     }
 
     @Test
@@ -1046,15 +898,11 @@ public class MyWallapopTests {
 	// Comprobamos que no esté el id = users-menu
 	Boolean resultado = (new WebDriverWait(driver, PO_NavView.getTimeout()).until(ExpectedConditions
 		.invisibilityOfElementLocated(By.xpath("//*[contains(@id,'" + "users-menu" + "')]"))));
-
 	assertTrue(resultado);
-
 	// Comprobamos que modificando la url del driver no puedo acceder
 	driver.navigate().to("http://localhost:8090/user/list");
-
 	// Comprobamos que estamos en el login ya que no podemos acceder
 	PO_LoginView.checkPOLoginView(driver, PO_Properties.getSPANISH());
-
     }
 
     @Test
@@ -1066,15 +914,11 @@ public class MyWallapopTests {
 	// Comprobamos que no esté el id = bids-menu
 	Boolean resultado = (new WebDriverWait(driver, PO_NavView.getTimeout()).until(
 		ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@id,'" + "bids-menu" + "')]"))));
-
 	assertTrue(resultado);
-
 	// Comprobamos que modificando la url del driver no puedo acceder
 	driver.navigate().to("http://localhost:8090/bid/list");
-
 	// Comprobamos que estamos en el login ya que no podemos acceder
 	PO_LoginView.checkPOLoginView(driver, PO_Properties.getSPANISH());
-
     }
 
     @Test
@@ -1085,16 +929,13 @@ public class MyWallapopTests {
 	// Logueamos como usuario
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
 	PO_HomeView.checkPOHomeView(driver, PO_Properties.getSPANISH());
-
 	// Comprobamos que no esté el id = users-menu
 	Boolean resultado = (new WebDriverWait(driver, PO_NavView.getTimeout()).until(ExpectedConditions
 		.invisibilityOfElementLocated(By.xpath("//*[contains(@id,'" + "users-menu" + "')]"))));
-
 	assertTrue(resultado);
 
 	// Comprobamos que modificando la url del driver no puedo acceder
 	driver.navigate().to("http://localhost:8090/user/list");
-
 	// Comprobamos el error forbidden.message
 	resultado = PO_ForbiddenView.checkPOForbiddenView(driver, PO_Properties.getSPANISH());
 	assertTrue(resultado);
@@ -1110,31 +951,20 @@ public class MyWallapopTests {
     public void Prueba31() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
 	// Pinchamos en ver ofertas
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 2);
-
 	// Clickamos el buscador
 	elementos = PO_View.checkElement(driver, "free", "//input");
 	elementos.get(0).click();
 	PO_ListBidView.fillForm(driver, "D1");
-	SeleniumUtils.esperarSegundos(driver, 2);
-
 	// Contactamos con el vendedor mandandole el mensaje
 	elementos = PO_View.checkElement(driver, "free", "//button[contains(@id, 'contact')]");
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 2);
 	PO_ChatView.fillForm(driver, "Hola");
-	SeleniumUtils.esperarSegundos(driver, 2);
-
 	// Comprobamos la existencia del mensaje
 	SeleniumUtils.textoPresentePagina(driver, "Hola");
 
@@ -1147,25 +977,14 @@ public class MyWallapopTests {
     public void Prueba32() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Abrimos conversaciones
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'DropDownInfo3')]/a");
 	elementos.get(0).click();
-	// Abrimos chats
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "@class", "btn btn-default");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
-
 	PO_ChatView.fillForm(driver, "Hola");
-	SeleniumUtils.esperarSegundos(driver, 2);
-
 	// Comprobamos la existencia del mensaje
 	SeleniumUtils.textoPresentePagina(driver, "Hola");
 
@@ -1178,17 +997,11 @@ public class MyWallapopTests {
     public void Prueba33() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Abrimos conversaciones
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'DropDownInfo3')]/a");
 	elementos.get(0).click();
-	// Cogemos la tabla
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//td");
 	// Comprobamos que salen las dos conversaciones que tiene pedro mirando los
 	// emails:
@@ -1203,25 +1016,17 @@ public class MyWallapopTests {
     public void Prueba34() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Abrimos conversaciones
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'DropDownInfo3')]/a");
 	elementos.get(0).click();
-	// Cogemos la tabla
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//td");
 	// Cogemos los emails del primero que esl que vamos a eliminar y comprobar
 	// despues
 	String emails = elementos.get(0).getText();
 	// Eliminamos
 	elementos.get(4).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 3);
 	// Comprobamos que no está el texto
 	SeleniumUtils.textoNoPresentePagina(driver, emails);
     }
@@ -1233,25 +1038,17 @@ public class MyWallapopTests {
     public void Prueba35() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Abrimos conversaciones
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'DropDownInfo3')]/a");
 	elementos.get(0).click();
-	// Cogemos la tabla
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//td");
 	// Cogemos los emails del ultimo que esl que vamos a eliminar y comprobar
 	// despues
 	String emails = elementos.get(elementos.size() - 5).getText();
 	// Eliminamos
 	elementos.get(elementos.size() - 1).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 3);
 	// Comprobamos que no está el texto
 	SeleniumUtils.textoNoPresentePagina(driver, emails);
     }
@@ -1265,19 +1062,14 @@ public class MyWallapopTests {
     public void Prueba36() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/add')]");
 	// Pinchamos añadir oferta
 	elementos.get(0).click();
 	// Rellenamos el formulario.
 	PO_AddBidView.fillFormOustanding(driver, "Prueba", "Descricpion", "10");
-
 	// Vamos al home
 	driver.navigate().to("http://localhost:8090/");
 	// Comprobamos que este
@@ -1298,27 +1090,17 @@ public class MyWallapopTests {
     public void Prueba37() {
 	// Logueamos
 	PO_LoginView.log(driver, "pedro@gmail.com", "123456");
-	// Esperamos y vamos a mis ofertas
-	SeleniumUtils.esperarSegundos(driver, 1);
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/mybids')]");
 	// Pinchamos en ver mis ofertas
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 3);
 	// Cogemos e intentamos destacar
 	elementos = PO_View.checkElement(driver, "text", "Destacar");
 	// Pinchamos
 	elementos.get(1).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Vamos al home
 	driver.navigate().to("http://localhost:8090/");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 3);
 	// Comprobamos que esté la oferta
 	SeleniumUtils.textoPresentePagina(driver, "Oferta A8");
 	// Y miramos que el salgo ha bajado 20, es decir 100-20 = 80.
@@ -1336,50 +1118,35 @@ public class MyWallapopTests {
     public void Prueba38() {
 	// Logueamos
 	PO_LoginView.log(driver, "lucas@gmail.com", "123456");
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Click en ofertas
 	List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/list')]");
 	// Pinchamos en ver ofertas
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 2);
-
 	// Clickamos el buscador y buscamos una oferta
 	elementos = PO_View.checkElement(driver, "free", "//input");
 	elementos.get(0).click();
 	PO_ListBidView.fillForm(driver, "A7");
-
 	// Compramos
 	elementos = PO_View.checkElement(driver, "free", "//form[contains(@id, 'botonBuy')]");
 	elementos.get(0).click();
-	SeleniumUtils.esperarSegundos(driver, 2);
-
 	// Tenemos menos de 20€
 	// Miramos q el saldo sea 100-20=80
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'user-menu')]/a");
 	elementos.get(0).click();
 	PO_View.checkElement(driver, "text", "18,00 €");
-
 	// Vamos a mis ofertas e intentamos destacar una
 	elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'bids-menu')]/a");
 	elementos.get(0).click();
 	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/bid/mybids')]");
 	// Pinchamos en ver mis ofertas
 	elementos.get(0).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 3);
 	// Cogemos e intentamos destacar
 	elementos = PO_View.checkElement(driver, "text", "Destacar");
 	// Pinchamos
 	elementos.get(1).click();
-	// Esperamos
-	SeleniumUtils.esperarSegundos(driver, 1);
 	// Comprobamos el tipo
 	elementos = PO_View.checkElement(driver, "text", "Normal");
 	// Pinchamos en ver mis ofertas
